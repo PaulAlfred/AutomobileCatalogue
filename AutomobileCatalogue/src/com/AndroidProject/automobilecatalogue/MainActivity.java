@@ -1,18 +1,40 @@
 package com.AndroidProject.automobilecatalogue;
 
-import android.support.v7.app.ActionBarActivity;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.json.JSONException;
+
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 
 public class MainActivity extends ActionBarActivity {
 
+	 ManufacturerListAdapter brand_list_adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        byte[] buffer;
+		try {
+			MyJSONClass MainObj = new MyJSONClass(getAssets().open("Manufacturers.txt"));
+			
+			brand_list_adapter = new ManufacturerListAdapter(getApplicationContext(),MainObj.getJSONObject());
+	        
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+        ListView mainList = (ListView) findViewById(R.id.mainList);
+        mainList.setAdapter(brand_list_adapter);
     }
 
 
