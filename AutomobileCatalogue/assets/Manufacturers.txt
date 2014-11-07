@@ -1,34 +1,5 @@
 {
 	"manufacturers": [
-	{
-		"name":"Maserati",
-		"founded":"1914",
-		"origin":"Modena, Italy",
-		"revenue":"$2.08 billion"
-	},
-	{
-		"name":"Nissan",
-		"founded":"1933",
-		"origin":"Yokohama, Japan",
-		"revenue":"$100 billion"
-	},
-	{
-		"name":"Chevrolet",
-		"founded":"1911",
-		"origin":"Michigan, United States",
-		"revenue":"$155 billion"
-	},
-	{
-		"name":"Hyundai",
-		"founded":"1947",
-		"origin":"Seoul, South Korea",
-		"revenue":"$86 billion"
-	},
-	{
-		"name":"Renault",
-		"founded":1899",
-		"origin":"Boulogne-Billancourt, France",
-		"revenue":"$51 billion"
-	}	
+		
 	]
 }

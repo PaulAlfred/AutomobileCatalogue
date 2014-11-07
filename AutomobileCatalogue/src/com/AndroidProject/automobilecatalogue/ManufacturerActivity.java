@@ -2,12 +2,15 @@ package com.AndroidProject.automobilecatalogue;
 
 import java.io.IOException;
 
+import com.AndroidProject.automobilecatalogue.R;
+import com.AndroidProject.automobilecatalogue.R.id;
+import com.AndroidProject.automobilecatalogue.R.layout;
+import com.AndroidProject.automobilecatalogue.R.menu;
 
-
-
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,40 +18,35 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
-public class CategoryActivity extends Activity
-{
-	CategoryListAdapter category_list;
+
+public class ManufacturerActivity extends ActionBarActivity {
+
+	ManufacturerListAdapter brand_list_adapter;
+	final Context context = this;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_category);
-		
+		setContentView(R.layout.activity_main);
 		try {
-			MyJSONClass MainObj = new MyJSONClass(getAssets().open("Categories.txt"));
-			category_list = new CategoryListAdapter(CategoryActivity.this, MainObj.getJSONObject(),"categories");	        
+			MyJSONClass MainObj = new MyJSONClass(getAssets().open("Manufacturers.txt"));
+			brand_list_adapter = new ManufacturerListAdapter(getApplicationContext(),MainObj.getJSONObject(),"manufacturers");   
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
-		ListView categoryList = (ListView) findViewById(R.id.categoryList);
-		categoryList.setAdapter(category_list);
-		categoryList.setOnItemClickListener(new OnItemClickListener() {
+		}
+		ListView mainList = (ListView) findViewById(R.id.mainList);
+		mainList.setAdapter(brand_list_adapter);
+		mainList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View v, int position,
 					long s) {
-				Intent intent = new Intent(CategoryActivity.this,CarActivity.class);
-				try{
+				Intent intent = new Intent(ManufacturerActivity.this,CategoryActivity.class);
 				startActivity(intent);
-				} catch (Exception e){
-					Toast.makeText(getApplicationContext(), e.getClass().getName(),Toast.LENGTH_SHORT).show();
-				}
 			}
 		});
-		
-
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,7 +60,7 @@ public class CategoryActivity extends Activity
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_add:
-			Intent intent = new Intent(CategoryActivity.this, ViewAddCategory.class);
+			Intent intent = new Intent(ManufacturerActivity.this, ViewAddManufacturer.class);
 			startActivity(intent);
 			return true;
 		default:
