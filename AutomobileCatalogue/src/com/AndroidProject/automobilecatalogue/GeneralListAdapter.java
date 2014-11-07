@@ -129,7 +129,10 @@ public class GeneralListAdapter extends BaseAdapter{
 	public void setwidgetInfo(int position)
 	{
 	}
-    
+
+
+  
+
 	
 
 }

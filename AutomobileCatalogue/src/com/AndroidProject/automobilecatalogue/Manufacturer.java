@@ -6,7 +6,7 @@ import org.json.JSONObject;
 public class Manufacturer extends BasicOperations {
 
 	String name, founded, origin, revenue;
-
+	
 	public String getName() {
 		return name;
 	}
@@ -57,6 +57,6 @@ public class Manufacturer extends BasicOperations {
 	}
 
 
-
+  
 
 }
