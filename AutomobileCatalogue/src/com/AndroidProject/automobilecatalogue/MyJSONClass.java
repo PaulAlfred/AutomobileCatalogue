@@ -6,12 +6,16 @@ import java.io.InputStream;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+
+
 
 public class MyJSONClass {
 	
 	byte[] buffer;
 	String stringBuffer;
 	JSONObject jObj;
+	Context context;
 	
 	public MyJSONClass(InputStream is){
 		
@@ -32,6 +36,6 @@ public class MyJSONClass {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return jObj;
+		return this.jObj;
 	}
 }

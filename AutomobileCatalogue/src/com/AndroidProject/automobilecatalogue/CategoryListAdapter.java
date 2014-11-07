@@ -15,41 +15,37 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class ManufacturerListAdapter extends BaseAdapter{
+public class CategoryListAdapter extends BaseAdapter {
 
-
-	JSONArray list_of_manufacturer;
-	JSONObject manufacturer;
+	JSONArray list_of_categories;
+	JSONObject category;
 
 	LayoutInflater inflater;
-	TextView name, revenue, origin, founded;
+	TextView name, description;
 
 	ArrayList <JSONObject> sortedjObj = new ArrayList<JSONObject>();
 
-
-	public ManufacturerListAdapter(Context context, JSONObject MainJSON){
+	public CategoryListAdapter(Context context, JSONObject MainJSON){
 		try{
 			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			list_of_manufacturer = MainJSON.getJSONArray("manufacturers");
+			list_of_categories = MainJSON.getJSONArray("categories");
 			sortJsonArray();
 		} catch (JSONException e){
 			e.printStackTrace();
 		}
 	}
 
-
 	@Override
 	public int getCount() {
-
-		return list_of_manufacturer.length();
+		return list_of_categories.length();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		try {
-			return list_of_manufacturer.get(position);
+			return list_of_categories.get(position);
 		} catch (JSONException e) {
-
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -63,30 +59,24 @@ public class ManufacturerListAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if(convertView == null){
+			convertView = inflater.inflate(R.layout.row_category, parent, false);
+			name = (TextView) convertView.findViewById(R.id.category_title);
+			description = (TextView) convertView.findViewById(R.id.category_description);
 
-			convertView = inflater.inflate(R.layout.row, parent, false);
-			name = (TextView) convertView.findViewById(R.id.titleText);
-			founded = (TextView) convertView.findViewById(R.id.description1);
-			origin = (TextView) convertView.findViewById(R.id.description2);
-			revenue = (TextView) convertView.findViewById(R.id.description3);
-
-			try {
-				manufacturer = list_of_manufacturer.getJSONObject(position);
-				name.setText("Name : " + sortedjObj.get(position).get("name"));
-				founded.setText("Manufacturer : " + sortedjObj.get(position).get("founded"));
-				origin.setText("Horse Power : " + sortedjObj.get(position).get("origin"));
-				revenue.setText("Category : " + sortedjObj.get(position).get("revenue"));
-			} catch (JSONException e) {
+			try{
+				category = list_of_categories.getJSONObject(position);
+				name.setText(sortedjObj.get(position).get("name").toString());
+				description.setText(sortedjObj.get(position).get("description").toString());
+			} catch (JSONException e){
 				e.printStackTrace();
 			}
 		}
 
 		return convertView;
 	}
-
 	private void sortJsonArray() throws JSONException{
-		for(int i = 0; i < list_of_manufacturer.length(); i++){
-			sortedjObj.add(list_of_manufacturer.getJSONObject(i));
+		for(int i = 0; i < list_of_categories.length(); i++){
+			sortedjObj.add(list_of_categories.getJSONObject(i));
 		}
 		Collections.sort(sortedjObj, new Comparator<JSONObject>() {
 
@@ -101,6 +91,7 @@ public class ManufacturerListAdapter extends BaseAdapter{
 				}
 			}
 		});
+
 
 	}
 }

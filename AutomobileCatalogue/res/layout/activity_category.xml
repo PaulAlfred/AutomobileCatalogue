@@ -9,7 +9,7 @@
     tools:context="com.AndroidProject.automobilecatalogue.MainActivity" >
 
     <ListView
-        android:id="@+id/mainList"
+        android:id="@+id/categoryList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"

@@ -15,23 +15,25 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class ManufacturerListAdapter extends BaseAdapter{
+public class CarListAdapter extends BaseAdapter{
+	
 
 
-	JSONArray list_of_manufacturer;
-	JSONObject manufacturer;
+	JSONArray list_of_cars;
+	JSONObject car;
 
 	LayoutInflater inflater;
-	TextView name, revenue, origin, founded;
+	TextView name, manufacturer, category, horsepower;
 
 	ArrayList <JSONObject> sortedjObj = new ArrayList<JSONObject>();
 
-
-	public ManufacturerListAdapter(Context context, JSONObject MainJSON){
+	public CarListAdapter(Context context, JSONObject MainJSON){
 		try{
 			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			list_of_manufacturer = MainJSON.getJSONArray("manufacturers");
+			list_of_cars = MainJSON.getJSONArray("cars");
+			
 			sortJsonArray();
+
 		} catch (JSONException e){
 			e.printStackTrace();
 		}
@@ -41,13 +43,13 @@ public class ManufacturerListAdapter extends BaseAdapter{
 	@Override
 	public int getCount() {
 
-		return list_of_manufacturer.length();
+		return list_of_cars.length();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		try {
-			return list_of_manufacturer.get(position);
+			return list_of_cars.get(position);
 		} catch (JSONException e) {
 
 			e.printStackTrace();
@@ -66,16 +68,16 @@ public class ManufacturerListAdapter extends BaseAdapter{
 
 			convertView = inflater.inflate(R.layout.row, parent, false);
 			name = (TextView) convertView.findViewById(R.id.titleText);
-			founded = (TextView) convertView.findViewById(R.id.description1);
-			origin = (TextView) convertView.findViewById(R.id.description2);
-			revenue = (TextView) convertView.findViewById(R.id.description3);
+			manufacturer = (TextView) convertView.findViewById(R.id.description1);
+			category = (TextView) convertView.findViewById(R.id.description2);
+			horsepower = (TextView) convertView.findViewById(R.id.description3);
 
 			try {
-				manufacturer = list_of_manufacturer.getJSONObject(position);
+				car = list_of_cars.getJSONObject(position);
 				name.setText("Name : " + sortedjObj.get(position).get("name"));
-				founded.setText("Manufacturer : " + sortedjObj.get(position).get("founded"));
-				origin.setText("Horse Power : " + sortedjObj.get(position).get("origin"));
-				revenue.setText("Category : " + sortedjObj.get(position).get("revenue"));
+				manufacturer.setText("Manufacturer : " + sortedjObj.get(position).get("manufacturer"));
+				category.setText("Category : " + sortedjObj.get(position).get("category"));
+				horsepower.setText("Horse Power : " + sortedjObj.get(position).get("horsepower"));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -83,24 +85,24 @@ public class ManufacturerListAdapter extends BaseAdapter{
 
 		return convertView;
 	}
-
+	
 	private void sortJsonArray() throws JSONException{
-		for(int i = 0; i < list_of_manufacturer.length(); i++){
-			sortedjObj.add(list_of_manufacturer.getJSONObject(i));
+		for(int i = 0; i < list_of_cars.length(); i++){
+			sortedjObj.add(list_of_cars.getJSONObject(i));
 		}
 		Collections.sort(sortedjObj, new Comparator<JSONObject>() {
 
-			@Override
-			public int compare(JSONObject lhs, JSONObject rhs) {
+		    @Override
+		    public int compare(JSONObject lhs, JSONObject rhs) {
 
-				try {
-					return (lhs.getString("name").toLowerCase().compareTo(rhs.getString("name").toLowerCase()));
-				} catch (JSONException e) {
-					e.printStackTrace();
-					return 0;
-				}
-			}
+		        try {
+		            return (lhs.getString("name").toLowerCase().compareTo(rhs.getString("name").toLowerCase()));
+		        } catch (JSONException e) {
+		            e.printStackTrace();
+		            return 0;
+		        }
+		    }
 		});
-
 	}
+
 }

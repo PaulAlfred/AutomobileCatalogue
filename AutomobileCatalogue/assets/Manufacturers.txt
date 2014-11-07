@@ -14,7 +14,7 @@
 	},
 	{
 		"name":"Chevrolet",
-		"founded":1911",
+		"founded":"1911",
 		"origin":"Michigan, United States",
 		"revenue":"$155 billion"
 	},

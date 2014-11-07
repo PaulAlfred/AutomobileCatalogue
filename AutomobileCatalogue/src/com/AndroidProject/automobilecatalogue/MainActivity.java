@@ -1,40 +1,44 @@
 package com.AndroidProject.automobilecatalogue;
 
 import java.io.IOException;
-import java.io.InputStream;
 
-import org.json.JSONException;
-
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 
 public class MainActivity extends ActionBarActivity {
 
 	 ManufacturerListAdapter brand_list_adapter;
+	 final Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        byte[] buffer;
 		try {
 			MyJSONClass MainObj = new MyJSONClass(getAssets().open("Manufacturers.txt"));
-			
-			brand_list_adapter = new ManufacturerListAdapter(getApplicationContext(),MainObj.getJSONObject());
-	        
-		} catch (JSONException e) {
-			e.printStackTrace();
+			brand_list_adapter = new ManufacturerListAdapter(getApplicationContext(),MainObj.getJSONObject());   
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
         ListView mainList = (ListView) findViewById(R.id.mainList);
         mainList.setAdapter(brand_list_adapter);
+        mainList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View v, int position,
+					long s) {
+				Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
+				startActivity(intent);
+			}
+		});
     }
 
 
