@@ -1,97 +1,54 @@
 package com.AndroidProject.automobilecatalogue;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 
-public class CategoryListAdapter extends BaseAdapter {
+public class CategoryListAdapter extends GeneralListAdapter {
 
-	JSONArray list_of_categories;
-	JSONObject category;
-
-	LayoutInflater inflater;
-	TextView name, description;
-
-	ArrayList <JSONObject> sortedjObj = new ArrayList<JSONObject>();
-
-	public CategoryListAdapter(Context context, JSONObject MainJSON){
-		try{
-			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			list_of_categories = MainJSON.getJSONArray("categories");
-			sortJsonArray();
-		} catch (JSONException e){
-			e.printStackTrace();
-		}
+	public CategoryListAdapter(Context context, JSONObject MainJSON,
+			String ArrayName) {
+		super(context, MainJSON, ArrayName);
+		setLayout(R.layout.row_category);
 	}
 
 	@Override
-	public int getCount() {
-		return list_of_categories.length();
+	public void setLayout(int layout) {
+		super.setLayout(layout);
 	}
-
 	@Override
-	public Object getItem(int position) {
-		try {
-			return list_of_categories.get(position);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public void setText1(String text1, int id) {
+		super.setText1(text1, id);
 	}
-
 	@Override
-	public long getItemId(int position) {
-		return position;
+	public void setText2(String text2, int id) {
+		super.setText2(text2, id);
 	}
-
+	public ArrayList<JSONObject> getSortedjObj() {
+		return super.getSortedjObj();
+	}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		if(convertView == null){
-			convertView = inflater.inflate(R.layout.row_category, parent, false);
-			name = (TextView) convertView.findViewById(R.id.category_title);
-			description = (TextView) convertView.findViewById(R.id.category_description);
-
-			try{
-				category = list_of_categories.getJSONObject(position);
-				name.setText(sortedjObj.get(position).get("name").toString());
-				description.setText(sortedjObj.get(position).get("description").toString());
-			} catch (JSONException e){
-				e.printStackTrace();
-			}
-		}
-
-		return convertView;
+		return super.getView(position, convertView, parent);
 	}
-	private void sortJsonArray() throws JSONException{
-		for(int i = 0; i < list_of_categories.length(); i++){
-			sortedjObj.add(list_of_categories.getJSONObject(i));
+
+	@Override
+	public void setwidgetInfo(int position) {
+		try {
+			setText1(getSortedjObj().get(position).get("name").toString(),R.id.category_title);
+			setText2(getSortedjObj().get(position).get("description").toString(),R.id.category_description);
+		} catch (JSONException e) {
+
+			e.printStackTrace();
 		}
-		Collections.sort(sortedjObj, new Comparator<JSONObject>() {
-
-			@Override
-			public int compare(JSONObject lhs, JSONObject rhs) {
-
-				try {
-					return (lhs.getString("name").toLowerCase().compareTo(rhs.getString("name").toLowerCase()));
-				} catch (JSONException e) {
-					e.printStackTrace();
-					return 0;
-				}
-			}
-		});
-
-
+		
+		super.setwidgetInfo(position);
 	}
+
+	
 }

@@ -23,7 +23,7 @@ public class CategoryActivity extends Activity
 		
 		try {
 			MyJSONClass MainObj = new MyJSONClass(getAssets().open("Categories.txt"));
-			category_list = new CategoryListAdapter(CategoryActivity.this, MainObj.getJSONObject());	        
+			category_list = new CategoryListAdapter(CategoryActivity.this, MainObj.getJSONObject(),"categories");	        
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 

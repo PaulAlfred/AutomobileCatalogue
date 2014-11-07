@@ -1,108 +1,67 @@
 package com.AndroidProject.automobilecatalogue;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
-
-public class CarListAdapter extends BaseAdapter{
-	
 
 
-	JSONArray list_of_cars;
-	JSONObject car;
+public class CarListAdapter extends GeneralListAdapter{
 
-	LayoutInflater inflater;
-	TextView name, manufacturer, category, horsepower;
-
-	ArrayList <JSONObject> sortedjObj = new ArrayList<JSONObject>();
-
-	public CarListAdapter(Context context, JSONObject MainJSON){
-		try{
-			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			list_of_cars = MainJSON.getJSONArray("cars");
-			
-			sortJsonArray();
-
-		} catch (JSONException e){
-			e.printStackTrace();
-		}
+	public CarListAdapter(Context context, JSONObject MainJSON, String ArrayName) {
+		super(context, MainJSON, ArrayName);
+		setLayout(R.layout.row);
 	}
-
-
 	@Override
-	public int getCount() {
-
-		return list_of_cars.length();
+	public void setText1(String text1, int id) {
+		super.setText1(text1, id);
 	}
-
 	@Override
-	public Object getItem(int position) {
+	public void setText2(String text2, int id) {
+		super.setText2(text2, id);
+	}
+	@Override
+	public void setText3(String text3, int id) {
+		super.setText3(text3, id);
+	}
+	@Override
+	public void setText4(String text4, int id) {
+		super.setText4(text4, id);
+	}
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {	
+		return super.getView(position, convertView, parent);
+	}
+	@Override
+	public void setwidgetInfo(int position) {
 		try {
-			return list_of_cars.get(position);
+			setText1(getSortedjObj().get(position).get("name").toString(), R.id.titleText);
+			setText2(getSortedjObj().get(position).get("horsepower").toString(), R.id.description1);
+			setText3(getSortedjObj().get(position).get("category").toString(), R.id.description2);
+			setText4(getSortedjObj().get(position).get("manufacturer").toString(), R.id.description3);
 		} catch (JSONException e) {
-
 			e.printStackTrace();
 		}
-		return null;
 	}
-
 	@Override
-	public long getItemId(int position) {
-		return position;
+	public void setLayout(int layout) {
+		// TODO Auto-generated method stub
+		super.setLayout(layout);
 	}
-
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		if(convertView == null){
+	public ArrayList<JSONObject> getSortedjObj() {
 
-			convertView = inflater.inflate(R.layout.row, parent, false);
-			name = (TextView) convertView.findViewById(R.id.titleText);
-			manufacturer = (TextView) convertView.findViewById(R.id.description1);
-			category = (TextView) convertView.findViewById(R.id.description2);
-			horsepower = (TextView) convertView.findViewById(R.id.description3);
-
-			try {
-				car = list_of_cars.getJSONObject(position);
-				name.setText("Name : " + sortedjObj.get(position).get("name"));
-				manufacturer.setText("Manufacturer : " + sortedjObj.get(position).get("manufacturer"));
-				category.setText("Category : " + sortedjObj.get(position).get("category"));
-				horsepower.setText("Horse Power : " + sortedjObj.get(position).get("horsepower"));
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return convertView;
+		return super.getSortedjObj();
 	}
+
+
 	
-	private void sortJsonArray() throws JSONException{
-		for(int i = 0; i < list_of_cars.length(); i++){
-			sortedjObj.add(list_of_cars.getJSONObject(i));
-		}
-		Collections.sort(sortedjObj, new Comparator<JSONObject>() {
+	
 
-		    @Override
-		    public int compare(JSONObject lhs, JSONObject rhs) {
 
-		        try {
-		            return (lhs.getString("name").toLowerCase().compareTo(rhs.getString("name").toLowerCase()));
-		        } catch (JSONException e) {
-		            e.printStackTrace();
-		            return 0;
-		        }
-		    }
-		});
-	}
 
 }

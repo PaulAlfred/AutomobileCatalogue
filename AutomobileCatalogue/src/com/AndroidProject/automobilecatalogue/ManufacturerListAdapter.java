@@ -1,106 +1,61 @@
 package com.AndroidProject.automobilecatalogue;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 
-public class ManufacturerListAdapter extends BaseAdapter{
+public class ManufacturerListAdapter extends GeneralListAdapter{
 
-
-	JSONArray list_of_manufacturer;
-	JSONObject manufacturer;
-
-	LayoutInflater inflater;
-	TextView name, revenue, origin, founded;
-
-	ArrayList <JSONObject> sortedjObj = new ArrayList<JSONObject>();
-
-
-	public ManufacturerListAdapter(Context context, JSONObject MainJSON){
-		try{
-			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			list_of_manufacturer = MainJSON.getJSONArray("manufacturers");
-			sortJsonArray();
-		} catch (JSONException e){
-			e.printStackTrace();
-		}
+	public ManufacturerListAdapter(Context context, JSONObject MainJSON,
+			String ArrayName) {
+		super(context, MainJSON, ArrayName);
+		setLayout(R.layout.row);
 	}
-
-
-	@Override
-	public int getCount() {
-
-		return list_of_manufacturer.length();
+	public void setText1(String text1, int id) {
+		super.setText1(text1, id);
 	}
-
 	@Override
-	public Object getItem(int position) {
+	public void setText2(String text2, int id) {
+		super.setText2(text2, id);
+	}
+	@Override
+	public void setText3(String text3, int id) {
+		super.setText3(text3, id);
+	}
+	@Override
+	public void setText4(String text4, int id) {
+		super.setText4(text4, id);
+	}
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {	
+		return super.getView(position, convertView, parent);
+	}
+	@Override
+	public void setwidgetInfo(int position) {
 		try {
-			return list_of_manufacturer.get(position);
+			setText1(getSortedjObj().get(position).get("name").toString(), R.id.titleText);
+			setText2(getSortedjObj().get(position).get("origin").toString(), R.id.description1);
+			setText3(getSortedjObj().get(position).get("founded").toString(), R.id.description2);
+			setText4(getSortedjObj().get(position).get("revenue").toString(), R.id.description3);
 		} catch (JSONException e) {
-
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
 	}
-
 	@Override
-	public long getItemId(int position) {
-		return position;
+	public void setLayout(int layout) {
+		super.setLayout(layout);
 	}
-
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		if(convertView == null){
+	public ArrayList<JSONObject> getSortedjObj() {
 
-			convertView = inflater.inflate(R.layout.row, parent, false);
-			name = (TextView) convertView.findViewById(R.id.titleText);
-			founded = (TextView) convertView.findViewById(R.id.description1);
-			origin = (TextView) convertView.findViewById(R.id.description2);
-			revenue = (TextView) convertView.findViewById(R.id.description3);
-
-			try {
-				manufacturer = list_of_manufacturer.getJSONObject(position);
-				name.setText("Name : " + sortedjObj.get(position).get("name"));
-				founded.setText("Manufacturer : " + sortedjObj.get(position).get("founded"));
-				origin.setText("Horse Power : " + sortedjObj.get(position).get("origin"));
-				revenue.setText("Category : " + sortedjObj.get(position).get("revenue"));
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return convertView;
+		return super.getSortedjObj();
 	}
 
-	private void sortJsonArray() throws JSONException{
-		for(int i = 0; i < list_of_manufacturer.length(); i++){
-			sortedjObj.add(list_of_manufacturer.getJSONObject(i));
-		}
-		Collections.sort(sortedjObj, new Comparator<JSONObject>() {
-
-			@Override
-			public int compare(JSONObject lhs, JSONObject rhs) {
-
-				try {
-					return (lhs.getString("name").toLowerCase().compareTo(rhs.getString("name").toLowerCase()));
-				} catch (JSONException e) {
-					e.printStackTrace();
-					return 0;
-				}
-			}
-		});
-
-	}
+	
 }

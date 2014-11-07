@@ -18,7 +18,7 @@ public class CarActivity extends Activity {
 			MyJSONClass MainObj;
 			try {
 				MainObj = new MyJSONClass(getAssets().open("Cars.txt"));
-				car_list = new CarListAdapter(CarActivity.this,MainObj.getJSONObject());   
+				car_list = new CarListAdapter(CarActivity.this,MainObj.getJSONObject(),"cars");   
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

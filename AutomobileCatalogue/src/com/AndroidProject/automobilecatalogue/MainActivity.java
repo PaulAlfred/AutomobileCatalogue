@@ -24,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 		try {
 			MyJSONClass MainObj = new MyJSONClass(getAssets().open("Manufacturers.txt"));
-			brand_list_adapter = new ManufacturerListAdapter(getApplicationContext(),MainObj.getJSONObject());   
+			brand_list_adapter = new ManufacturerListAdapter(getApplicationContext(),MainObj.getJSONObject(),"manufacturers");   
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
