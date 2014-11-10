@@ -1,40 +1,21 @@
 package com.AndroidProject.automobilecatalogue;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import android.content.Context;
 
-public class ControllerManufacturer extends ControllerBasicOperations {
-
+public class ControllerManufacturer  {
 	
+	Context context;
 	
-	@Override
-	public JSONArray addToOwnJSON(JSONObject jObj, JSONArray jArr) {
-		// TODO Auto-generated method stub
-		return super.addToOwnJSON(jObj, jArr);
+	private ModelCompany list_of_manufacturers = new ModelCompany(MainActivity.getAppContext());	
+	
+	public ControllerManufacturer() {
+		this.context = MainActivity.getAppContext();
 	}
-
-	@Override
-	public JSONArray addToMainJSON(JSONObject jObj, JSONArray jArr) {
-		// TODO Auto-generated method stub
-		return super.addToMainJSON(jObj, jArr);
+	
+	public void setManufacturer(ModelManufacturer manufacturer) {
+		list_of_manufacturers.addManufacturer(manufacturer);
+	}   
+	public void deleteManufacturer(ModelManufacturer manufacturer){
+		list_of_manufacturers.delete(manufacturer);
 	}
-
-	@Override
-	public JSONArray delete() {
-		// TODO Auto-generated method stub
-		return super.delete();
-	}
-
-	@Override
-	public JSONArray edit() {
-		// TODO Auto-generated method stub
-		return super.edit();
-	}
-
-	@Override
-	public JSONObject select() {
-		// TODO Auto-generated method stub
-		return super.select();
-	}
-
 }

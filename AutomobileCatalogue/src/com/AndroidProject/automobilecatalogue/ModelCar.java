@@ -4,42 +4,40 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 
-public class ModelCar{
+public class ModelCar extends ModelBasicOperations{
 
-	String name, manufacturer, category, horsepower;
 	
-	public String getName() {
-		return name;
+	@Override
+	public void addToJSON() {
+		// TODO Auto-generated method stub
+		super.addToJSON();
 	}
 
-	public void setName(String name) {
-		this.name = name;
+
+	/*public void delete() {
+		// TODO Auto-generated method stub
+		super.delete();
+	}
+*/
+	@Override
+	public void edit() {
+		// TODO Auto-generated method stub
+		super.edit();
 	}
 
-	public String getManufacturer() {
-		return manufacturer;
+	@Override
+	public void select() {
+		// TODO Auto-generated method stub
+		super.select();
 	}
 
-	public void setManufacturer(String manufacturer) {
-		this.manufacturer = manufacturer;
+	@Override
+	public void setValues() {
+		// TODO Auto-generated method stub
+		super.setValues();
 	}
 
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-
-	}
-
-	public String getHorsepower() {
-		return horsepower;
-	}
-
-	public void setHorsepower(String horsepower) {
-		this.horsepower = horsepower;
-	}
+	
 
 
 }

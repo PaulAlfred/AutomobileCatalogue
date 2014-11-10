@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.AndroidProject.automobilecatalogue.View.ManufacturerActivity"
+            android:name=".MainActivity"
             android:label="Manufacturers" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,10 +25,9 @@
             android:name=".CarActivity"
             android:label="Cars">
         </activity>
-        <activity
-            android:name=".AddManufacturer"
-            android:label="Add">
-        </activity>
+        <activity android:name=".ViewAddCategory" android:label="AddLabel"></activity>
+        <activity android:name=".ViewAddCar" android:label="AddCar"></activity>
+    	<activity android:name=".ViewAddManufacturer" android:label="AddManufacturer"></activity>
     </application>
 
 </manifest>

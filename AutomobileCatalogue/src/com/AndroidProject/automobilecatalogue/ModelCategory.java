@@ -1,26 +1,42 @@
 package com.AndroidProject.automobilecatalogue;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 
-public class ModelCategory {
+
+public class ModelCategory extends ModelBasicOperations{
+
+	@Override
+	public void addToJSON() {
+		// TODO Auto-generated method stub
+		super.addToJSON();
+	}
+
 	
-	String name, description;
-
-	public String getName() {
-		return name;
+	/*@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		super.delete();
+	}
+*/
+	@Override
+	public void edit() {
+		// TODO Auto-generated method stub
+		super.edit();
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	@Override
+	public void select() {
+		// TODO Auto-generated method stub
+		super.select();
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	@Override
+	public void setValues() {
+		// TODO Auto-generated method stub
+		super.setValues();
 	}
 
 

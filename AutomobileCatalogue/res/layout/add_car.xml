@@ -74,6 +74,24 @@
             android:orientation="vertical" >
 
             <AutoCompleteTextView
+                android:id="@+id/AutoCompleteTextView02"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Car model"
+                android:textSize="14sp" />
+
+            <AutoCompleteTextView
+                android:id="@+id/AutoCompleteTextView01"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Vechicle Type"
+                android:textSize="14sp" />
+
+            <AutoCompleteTextView
                 android:id="@+id/edit_car_name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -84,17 +102,6 @@
 
                 <requestFocus />
             </AutoCompleteTextView>
-
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="144dp"
-                android:layout_height="23dp" />
-
-            <Spinner
-                android:id="@+id/Spinner01"
-                android:layout_width="144dp"
-                android:layout_height="23dp"
-                android:layout_weight="1" />
 
             <AutoCompleteTextView
                 android:id="@+id/edit_revenue"
