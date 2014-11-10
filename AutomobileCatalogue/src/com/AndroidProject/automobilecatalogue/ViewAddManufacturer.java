@@ -4,43 +4,41 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class ViewAddManufacturer extends Activity {
 	
-	ControllerManufacturer manufacturer_controller = new ControllerManufacturer();
-	
-	ModelManufacturer	manufacturer_model = new ModelManufacturer();
 	Button add;
 	
-	EditText name, founded, revenue, origin;
-	
+	AutoCompleteTextView name, founded, revenue, origin;
+	ModelManufacturer manufacturer;
+	ModelManufacturerList list_of_company = new ModelManufacturerList(MainActivity.getAppContext());
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_manufacturer);
+
+		
 		
 		add = (Button) findViewById(R.id.add);
-		name = (EditText) findViewById(R.id.edit_car_name);
-		founded = (EditText) findViewById(R.id.edit_year);
-		revenue = (EditText) findViewById(R.id.edit_revenue);
-		origin = (EditText) findViewById(R.id.edit_origin);
+		name = (AutoCompleteTextView) findViewById(R.id.edit_company);
+		founded = (AutoCompleteTextView) findViewById(R.id.edit_year);
+		revenue = (AutoCompleteTextView) findViewById(R.id.edit_revenue);
+		origin = (AutoCompleteTextView) findViewById(R.id.edit_origin);
 		
 		add.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
-				manufacturer_model.setName(name.getText().toString());
-				manufacturer_model.setFounded(founded.getText().toString());
-				manufacturer_model.setOrigin(origin.getText().toString());
-				manufacturer_model.setRevenue(revenue.getText().toString());
-				manufacturer_controller.setManufacturer(manufacturer_model);				
-				
+				manufacturer = new ModelManufacturer(name.getText().toString(), founded.getText().toString(), origin.getText().toString(), revenue.getText().toString());
+				list_of_company.addManufacturer(manufacturer);
+				list_of_company.saveManufacturers();
 			}
 		});
 	}
-
+	
+	
 }

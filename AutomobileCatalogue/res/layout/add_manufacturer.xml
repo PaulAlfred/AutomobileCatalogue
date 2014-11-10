@@ -109,14 +109,14 @@
 
             <AutoCompleteTextView
                 android:id="@+id/edit_revenue"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:ems="10"
-                android:hint="Company&apos;s Current Revenue"
+                android:hint="Company&apos;s current revenue"
                 android:textSize="14sp" />
 
         </LinearLayout>
+
     </LinearLayout>
 
     <Button

@@ -74,7 +74,7 @@
             android:orientation="vertical" >
 
             <AutoCompleteTextView
-                android:id="@+id/AutoCompleteTextView02"
+                android:id="@+id/edit_car_model"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -83,7 +83,7 @@
                 android:textSize="14sp" />
 
             <AutoCompleteTextView
-                android:id="@+id/AutoCompleteTextView01"
+                android:id="@+id/edit_category2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -92,7 +92,7 @@
                 android:textSize="14sp" />
 
             <AutoCompleteTextView
-                android:id="@+id/edit_car_name"
+                android:id="@+id/edit_manufacturer_name2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -104,7 +104,7 @@
             </AutoCompleteTextView>
 
             <AutoCompleteTextView
-                android:id="@+id/edit_revenue"
+                android:id="@+id/edit_horsepower"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

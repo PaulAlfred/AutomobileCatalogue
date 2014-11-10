@@ -1,5 +1,6 @@
 package com.AndroidProject.automobilecatalogue;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -39,11 +40,19 @@ public class ManufacturerListAdapter extends GeneralListAdapter{
 	@Override
 	public void setwidgetInfo(int position) {
 		try {
+			
+			ControllerManufacturer mManSerializer = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
+			
+			ArrayList<ModelManufacturer> list_of_manufacturer = mManSerializer.loadManufacturers();
+			
 			setText1(getSortedjObj().get(position).get("name").toString(), R.id.titleText);
 			setText2(getSortedjObj().get(position).get("origin").toString(), R.id.description1);
 			setText3(getSortedjObj().get(position).get("founded").toString(), R.id.description2);
 			setText4(getSortedjObj().get(position).get("revenue").toString(), R.id.description3);
 		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
