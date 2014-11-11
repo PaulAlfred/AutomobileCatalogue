@@ -1,71 +1,73 @@
 package com.AndroidProject.automobilecatalogue;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
 
-public class ManufacturerListAdapter extends GeneralListAdapter{
+public class ManufacturerListAdapter extends BaseAdapter{
+	
+	
+	private Context context;
+	LayoutInflater inflater;
+	private ArrayList<ModelManufacturer> manufacturers = new ArrayList<ModelManufacturer>();
+	
+	public ManufacturerListAdapter(Context context, ArrayList<ModelManufacturer> manufacturers){
+		this.context = context;
+		this.manufacturers = manufacturers;
+		inflater = LayoutInflater.from(this.context);
+	}
+	@Override
+	public int getCount() {
+		return this.manufacturers.size();
+	}
 
-	public ManufacturerListAdapter(Context context, JSONObject MainJSON,
-			String ArrayName) {
-		super(context, MainJSON, ArrayName);
-		setLayout(R.layout.row);
-	}
-	public void setText1(String text1, int id) {
-		super.setText1(text1, id);
-	}
 	@Override
-	public void setText2(String text2, int id) {
-		super.setText2(text2, id);
+	public Object getItem(int position) {
+		return this.manufacturers.get(position);
 	}
+
 	@Override
-	public void setText3(String text3, int id) {
-		super.setText3(text3, id);
+	public long getItemId(int position) {
+		return 0;
 	}
+
 	@Override
-	public void setText4(String text4, int id) {
-		super.setText4(text4, id);
-	}
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {	
-		return super.getView(position, convertView, parent);
-	}
-	@Override
-	public void setwidgetInfo(int position) {
-		try {
-			
-			ControllerManufacturer mManSerializer = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
-			
-			ArrayList<ModelManufacturer> list_of_manufacturer = mManSerializer.loadManufacturers();
-			
-			setText1(getSortedjObj().get(position).get("name").toString(), R.id.titleText);
-			setText2(getSortedjObj().get(position).get("origin").toString(), R.id.description1);
-			setText3(getSortedjObj().get(position).get("founded").toString(), R.id.description2);
-			setText4(getSortedjObj().get(position).get("revenue").toString(), R.id.description3);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public View getView(int position, View convertView, ViewGroup parent) {
+
+		
+		View row = convertView;
+		
+		if(row == null){
+			row = inflater.inflate(R.layout.row, parent, false);
 		}
+		
+		
+		ViewHolder mViewHolder = new ViewHolder();
+		mViewHolder.Name = (AutoCompleteTextView) row.findViewById(R.id.titleText);
+		mViewHolder.Origin = (AutoCompleteTextView) row.findViewById(R.id.description1);
+		mViewHolder.Founded = (AutoCompleteTextView) row.findViewById(R.id.description2);
+		mViewHolder.Revenue = (AutoCompleteTextView) row.findViewById(R.id.description3);
+		
+		mViewHolder.Name.setText(manufacturers.get(position).getmName());
+		mViewHolder.Founded.setText(manufacturers.get(position).getmFounded());
+		mViewHolder.Origin.setText(manufacturers.get(position).getmOrigin());
+		mViewHolder.Revenue.setText(manufacturers.get(position).getmRevenue());
+		
+		return row;
 	}
-	@Override
-	public void setLayout(int layout) {
-		super.setLayout(layout);
-	}
-	@Override
-	public ArrayList<JSONObject> getSortedjObj() {
 
-		return super.getSortedjObj();
+	private class ViewHolder{
+		AutoCompleteTextView Name, Origin, Founded, Revenue;
 	}
+	
+	
+	
 
 	
 }

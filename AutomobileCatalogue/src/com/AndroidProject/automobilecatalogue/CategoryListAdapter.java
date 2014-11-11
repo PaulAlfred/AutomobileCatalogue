@@ -9,47 +9,34 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 
-public class CategoryListAdapter extends GeneralListAdapter {
+public class CategoryListAdapter extends BaseAdapter {
 
-	public CategoryListAdapter(Context context, JSONObject MainJSON,
-			String ArrayName) {
-		super(context, MainJSON, ArrayName);
-		setLayout(R.layout.row_category);
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
-	public void setLayout(int layout) {
-		super.setLayout(layout);
+	public Object getItem(int position) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 	@Override
-	public void setText1(String text1, int id) {
-		super.setText1(text1, id);
+	public long getItemId(int position) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
-	@Override
-	public void setText2(String text2, int id) {
-		super.setText2(text2, id);
-	}
-	public ArrayList<JSONObject> getSortedjObj() {
-		return super.getSortedjObj();
-	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		return super.getView(position, convertView, parent);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	@Override
-	public void setwidgetInfo(int position) {
-		try {
-			setText1(getSortedjObj().get(position).get("name").toString(),R.id.category_title);
-			setText2(getSortedjObj().get(position).get("description").toString(),R.id.category_description);
-		} catch (JSONException e) {
-
-			e.printStackTrace();
-		}
-		
-		super.setwidgetInfo(position);
-	}
 
 	
 }

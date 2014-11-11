@@ -9,13 +9,32 @@ public class ModelManufacturer{
 
 	private ModelCar car = new ModelCar();
 	
-	
 	private String mName;
 	private String mFounded;
 	private String mOrigin;
 	private String mRevenue;
 	
-	
+	public ModelCar getCar() {
+		return car;
+	}
+
+	public String getmName() {
+		return mName;
+	}
+
+	public String getmFounded() {
+		return mFounded;
+	}
+
+	public String getmOrigin() {
+		return mOrigin;
+	}
+
+	public String getmRevenue() {
+		return mRevenue;
+	}
+
+
 	private static final String JSON_NAME = "name";
 	private static final String JSON_FOUNDED = "founded";
 	private static final String JSON_ORIGIN = "origin";

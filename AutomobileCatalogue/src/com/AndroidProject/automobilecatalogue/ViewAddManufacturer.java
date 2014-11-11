@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 public class ViewAddManufacturer extends Activity {
 	
@@ -21,8 +19,6 @@ public class ViewAddManufacturer extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_manufacturer);
 
-		
-		
 		add = (Button) findViewById(R.id.add);
 		name = (AutoCompleteTextView) findViewById(R.id.edit_company);
 		founded = (AutoCompleteTextView) findViewById(R.id.edit_year);
@@ -39,6 +35,14 @@ public class ViewAddManufacturer extends Activity {
 			}
 		});
 	}
+	@Override
+	protected void onPause() {
+
+		super.onPause();
+		list_of_company.saveManufacturers();
+	}
+	
+	
 	
 	
 }

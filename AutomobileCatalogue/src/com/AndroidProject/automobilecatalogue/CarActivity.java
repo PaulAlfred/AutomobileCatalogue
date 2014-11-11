@@ -20,13 +20,7 @@ public class CarActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car);
-			MyJSONClass MainObj;
-			try {
-				MainObj = new MyJSONClass(getAssets().open("Cars.txt"));
-				car_list = new CarListAdapter(CarActivity.this,MainObj.getJSONObject(),"cars");   
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			
 
 	
         ListView carList = (ListView) findViewById(R.id.carList);

@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 public class ModelManufacturerList{
 
-	private final String mFilename = "Manufacturers.json";
+	private final String mFilename = "Manufacturers";
 	
 	private ArrayList<ModelManufacturer> mManufacturers;
 	private ControllerManufacturer mManSerializer;
@@ -45,7 +45,6 @@ public class ModelManufacturerList{
 	public boolean saveManufacturers(){
 		try{
 			mManSerializer.saveManufacturers(mManufacturers);
-			Toast.makeText(mAppcontext, mFilename, Toast.LENGTH_SHORT).show();
 			Log.d("Message", "InputAdd");
 			return true;
 		} catch (Exception e) {

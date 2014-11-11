@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONTokener;
 
 import android.content.Context;
+import android.util.Log;
 
 public class ControllerManufacturer {
 
@@ -29,6 +30,7 @@ public class ControllerManufacturer {
 		JSONArray array = new JSONArray();
 		for (ModelManufacturer m : manufacturers)
 			array.put(m.toJSON());
+			
 		Writer writer = null;
 		try{
 			OutputStream out = context.openFileOutput(mFilename, Context.MODE_PRIVATE);
@@ -46,6 +48,7 @@ public class ControllerManufacturer {
 				}
 		}
 	}
+	
 	public ArrayList<ModelManufacturer> loadManufacturers() throws IOException, JSONException{
 		ArrayList<ModelManufacturer> manufacturers = new ArrayList<ModelManufacturer>();
 		BufferedReader reader = null;
@@ -61,7 +64,7 @@ public class ControllerManufacturer {
 			for(int i=0; i<array.length(); i++){
 				manufacturers.add(new ModelManufacturer(array.getJSONObject(i)));
 			}
-
+			Log.d("LoadArray",array.toString());
 
 		} catch (FileNotFoundException e){
 

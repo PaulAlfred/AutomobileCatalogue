@@ -24,13 +24,7 @@ public class CategoryActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_category);
-		
-		try {
-			MyJSONClass MainObj = new MyJSONClass(getAssets().open("Categories.txt"));
-			category_list = new CategoryListAdapter(CategoryActivity.this, MainObj.getJSONObject(),"categories");	        
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
+	
 		ListView categoryList = (ListView) findViewById(R.id.categoryList);
 		categoryList.setAdapter(category_list);
 		categoryList.setOnItemClickListener(new OnItemClickListener() {
