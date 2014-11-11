@@ -24,7 +24,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView1"
+        android:id="@+id/edit_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -40,22 +40,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/autoCompleteTextView1"
+        android:layout_below="@+id/edit_type"
         android:text="Description"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/edit_description"
         android:layout_width="300dp"
         android:layout_height="200dp"
+        android:layout_above="@+id/add_category"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/textView3"
         android:ems="10"
-        android:hint="Describe the Cateogry"
+        android:hint="Describe the Category"
         android:inputType="textMultiLine" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/add_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

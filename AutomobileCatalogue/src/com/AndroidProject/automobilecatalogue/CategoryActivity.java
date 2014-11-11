@@ -1,13 +1,9 @@
 package com.AndroidProject.automobilecatalogue;
 
-import java.io.IOException;
-
-
-
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,16 +13,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class CategoryActivity extends Activity
+public class CategoryActivity extends ActionBarActivity
 {
-	CategoryListAdapter category_list;
+	//CategoryListAdapter category_list;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_category);
 	
 		ListView categoryList = (ListView) findViewById(R.id.categoryList);
-		categoryList.setAdapter(category_list);
+		//categoryList.setAdapter(category_list);
 		categoryList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -41,13 +37,12 @@ public class CategoryActivity extends Activity
 			}
 		});
 		
-
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.add_menu, menu);
+		inflater.inflate(R.menu.add_category, menu);
 		return true;
 
 	}

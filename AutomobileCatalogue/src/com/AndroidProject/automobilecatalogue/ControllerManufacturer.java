@@ -28,6 +28,7 @@ public class ControllerManufacturer {
 	}
 	public void saveManufacturers(ArrayList<ModelManufacturer> manufacturers) throws JSONException, IOException {
 		JSONArray array = new JSONArray();
+		manufacturers.addAll(loadManufacturers());
 		for (ModelManufacturer m : manufacturers)
 			array.put(m.toJSON());
 			
@@ -65,12 +66,12 @@ public class ControllerManufacturer {
 				manufacturers.add(new ModelManufacturer(array.getJSONObject(i)));
 			}
 			Log.d("LoadArray",array.toString());
+			
+			if(reader != null)
+				reader.close();
 
 		} catch (FileNotFoundException e){
 
-		} finally{
-			if(reader != null)
-				reader.close();
 		}
 		return manufacturers;
 	}

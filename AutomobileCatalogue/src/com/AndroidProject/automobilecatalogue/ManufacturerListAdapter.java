@@ -6,7 +6,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -49,10 +48,10 @@ public class ManufacturerListAdapter extends BaseAdapter{
 		
 		
 		ViewHolder mViewHolder = new ViewHolder();
-		mViewHolder.Name = (AutoCompleteTextView) row.findViewById(R.id.titleText);
-		mViewHolder.Origin = (AutoCompleteTextView) row.findViewById(R.id.description1);
-		mViewHolder.Founded = (AutoCompleteTextView) row.findViewById(R.id.description2);
-		mViewHolder.Revenue = (AutoCompleteTextView) row.findViewById(R.id.description3);
+		mViewHolder.Name = (TextView) row.findViewById(R.id.titleText);
+		mViewHolder.Origin = (TextView) row.findViewById(R.id.description1);
+		mViewHolder.Founded = (TextView) row.findViewById(R.id.description2);
+		mViewHolder.Revenue = (TextView) row.findViewById(R.id.description3);
 		
 		mViewHolder.Name.setText(manufacturers.get(position).getmName());
 		mViewHolder.Founded.setText(manufacturers.get(position).getmFounded());
@@ -63,7 +62,7 @@ public class ManufacturerListAdapter extends BaseAdapter{
 	}
 
 	private class ViewHolder{
-		AutoCompleteTextView Name, Origin, Founded, Revenue;
+		TextView Name, Origin, Founded, Revenue;
 	}
 	
 	

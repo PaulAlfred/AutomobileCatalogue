@@ -1,6 +1,7 @@
 package com.AndroidProject.automobilecatalogue;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +20,7 @@ public class ViewAddManufacturer extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_manufacturer);
 
+		
 		add = (Button) findViewById(R.id.add);
 		name = (AutoCompleteTextView) findViewById(R.id.edit_company);
 		founded = (AutoCompleteTextView) findViewById(R.id.edit_year);
@@ -30,19 +32,28 @@ public class ViewAddManufacturer extends Activity {
 			@Override
 			public void onClick(View v) {
 				manufacturer = new ModelManufacturer(name.getText().toString(), founded.getText().toString(), origin.getText().toString(), revenue.getText().toString());
-				list_of_company.addManufacturer(manufacturer);
-				list_of_company.saveManufacturers();
+				list_of_company.addManufacturer(manufacturer);	
+				startActivity(new Intent(ViewAddManufacturer.this, MainActivity.class));
 			}
 		});
 	}
 	@Override
 	protected void onPause() {
-
 		super.onPause();
 		list_of_company.saveManufacturers();
 	}
 	
-	
-	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		startActivity(new Intent(this, MainActivity.class));
+		
+	}
+	@Override
+	protected void onStop() {
+		super.onStop();
+
+		
+	}
 	
 }

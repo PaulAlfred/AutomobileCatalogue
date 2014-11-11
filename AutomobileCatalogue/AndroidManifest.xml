@@ -28,6 +28,7 @@
         <activity android:name=".ViewAddCategory" android:label="AddLabel"></activity>
         <activity android:name=".ViewAddCar" android:label="AddCar"></activity>
     	<activity android:name=".ViewAddManufacturer" android:label="AddManufacturer"></activity>
+    	<activity android:name=".CategoryActivity" android:label="Categories"></activity>
     </application>
 
 </manifest>
