@@ -1,6 +1,5 @@
 package com.AndroidProject.automobilecatalogue;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,37 +17,19 @@ import android.widget.ListView;
 public class MainActivity extends ActionBarActivity {
 
 	
-	private static Context context;
-	private ManufacturerListAdapter brand_list_adapter;
-	private ControllerManufacturer controllerManufacturer;	
-	private boolean resume = false;
-	
+	private static Context mContext;
+	private ManufacturerListAdapter mBrand_List_Adapter;
+	private ControllerManufacturer mControllerManufacturer;	
+	//loading the cars from Manufacturers.json and putting its contents to the adapter
+	//then displays the adapter in a listview
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		MainActivity.context = getApplicationContext();
+		MainActivity.mContext = getApplicationContext();
 		setContentView(R.layout.activity_main);
-		controllerManufacturer = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
-		try {
-			brand_list_adapter = new ManufacturerListAdapter(this, controllerManufacturer.loadManufacturers());   
-		} catch (Exception e ){
-			Log.d("brand_list_exception", e.getMessage());
-		}
-		ListView mainList = (ListView) findViewById(R.id.mainList);
-		mainList.setAdapter(brand_list_adapter);
-		mainList.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> adapter, View v, int position,
-					long s) {
-				Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
-				startActivity(intent);
-				
-			}
-		});
+		generateAdapter();
 	}
-
-
+	//inflates the add menu and icon on the action bar
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -56,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
 		return true;
 
 	}
-
+	//starts the activity of the add menu
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -69,50 +50,37 @@ public class MainActivity extends ActionBarActivity {
 
 		}	
 	}
+	//gets the context of MainActivity to be accessed globally
 	public static Context getAppContext() {
-        return MainActivity.context;
+        return MainActivity.mContext;
     }
-
+	//refreshes the view on start of MainActivity
 	@Override
 	protected void onStart() {
 		super.onStart();
-		controllerManufacturer = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
+		generateAdapter();
+		
+	}
+	//Used to simplify code
+	private void  generateAdapter(){
+		mControllerManufacturer = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
 		try {
-			brand_list_adapter = new ManufacturerListAdapter(this, controllerManufacturer.loadManufacturers());   
+			mBrand_List_Adapter = new ManufacturerListAdapter(this, mControllerManufacturer.loadManufacturers());   
 		} catch (Exception e ){
 			Log.d("brand_list_exception", e.getMessage());
 		}
 		ListView mainList = (ListView) findViewById(R.id.mainList);
-		mainList.setAdapter(brand_list_adapter);
+		mainList.setAdapter(mBrand_List_Adapter);
 		mainList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View v, int position,
 					long s) {
-				Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
+				Intent intent = new Intent(MainActivity.this,CarActivity.class);
 				startActivity(intent);
 				
 			}
 		});
-	}
-	
-	@Override
-	protected void onPause() {
-		
-		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
-		
-	}
-	
-	@Override
-	protected void onStop() {
-	
-		super.onStop();
 	}
 	
 }

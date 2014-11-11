@@ -26,6 +26,9 @@ public class ControllerManufacturer {
 		context = c;
 		mFilename = f;
 	}
+	//saves the manufacturers to the Manufacturers.json file, that was previously added to ModelManufacturers
+	//or creates a new Manufacturers.json, then stores
+	//to the default location with Filename = mFilename
 	public void saveManufacturers(ArrayList<ModelManufacturer> manufacturers) throws JSONException, IOException {
 		JSONArray array = new JSONArray();
 		manufacturers.addAll(loadManufacturers());
@@ -49,7 +52,7 @@ public class ControllerManufacturer {
 				}
 		}
 	}
-	
+	//loads the Manufacturers form mFilename
 	public ArrayList<ModelManufacturer> loadManufacturers() throws IOException, JSONException{
 		ArrayList<ModelManufacturer> manufacturers = new ArrayList<ModelManufacturer>();
 		BufferedReader reader = null;

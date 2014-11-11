@@ -91,17 +91,10 @@
                 android:hint="Vechicle Type"
                 android:textSize="14sp" />
 
-            <AutoCompleteTextView
-                android:id="@+id/edit_manufacturer_name2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Company Name"
-                android:textSize="14sp" >
-
-                <requestFocus />
-            </AutoCompleteTextView>
+            <Spinner
+                android:id="@+id/manufacturer_spin"
+                android:layout_width="184dp"
+                android:layout_height="36dp" />
 
             <AutoCompleteTextView
                 android:id="@+id/edit_horsepower"
@@ -109,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Company&apos;s Current Revenue"
+                android:hint="Car's Horse Power"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
@@ -125,13 +118,7 @@
         android:layout_marginTop="28dp"
         android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="31dp"
-            android:layout_weight="0.57"
-            android:src="@drawable/ic_launcher" />
+  
     </LinearLayout>
 
 </RelativeLayout>

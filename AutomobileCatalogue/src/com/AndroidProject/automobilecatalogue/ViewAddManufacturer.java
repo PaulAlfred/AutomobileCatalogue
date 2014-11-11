@@ -15,6 +15,7 @@ public class ViewAddManufacturer extends Activity {
 	AutoCompleteTextView name, founded, revenue, origin;
 	ModelManufacturer manufacturer;
 	ModelManufacturerList list_of_company = new ModelManufacturerList(MainActivity.getAppContext());
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,19 +41,13 @@ public class ViewAddManufacturer extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		list_of_company.saveManufacturers();
+
 	}
 	
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
 		startActivity(new Intent(this, MainActivity.class));
-		
-	}
-	@Override
-	protected void onStop() {
-		super.onStop();
-
 		
 	}
 	

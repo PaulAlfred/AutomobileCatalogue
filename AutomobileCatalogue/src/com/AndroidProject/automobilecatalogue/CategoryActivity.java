@@ -1,6 +1,5 @@
 package com.AndroidProject.automobilecatalogue;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -15,14 +14,14 @@ import android.widget.Toast;
 
 public class CategoryActivity extends ActionBarActivity
 {
-	//CategoryListAdapter category_list;
+	//displays all of the categories
+	//starts intent of the cars activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_category);
 	
 		ListView categoryList = (ListView) findViewById(R.id.categoryList);
-		//categoryList.setAdapter(category_list);
 		categoryList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -38,7 +37,7 @@ public class CategoryActivity extends ActionBarActivity
 		});
 		
 	}
-
+	//inflates the add menu and icon on the action bar
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -46,7 +45,7 @@ public class CategoryActivity extends ActionBarActivity
 		return true;
 
 	}
-
+	//starts the activity of the add menu
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

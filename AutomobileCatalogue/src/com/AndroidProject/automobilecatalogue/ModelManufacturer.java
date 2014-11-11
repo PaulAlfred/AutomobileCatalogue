@@ -3,21 +3,21 @@ package com.AndroidProject.automobilecatalogue;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-
 public class ModelManufacturer{
-
-	private ModelCar car = new ModelCar();
-	
+	//To be put on a jsonObject
+	//values
 	private String mName;
 	private String mFounded;
 	private String mOrigin;
 	private String mRevenue;
+	//json variables
+	private static final String JSON_NAME = "name";
+	private static final String JSON_FOUNDED = "founded";
+	private static final String JSON_ORIGIN = "origin";
+	private static final String JSON_REVENUE = "revenue";
 	
-	public ModelCar getCar() {
-		return car;
-	}
-
+	
+	//getters of values
 	public String getmName() {
 		return mName;
 	}
@@ -35,19 +35,15 @@ public class ModelManufacturer{
 	}
 
 
-	private static final String JSON_NAME = "name";
-	private static final String JSON_FOUNDED = "founded";
-	private static final String JSON_ORIGIN = "origin";
-	private static final String JSON_REVENUE = "revenue";
-	
-	
+
+	//constructor that sets the values of the car
 	public ModelManufacturer(String Name, String Founded, String Origin, String Revenue){
 		this.mName = Name;
 		this.mFounded = Founded;
 		this.mOrigin = Origin;
 		this.mRevenue = Revenue;
 	}
-	
+	//gets the value of the jsonobject
 	public ModelManufacturer(JSONObject json) throws JSONException {
 		mName = json.getString(JSON_NAME);
 		mFounded = json.getString(JSON_FOUNDED);
@@ -55,8 +51,7 @@ public class ModelManufacturer{
 		mRevenue = json.getString(JSON_REVENUE);
 		
 	}
-
-
+	//puts the "variables":"values" in a jsonobject
 	public JSONObject toJSON() throws JSONException{
 		JSONObject item = new JSONObject();
 		item.put("name", this.mName);

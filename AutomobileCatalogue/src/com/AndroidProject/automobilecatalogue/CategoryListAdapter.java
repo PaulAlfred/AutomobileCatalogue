@@ -6,15 +6,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class CategoryListAdapter extends BaseAdapter {
 
 	private Context context;
-	LayoutInflater inflater;
+	private LayoutInflater inflater;
 	private ArrayList<ModelCategory> categories = new ArrayList<ModelCategory>();
 	
 	public CategoryListAdapter(Context context, ArrayList<ModelCategory> categories){

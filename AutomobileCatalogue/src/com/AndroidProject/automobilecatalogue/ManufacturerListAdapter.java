@@ -13,7 +13,7 @@ public class ManufacturerListAdapter extends BaseAdapter{
 	
 	
 	private Context context;
-	LayoutInflater inflater;
+	private LayoutInflater inflater;
 	private ArrayList<ModelManufacturer> manufacturers = new ArrayList<ModelManufacturer>();
 	
 	public ManufacturerListAdapter(Context context, ArrayList<ModelManufacturer> manufacturers){

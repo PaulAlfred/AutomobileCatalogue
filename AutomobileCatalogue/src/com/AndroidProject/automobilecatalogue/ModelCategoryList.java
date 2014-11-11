@@ -7,7 +7,7 @@ import org.json.JSONException;
 
 import android.content.Context;
 import android.util.Log;
-
+//Acts as a bridge of ControllerCategory and ModelCategory
 public class ModelCategoryList {
 	
 private final String mFilename = "Categories.json";
@@ -40,7 +40,7 @@ private final String mFilename = "Categories.json";
 			return false;
 		}
 	}
-	public void loadManufacturers(){
+	public void loadCategory(){
 		try {
 			mCatSerializer.loadCategories();
 		} catch (IOException e) {
