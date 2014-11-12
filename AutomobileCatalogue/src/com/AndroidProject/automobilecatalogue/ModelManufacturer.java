@@ -16,7 +16,23 @@ public class ModelManufacturer{
 	private static final String JSON_ORIGIN = "origin";
 	private static final String JSON_REVENUE = "revenue";
 	
-	
+	//setter of values
+	public void setmName(String mName) {
+		this.mName = mName;
+	}
+
+	public void setmFounded(String mFounded) {
+		this.mFounded = mFounded;
+	}
+
+	public void setmOrigin(String mOrigin) {
+		this.mOrigin = mOrigin;
+	}
+
+	public void setmRevenue(String mRevenue) {
+		this.mRevenue = mRevenue;
+	}
+
 	//getters of values
 	public String getmName() {
 		return mName;

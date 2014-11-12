@@ -14,12 +14,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 
-public class ControllerCar  {
+public class ControllerCar  extends Activity{
 
+	
 
 	private Context context;
 	private String mFilename;
@@ -31,27 +34,8 @@ public class ControllerCar  {
 	//or creates a new cars.json, then stores
 	//to the default location with Filename = mFilename
 	public void saveCars(ArrayList<ModelCar> cars) throws JSONException, IOException {
-		JSONArray array = new JSONArray();
 		cars.addAll(loadCars());
-		for (ModelCar c : cars)
-			array.put(c.toJSON());
-			
-		Writer writer = null;
-		try{
-			OutputStream out = context.openFileOutput(mFilename, Context.MODE_PRIVATE);
-			writer = new OutputStreamWriter(out);
-			writer.write(array.toString());
-		} catch(IOException e){
-			e.printStackTrace();
-		}
-		finally {
-			if(writer != null)
-				try {
-					writer.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		}
+		partialSave(cars);
 	}
 	//loads the cars form mFilename
 	public ArrayList<ModelCar> loadCars() throws IOException, JSONException{
@@ -79,5 +63,70 @@ public class ControllerCar  {
 		}
 		return cars;
 	}
+	
+	public void deleteCar(String mName) throws IOException, JSONException{
+		
+		ArrayList<ModelCar> cars = loadCars();
+		
+		for(int i =0; i<cars.size(); i++){
+			 String name = cars.get(i).getmName();
+			if(name.equals(mName)){
+				cars.remove(i);
+			}
+		}
+		partialSave(cars);
+	}
+	public void editCar(String mName) throws IOException, JSONException{
 
+		ArrayList<ModelCar> cars = loadCars();
+
+		for(int i =0; i<cars.size(); i++){
+			String name = cars.get(i).getmName();
+			if(name.equals(mName)){
+				cars.get(i);
+				Intent intent = new Intent(this, ViewAddCar.class);
+				intent.putExtra(ViewAddCar.Name, cars.get(i).getmName());
+				intent.putExtra(ViewAddCar.Category, cars.get(i).getmType());
+				intent.putExtra(ViewAddCar.Manufacturer, cars.get(i).getmManufacturer());
+				intent.putExtra(ViewAddCar.Horsepower, cars.get(i).getmHorsepower());
+				context.startActivity(intent);
+			}
+		}
+	}
+	public void editCar(ModelCar model, String mName) throws IOException, JSONException{
+		ArrayList<ModelCar> cars = new ArrayList<ModelCar>();
+		cars = loadCars();
+		for(int i = 0; i < cars.size(); i++){
+			if(model.getmName().equals(cars.get(i).getmName()))
+				cars.get(i).setmName(model.getmName());
+				cars.get(i).setmType(model.getmType());
+				cars.get(i).setmManufacturer(model.getmManufacturer());
+				cars.get(i).setmHorsepower(model.getmHorsepower());
+		}
+		partialSave(cars);
+	}
+	private void partialSave(ArrayList<ModelCar> cars) throws JSONException
+	{
+		JSONArray array = new JSONArray();
+		for (ModelCar c : cars)
+			array.put(c.toJSON());
+
+		Writer writer = null;
+		try{
+			OutputStream out = context.openFileOutput(mFilename, Context.MODE_PRIVATE);
+			writer = new OutputStreamWriter(out);
+			writer.write(array.toString());
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+		finally {
+			if(writer != null)
+				try {
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+
+	}
 }

@@ -14,11 +14,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-public class ControllerManufacturer {
 
+public class ControllerManufacturer  extends Activity{
+
+	
 
 	private Context context;
 	private String mFilename;
@@ -26,33 +29,23 @@ public class ControllerManufacturer {
 		context = c;
 		mFilename = f;
 	}
-	//saves the manufacturers to the Manufacturers.json file, that was previously added to ModelManufacturers
-	//or creates a new Manufacturers.json, then stores
+	//saves the cars to the Manufacturer.json file, that was previously added to ModelManufacturer
+	//or creates a new cars.json, then stores
 	//to the default location with Filename = mFilename
-	public void saveManufacturers(ArrayList<ModelManufacturer> manufacturers) throws JSONException, IOException {
-		JSONArray array = new JSONArray();
-		manufacturers.addAll(loadManufacturers());
-		for (ModelManufacturer m : manufacturers)
-			array.put(m.toJSON());
-			
-		Writer writer = null;
-		try{
-			OutputStream out = context.openFileOutput(mFilename, Context.MODE_PRIVATE);
-			writer = new OutputStreamWriter(out);
-			writer.write(array.toString());
-		} catch(IOException e){
+	public void saveManufacturers(ArrayList<ModelManufacturer> manufacturers){
+		try {
+			manufacturers.addAll(loadManufacturers());
+			partialSave(manufacturers);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			if(writer != null)
-				try {
-					writer.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		}
+		
 	}
-	//loads the Manufacturers form mFilename
+	//loads the cars form mFilename
 	public ArrayList<ModelManufacturer> loadManufacturers() throws IOException, JSONException{
 		ArrayList<ModelManufacturer> manufacturers = new ArrayList<ModelManufacturer>();
 		BufferedReader reader = null;
@@ -78,5 +71,54 @@ public class ControllerManufacturer {
 		}
 		return manufacturers;
 	}
+	
+	public void deleteManufacturer(String mName) throws IOException, JSONException{
+		
+		ArrayList<ModelManufacturer> manufacturers = new ArrayList<ModelManufacturer>();
+		manufacturers = loadManufacturers();
+		
+		for(int i =0; i<manufacturers.size(); i++){
+			 String name = manufacturers.get(i).getmName();
+			if(name.equals(mName)){
+				manufacturers.remove(i);
+			}
+		}
+		partialSave(manufacturers);
+	}
+	public void editManufacturer(ModelManufacturer model, String mName) throws IOException, JSONException{
+		ArrayList<ModelManufacturer> manufacturers = new ArrayList<ModelManufacturer>();
+		manufacturers = loadManufacturers();
+		for(int i = 0; i < manufacturers.size(); i++){
+			if(model.getmName().equals(manufacturers.get(i).getmName()))
+				manufacturers.get(i).setmName(model.getmName());
+				manufacturers.get(i).setmFounded(model.getmFounded());
+				manufacturers.get(i).setmOrigin(model.getmOrigin());
+				manufacturers.get(i).setmRevenue(model.getmRevenue());
+		}
+		partialSave(manufacturers);
+	}
+	private void partialSave(ArrayList<ModelManufacturer> manufacturers) throws JSONException
+	{
+		JSONArray array = new JSONArray();
+		for (ModelManufacturer m : manufacturers)
+			array.put(m.toJSON());
 
+		Writer writer = null;
+		try{
+			OutputStream out = context.openFileOutput(mFilename, Context.MODE_PRIVATE);
+			writer = new OutputStreamWriter(out);
+			writer.write(array.toString());
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+		finally {
+			if(writer != null)
+				try {
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+
+	}
 }

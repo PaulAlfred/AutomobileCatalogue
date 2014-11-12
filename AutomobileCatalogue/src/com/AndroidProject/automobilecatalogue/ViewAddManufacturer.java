@@ -1,5 +1,9 @@
 package com.AndroidProject.automobilecatalogue;
 
+import java.io.IOException;
+
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,23 +14,42 @@ import android.widget.Button;
 
 public class ViewAddManufacturer extends Activity {
 	
-	Button add;
+	Intent i;
 	
-	AutoCompleteTextView name, founded, revenue, origin;
+	Button add, edit;
+	
+	AutoCompleteTextView name;
+	AutoCompleteTextView founded;
+	AutoCompleteTextView revenue;
+	AutoCompleteTextView origin;
+	
+	public static final String mName = "name";
+	public static final String mFounded = "founded";
+	public static final String mOrigin = "origin";
+	public static final String mRevenue = "revenue";
+	
 	ModelManufacturer manufacturer;
 	ModelManufacturerList list_of_company = new ModelManufacturerList(MainActivity.getAppContext());
-	
+	ControllerManufacturer mControllerManufacturer;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_manufacturer);
-
-		
-		add = (Button) findViewById(R.id.add);
+		i = getIntent();
 		name = (AutoCompleteTextView) findViewById(R.id.edit_company);
 		founded = (AutoCompleteTextView) findViewById(R.id.edit_year);
 		revenue = (AutoCompleteTextView) findViewById(R.id.edit_revenue);
 		origin = (AutoCompleteTextView) findViewById(R.id.edit_origin);
+			
+		add = (Button) findViewById(R.id.add);
+		edit = (Button) findViewById(R.id.edit);
+		
+		name.setText(i.getStringExtra(ViewAddManufacturer.mName));
+		founded.setText(i.getStringExtra(ViewAddManufacturer.mFounded));
+		revenue.setText(i.getStringExtra(ViewAddManufacturer.mRevenue));
+		origin.setText(i.getStringExtra(ViewAddManufacturer.mOrigin));
+		
+		mControllerManufacturer = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
 		
 		add.setOnClickListener(new OnClickListener() {
 			
@@ -37,13 +60,26 @@ public class ViewAddManufacturer extends Activity {
 				startActivity(new Intent(ViewAddManufacturer.this, MainActivity.class));
 			}
 		});
+		edit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				manufacturer = new ModelManufacturer(name.getText().toString(), founded.getText().toString(), origin.getText().toString(), revenue.getText().toString());
+				try {
+					mControllerManufacturer.editManufacturer(manufacturer, i.getStringExtra(ViewAddManufacturer.mName));
+					onBackPressed();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
 	}
-	@Override
-	protected void onPause() {
-		super.onPause();
 
-	}
-	
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();

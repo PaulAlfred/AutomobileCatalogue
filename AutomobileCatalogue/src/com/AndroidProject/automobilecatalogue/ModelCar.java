@@ -19,7 +19,23 @@ public class ModelCar {
 	private static final String JSON_MANUFACTURER = "manufacturer";
 	private static final String JSON_HORSPOWER = "horsepower";
 	
-	
+	//setters of values
+	public void setmName(String mName) {
+		this.mName = mName;
+	}
+
+	public void setmType(String mType) {
+		this.mType = mType;
+	}
+
+	public void setmManufacturer(String mManufacturer) {
+		this.mManufacturer = mManufacturer;
+	}
+
+	public void setmHorsepower(String mHorsepower) {
+		this.mHorsepower = mHorsepower;
+	}
+
 	//getters of values
 	public String getmType() {
 		return mType;

@@ -46,10 +46,10 @@ public class ModelManufacturerList{
 		try {
 			mManSerializer.loadManufacturers();
 		} catch (IOException e) {
-			Log.d("load", e.getMessage());
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JSONException e) {
-			Log.d("load", e.getMessage());
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

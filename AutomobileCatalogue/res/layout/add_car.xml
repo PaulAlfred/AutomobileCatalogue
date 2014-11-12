@@ -12,16 +12,8 @@
         android:text="Add Car"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/add_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="39dp"
-        android:text="Add" />
-
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -102,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Car's Horse Power"
+                android:hint="Car&apos;s Horse Power"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
@@ -117,8 +109,25 @@
         android:layout_below="@+id/add_car"
         android:layout_marginTop="28dp"
         android:orientation="vertical" >
-
-  
     </LinearLayout>
+
+    <Button
+        android:id="@+id/edit_car_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/add_category"
+        android:layout_alignBottom="@+id/add_category"
+        android:layout_toRightOf="@+id/add_car"
+        android:text="Edit" />
+
+    <Button
+        android:id="@+id/add_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/add_car"
+        android:layout_marginBottom="35dp"
+        android:layout_marginRight="33dp"
+        android:text="Add" />
 
 </RelativeLayout>
