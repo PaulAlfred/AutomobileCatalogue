@@ -26,7 +26,9 @@ public class CarActivity extends ActionBarActivity {
 	private int mPosition;
 	private ArrayList<ModelCar> mCars;
 	
-
+	public static final String mManufacturer = "manufacturer";
+	public static final String mCategory = "category";
+	
 	//loading the cars from cars.json and putting its contents to the adapter
 	//then displays the adapter in a listview
 	@Override
@@ -63,6 +65,7 @@ public class CarActivity extends ActionBarActivity {
 		switch (item.getItemId()) {
 		case R.id.action_add:
 			Intent intent = new Intent(CarActivity.this, ViewAddCar.class);
+			intent.putExtra(ViewAddCar.isEdit, false);
 			startActivity(intent);
 			return true;
 		default:
@@ -70,20 +73,10 @@ public class CarActivity extends ActionBarActivity {
 
 		}
 	}
-	private void generateAdapter(){
-		try {
-			
-			car_list = new CarListAdapter(this, controllerCar.loadCars());
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		} catch (JSONException e) {
-
-			e.printStackTrace();
-		}
-		ListView carList = (ListView) findViewById(R.id.carList);
-		carList.setAdapter(car_list);
-		registerForContextMenu(carList);
+	@Override
+	protected void onResume() {
+		generateAdapter();
+		super.onResume();
 	}
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
@@ -92,7 +85,7 @@ public class CarActivity extends ActionBarActivity {
 		mPosition = info.position;
 		menu.setHeaderTitle(mCars.get(mPosition).getmName());
 		menu.add(Menu.NONE,0,0,"Delete");
-		menu.add(menu.NONE,1,1,"Edit");
+		menu.add(Menu.NONE,1,1,"Edit");
 
 	}
 	@Override
@@ -124,8 +117,24 @@ public class CarActivity extends ActionBarActivity {
 		intent.putExtra(ViewAddCar.Category,mCars.get(mPosition).getmType());
 		intent.putExtra(ViewAddCar.Manufacturer,mCars.get(mPosition).getmManufacturer());
 		intent.putExtra(ViewAddCar.Horsepower,mCars.get(mPosition).getmHorsepower());
+		intent.putExtra(ViewAddCar.isEdit, true);
 		return intent;
 		
+	}
+	
+	private void generateAdapter(){
+		try {
+			car_list = new CarListAdapter(this, controllerCar.loadCars());
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		} catch (JSONException e) {
+
+			e.printStackTrace();
+		}
+		ListView carList = (ListView) findViewById(R.id.carList);
+		carList.setAdapter(car_list);
+		registerForContextMenu(carList);
 	}
 	
 }

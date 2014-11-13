@@ -14,20 +14,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
 
-public class ControllerManufacturer  extends Activity{
-
+public class ControllerManufacturer {
 	
-
 	private Context context;
 	private String mFilename;
 	public ControllerManufacturer(Context c, String f) {
 		context = c;
 		mFilename = f;
+		
 	}
 	//saves the cars to the Manufacturer.json file, that was previously added to ModelManufacturer
 	//or creates a new cars.json, then stores
@@ -85,9 +83,11 @@ public class ControllerManufacturer  extends Activity{
 		}
 		partialSave(manufacturers);
 	}
+	
 	public void editManufacturer(ModelManufacturer model, String mName) throws IOException, JSONException{
 		ArrayList<ModelManufacturer> manufacturers = new ArrayList<ModelManufacturer>();
 		manufacturers = loadManufacturers();
+		//manufacturers.get(position).getNode("name").put
 		for(int i = 0; i < manufacturers.size(); i++){
 			if(model.getmName().equals(manufacturers.get(i).getmName()))
 				manufacturers.get(i).setmName(model.getmName());
@@ -97,6 +97,11 @@ public class ControllerManufacturer  extends Activity{
 		}
 		partialSave(manufacturers);
 	}
+	
+	//manufacturers,edit(){
+		
+//	}
+	
 	private void partialSave(ArrayList<ModelManufacturer> manufacturers) throws JSONException
 	{
 		JSONArray array = new JSONArray();

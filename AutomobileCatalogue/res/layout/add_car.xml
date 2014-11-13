@@ -4,12 +4,11 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/add_car"
+        android:id="@+id/add_edit_car_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="Add Car"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
@@ -74,14 +73,10 @@
                 android:hint="Car model"
                 android:textSize="14sp" />
 
-            <AutoCompleteTextView
-                android:id="@+id/edit_category2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Vechicle Type"
-                android:textSize="14sp" />
+            <Spinner
+                android:id="@+id/category_spinner"
+                android:layout_width="184dp"
+                android:layout_height="36dp" />
 
             <Spinner
                 android:id="@+id/manufacturer_spin"
@@ -95,6 +90,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Car&apos;s Horse Power"
+                android:text="100"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
@@ -103,31 +99,34 @@
         android:id="@+id/linearLayout02"
         android:layout_width="wrap_content"
         android:layout_height="150dp"
-        android:layout_alignLeft="@+id/add_car"
+        android:layout_alignLeft="@+id/add_edit_car_title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/add_car"
+        android:layout_below="@+id/add_edit_car_title"
         android:layout_marginTop="28dp"
         android:orientation="vertical" >
     </LinearLayout>
 
-    <Button
-        android:id="@+id/edit_car_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/add_category"
-        android:layout_alignBottom="@+id/add_category"
-        android:layout_toRightOf="@+id/add_car"
-        android:text="Edit" />
-
-    <Button
-        android:id="@+id/add_category"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/add_car"
-        android:layout_marginBottom="35dp"
-        android:layout_marginRight="33dp"
-        android:text="Add" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal" >
+ 
+	<Button
+        android:id="@+id/Cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_marginBottom="30dp"
+        android:text="Cancel" />
+	<Button
+        android:id="@+id/add_edit_car_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_marginBottom="30dp"/>
+    
+    </LinearLayout>
 
 </RelativeLayout>

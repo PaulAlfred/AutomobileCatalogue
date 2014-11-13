@@ -13,14 +13,12 @@
         android:layout_marginTop="50dp" >
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/add_edit_man_info"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:text="Add Manufacturer"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="35sp" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -114,29 +112,31 @@
                 android:ems="10"
                 android:hint="Company&apos;s current revenue"
                 android:textSize="14sp" />
-
         </LinearLayout>
-
     </LinearLayout>
 
-    <Button
-        android:id="@+id/add"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/linearLayout1"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="36dp"
-        android:layout_marginLeft="42dp"
-        android:text="Add" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal" >
+		
+         <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="Cancel" />
+        
+        <Button
+            android:id="@+id/add_edit_man"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp" />
 
-    <Button
-        android:id="@+id/edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/add"
-        android:layout_alignBottom="@+id/add"
-        android:layout_marginLeft="14dp"
-        android:layout_toRightOf="@+id/add"
-        android:text="Edit" />
+       
+    </LinearLayout>
 
 </RelativeLayout>

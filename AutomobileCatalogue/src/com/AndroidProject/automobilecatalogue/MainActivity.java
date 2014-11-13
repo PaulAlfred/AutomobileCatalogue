@@ -38,7 +38,7 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		MainActivity.mContext = getApplicationContext();
 		mManufacturers = new ArrayList<ModelManufacturer>();
-
+		
 		setContentView(R.layout.activity_main);
 	}
 	//inflates the add menu and icon on the action bar
@@ -55,6 +55,7 @@ public class MainActivity extends ActionBarActivity {
 		switch (item.getItemId()) {
 		case R.id.action_add:
 			Intent intent = new Intent(MainActivity.this, ViewAddManufacturer.class);
+			intent.putExtra(ViewAddManufacturer.isEdit, false);
 			startActivity(intent);
 			return true;
 		default:
@@ -89,8 +90,19 @@ public class MainActivity extends ActionBarActivity {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View v, int position,
 					long s) {
-				Intent intent = new Intent(MainActivity.this,CarActivity.class);
-				startActivity(intent);
+				
+				try {
+					Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
+					intent.putExtra(CategoryActivity.mManufacturer,mControllerManufacturer.loadManufacturers().get(position).getmName());
+					startActivity(intent);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
 				
 			}
 		});
@@ -135,9 +147,14 @@ public class MainActivity extends ActionBarActivity {
 		intent.putExtra(ViewAddManufacturer.mFounded, mManufacturers.get(mPosition).getmFounded());
 		intent.putExtra(ViewAddManufacturer.mOrigin, mManufacturers.get(mPosition).getmOrigin());
 		intent.putExtra(ViewAddManufacturer.mRevenue, mManufacturers.get(mPosition).getmRevenue());
-		
+		intent.putExtra(ViewAddManufacturer.isEdit, true);
 		return intent;
 		
+	}
+	@Override
+	protected void onResume() {
+		generateAdapter();
+		super.onResume();
 	}
 	
 	
