@@ -34,6 +34,7 @@ public class ViewAddManufacturer extends Activity {
 	public static final String mOrigin = "origin";
 	public static final String mRevenue = "revenue";
 	public static final String isEdit = "isEdit";
+	public static final String mPosition = "position";
 	
 	ModelManufacturer manufacturer;
 	ModelManufacturerList list_of_company;
@@ -75,7 +76,6 @@ public class ViewAddManufacturer extends Activity {
 					edit();
 				else
 					add();
-			
 				
 			}
 
@@ -90,7 +90,7 @@ public class ViewAddManufacturer extends Activity {
 				setValues();
 				manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
 				try {
-					mControllerManufacturer.editManufacturer(manufacturer, i.getStringExtra(ViewAddManufacturer.mName));
+					mControllerManufacturer.editManufacturer(manufacturer, i.getExtras().getInt(ViewAddManufacturer.mPosition));
 					finish();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

@@ -22,13 +22,19 @@ import android.util.Log;
 
 public class ControllerCar  extends Activity{
 
-	
-
 	private Context context;
 	private String mFilename;
+	private ArrayList<ModelCar> mCars;
 	public ControllerCar(Context c, String f) {
 		context = c;
 		mFilename = f;
+		try {
+			mCars = loadCars();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 	//saves the cars to the cars.json file, that was previously added to ModelCar
 	//or creates a new cars.json, then stores
@@ -64,47 +70,28 @@ public class ControllerCar  extends Activity{
 		return cars;
 	}
 	
-	public void deleteCar(String mName) throws IOException, JSONException{
+	public void deleteCar(int position) throws IOException, JSONException{
 		
-		ArrayList<ModelCar> cars = loadCars();
+		mCars.remove(position);
+		/*ArrayList<ModelCar> cars = loadCars();
 		
 		for(int i =0; i<cars.size(); i++){
 			 String name = cars.get(i).getmName();
 			if(name.equals(mName)){
 				cars.remove(i);
 			}
-		}
-		partialSave(cars);
+		}*/
+		partialSave(mCars);
 	}
-	public void editCar(String mName) throws IOException, JSONException{
+	public void editCar(ModelCar car, int position) throws IOException, JSONException{
 
-		ArrayList<ModelCar> cars = loadCars();
-
-		for(int i =0; i<cars.size(); i++){
-			String name = cars.get(i).getmName();
-			if(name.equals(mName)){
-				cars.get(i);
-				Intent intent = new Intent(this, ViewAddCar.class);
-				intent.putExtra(ViewAddCar.Name, cars.get(i).getmName());
-				intent.putExtra(ViewAddCar.Category, cars.get(i).getmType());
-				intent.putExtra(ViewAddCar.Manufacturer, cars.get(i).getmManufacturer());
-				intent.putExtra(ViewAddCar.Horsepower, cars.get(i).getmHorsepower());
-				context.startActivity(intent);
-			}
-		}
+		mCars.get(position).setmHorsepower(car.getmHorsepower());
+		mCars.get(position).setmManufacturer(car.getmManufacturer());
+		mCars.get(position).setmName(car.getmName());
+		mCars.get(position).setmType(car.getmType());
+		partialSave(mCars);
 	}
-	public void editCar(ModelCar model, String mName) throws IOException, JSONException{
-		ArrayList<ModelCar> cars = new ArrayList<ModelCar>();
-		cars = loadCars();
-		for(int i = 0; i < cars.size(); i++){
-			if(model.getmName().equals(cars.get(i).getmName()))
-				cars.get(i).setmName(model.getmName());
-				cars.get(i).setmType(model.getmType());
-				cars.get(i).setmManufacturer(model.getmManufacturer());
-				cars.get(i).setmHorsepower(model.getmHorsepower());
-		}
-		partialSave(cars);
-	}
+	
 	private void partialSave(ArrayList<ModelCar> cars) throws JSONException
 	{
 		JSONArray array = new JSONArray();

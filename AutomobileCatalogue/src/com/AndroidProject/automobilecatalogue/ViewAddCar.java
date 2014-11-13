@@ -37,7 +37,7 @@ public class ViewAddCar extends Activity{
 	public static final String Horsepower = "horsepower";
 	public static final String Category = "category";
 	public static final String isEdit = "isEdit";
-	
+	public static final String mPosition = "position";
 	String name;
 	String manufacturer;
 	String type;
@@ -141,8 +141,9 @@ public class ViewAddCar extends Activity{
 	}
 	private void edit(){
 		try {
-			car = new ModelCar(mName.getText().toString(), mManufacturer.getSelectedItem().toString(), mHorsepower.getText().toString(), mCategory.getSelectedItem().toString());
-			controllerCar.editCar(car, i.getStringExtra(ViewAddCar.Name));
+			setCarValues();
+			car = new ModelCar(name, manufacturer, horsepower, type);
+			controllerCar.editCar(car, i.getExtras().getInt(ViewAddCar.mPosition));
 			finish();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -160,7 +161,7 @@ public class ViewAddCar extends Activity{
 		type = mCategory.getSelectedItem().toString();
 		
 		if(name.equals("")){
-			name = "Generic While Vehicle";
+			name = "Generic White Vehicle";
 			Log.d("name","was null");
 		}
 		if(manufacturer.equals("")){

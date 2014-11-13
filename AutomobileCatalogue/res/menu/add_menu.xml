@@ -5,8 +5,4 @@
           android:icon="@drawable/ic_menu_add"
           android:title="Add"
           yourapp:showAsAction="always" />
-     <item android:id="@+id/menu_item_delete_crime"
-			android:icon="@android:drawable/ic_menu_delete"
-			android:title="delete" 
-			yourapp:showAsAction="always" />
 </menu>

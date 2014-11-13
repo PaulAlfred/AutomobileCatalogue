@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -38,7 +37,6 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		MainActivity.mContext = getApplicationContext();
 		mManufacturers = new ArrayList<ModelManufacturer>();
-		
 		setContentView(R.layout.activity_main);
 	}
 	//inflates the add menu and icon on the action bar
@@ -81,7 +79,6 @@ public class MainActivity extends ActionBarActivity {
 			mManufacturers = mControllerManufacturer.loadManufacturers();
 			mBrand_List_Adapter = new ManufacturerListAdapter(this, mControllerManufacturer.loadManufacturers());   
 		} catch (Exception e ){
-			Log.d("brand_list_exception", e.getMessage());
 		}
 		ListView mainList = (ListView) findViewById(R.id.mainList);
 		mainList.setAdapter(mBrand_List_Adapter);
@@ -123,7 +120,7 @@ public class MainActivity extends ActionBarActivity {
 		try {
 			switch(item.getItemId()){
 			case 0:
-				mControllerManufacturer.deleteManufacturer(mManufacturers.get(mPosition).getmName());
+				mControllerManufacturer.deleteManufacturer(mPosition);
 				generateAdapter();
 				break;
 			case 1:
@@ -148,6 +145,7 @@ public class MainActivity extends ActionBarActivity {
 		intent.putExtra(ViewAddManufacturer.mOrigin, mManufacturers.get(mPosition).getmOrigin());
 		intent.putExtra(ViewAddManufacturer.mRevenue, mManufacturers.get(mPosition).getmRevenue());
 		intent.putExtra(ViewAddManufacturer.isEdit, true);
+		intent.putExtra(ViewAddManufacturer.mPosition, mPosition);
 		return intent;
 		
 	}

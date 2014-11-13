@@ -36,18 +36,6 @@ public class CarActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_car);
 		mCars = new ArrayList<ModelCar>();
-		controllerCar = new ControllerCar(getApplicationContext(), "Cars.json");
-		try {
-			mCars = controllerCar.loadCars();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		generateAdapter();
-		
 		
 	}
 	//inflates the add menu and icon on the action bar
@@ -75,8 +63,8 @@ public class CarActivity extends ActionBarActivity {
 	}
 	@Override
 	protected void onResume() {
-		generateAdapter();
 		super.onResume();
+		generateAdapter();
 	}
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
@@ -93,7 +81,7 @@ public class CarActivity extends ActionBarActivity {
 		try {
 			switch(item.getItemId()){
 			case 0:
-				controllerCar.deleteCar(mCars.get(mPosition).getmName());
+				controllerCar.deleteCar(mPosition);
 				generateAdapter();
 				break;
 			case 1:
@@ -118,12 +106,15 @@ public class CarActivity extends ActionBarActivity {
 		intent.putExtra(ViewAddCar.Manufacturer,mCars.get(mPosition).getmManufacturer());
 		intent.putExtra(ViewAddCar.Horsepower,mCars.get(mPosition).getmHorsepower());
 		intent.putExtra(ViewAddCar.isEdit, true);
+		intent.putExtra(ViewAddCar.mPosition, mPosition);
 		return intent;
 		
 	}
 	
 	private void generateAdapter(){
 		try {
+			controllerCar = new ControllerCar(getApplicationContext(), "Cars.json");
+			mCars = controllerCar.loadCars();
 			car_list = new CarListAdapter(this, controllerCar.loadCars());
 		} catch (IOException e) {
 

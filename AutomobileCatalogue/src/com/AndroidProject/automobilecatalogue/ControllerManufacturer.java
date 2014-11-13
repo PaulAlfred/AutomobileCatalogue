@@ -22,10 +22,19 @@ public class ControllerManufacturer {
 	
 	private Context context;
 	private String mFilename;
-	public ControllerManufacturer(Context c, String f) {
+	private ArrayList<ModelManufacturer> manufacturers;
+	public ControllerManufacturer(Context c, String f){
 		context = c;
 		mFilename = f;
-		
+		try {
+			manufacturers = loadManufacturers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	//saves the cars to the Manufacturer.json file, that was previously added to ModelManufacturer
 	//or creates a new cars.json, then stores
@@ -70,31 +79,17 @@ public class ControllerManufacturer {
 		return manufacturers;
 	}
 	
-	public void deleteManufacturer(String mName) throws IOException, JSONException{
+	public void deleteManufacturer(int position) throws IOException, JSONException{
 		
-		ArrayList<ModelManufacturer> manufacturers = new ArrayList<ModelManufacturer>();
-		manufacturers = loadManufacturers();
-		
-		for(int i =0; i<manufacturers.size(); i++){
-			 String name = manufacturers.get(i).getmName();
-			if(name.equals(mName)){
-				manufacturers.remove(i);
-			}
-		}
+		manufacturers.remove(position);
 		partialSave(manufacturers);
 	}
 	
-	public void editManufacturer(ModelManufacturer model, String mName) throws IOException, JSONException{
-		ArrayList<ModelManufacturer> manufacturers = new ArrayList<ModelManufacturer>();
-		manufacturers = loadManufacturers();
-		//manufacturers.get(position).getNode("name").put
-		for(int i = 0; i < manufacturers.size(); i++){
-			if(model.getmName().equals(manufacturers.get(i).getmName()))
-				manufacturers.get(i).setmName(model.getmName());
-				manufacturers.get(i).setmFounded(model.getmFounded());
-				manufacturers.get(i).setmOrigin(model.getmOrigin());
-				manufacturers.get(i).setmRevenue(model.getmRevenue());
-		}
+	public void editManufacturer(ModelManufacturer model, int position) throws IOException, JSONException{
+		manufacturers.get(position).setmFounded(model.getmFounded());
+		manufacturers.get(position).setmName(model.getmName());
+		manufacturers.get(position).setmOrigin(model.getmOrigin());
+		manufacturers.get(position).setmRevenue(model.getmRevenue());
 		partialSave(manufacturers);
 	}
 	
