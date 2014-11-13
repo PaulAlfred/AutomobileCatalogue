@@ -18,6 +18,8 @@ public class CategoryActivity extends ActionBarActivity
 	private ModelCategoryList modelCategoryList;
 	
 	public static final String mManufacturer = "manufacturer";
+	public static final String mManfacturerNo = "manufacturerNo";
+	
 	Intent i;
 	//displays all of the categories
 	//starts intent of the cars activity
@@ -49,6 +51,8 @@ public class CategoryActivity extends ActionBarActivity
 				Intent intent = new Intent(CategoryActivity.this,CarActivity.class);
 				intent.putExtra(CarActivity.mManufacturer, i.getStringExtra(CategoryActivity.mManufacturer));
 				intent.putExtra(CarActivity.mCategory, categories.get(position).getmName());
+				intent.putExtra(CarActivity.mManufacturerNo, i.getExtras().getInt(CategoryActivity.mManfacturerNo));
+				intent.putExtra(CarActivity.mCategoryNo, position);
 				try{
 				startActivity(intent);
 				} catch (Exception e){

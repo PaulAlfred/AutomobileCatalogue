@@ -92,7 +92,7 @@ public class ControllerCar  extends Activity{
 		partialSave(mCars);
 	}
 	
-	private void partialSave(ArrayList<ModelCar> cars) throws JSONException
+	public void partialSave(ArrayList<ModelCar> cars) throws JSONException
 	{
 		JSONArray array = new JSONArray();
 		for (ModelCar c : cars)

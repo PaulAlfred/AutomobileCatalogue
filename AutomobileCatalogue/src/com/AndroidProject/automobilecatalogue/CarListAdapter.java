@@ -10,25 +10,34 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 
-public class CarListAdapter extends BaseAdapter {
+public class CarListAdapter extends BaseAdapter{
 
 	private Context context;
 	private LayoutInflater inflater;
 	private ArrayList<ModelCar> cars = new ArrayList<ModelCar>();
+	private ArrayList<String> dataFilter = new ArrayList<String>(2);
+	private ArrayList<ModelCar> filteredCars = new ArrayList<ModelCar>();
 	
-	public CarListAdapter(Context context, ArrayList<ModelCar> cars){
+	public CarListAdapter(Context context, ArrayList<ModelCar> cars, ArrayList<String> dataFilter){
 		this.context = context;
 		this.cars = cars;
+		this.dataFilter = dataFilter;
+		
+		for(ModelCar c : cars)
+			if((c.getmManufacturer().equals(dataFilter.get(0)))&&(c.getmType().equals(dataFilter.get(1))))
+				filteredCars.add(c);
+		
+		
 		inflater = LayoutInflater.from(this.context);
 	}
 	@Override
 	public int getCount() {
-		return this.cars.size();
+		return this.filteredCars.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return this.cars.get(position);
+		return this.filteredCars.get(position);
 	}
 
 	@Override
@@ -53,10 +62,10 @@ public class CarListAdapter extends BaseAdapter {
 		mViewHolder.Manufacturer = (TextView) row.findViewById(R.id.description2);
 		mViewHolder.Horsepower = (TextView) row.findViewById(R.id.description3);
 		
-		mViewHolder.Name.setText(cars.get(position).getmName());
-		mViewHolder.Type.setText(cars.get(position).getmType());
-		mViewHolder.Manufacturer.setText(cars.get(position).getmManufacturer());
-		mViewHolder.Horsepower.setText(cars.get(position).getmHorsepower());
+		mViewHolder.Name.setText(filteredCars.get(position).getmName());
+		mViewHolder.Type.setText(filteredCars.get(position).getmType());
+		mViewHolder.Manufacturer.setText(filteredCars.get(position).getmManufacturer());
+		mViewHolder.Horsepower.setText(filteredCars.get(position).getmHorsepower());
 		
 		return row;
 	}
@@ -64,8 +73,8 @@ public class CarListAdapter extends BaseAdapter {
 	private class ViewHolder{
 		TextView Name, Type, Manufacturer, Horsepower;
 	}
-	
-	
+
+
 
 
 

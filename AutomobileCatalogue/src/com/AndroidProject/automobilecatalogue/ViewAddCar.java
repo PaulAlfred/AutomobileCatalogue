@@ -20,17 +20,21 @@ import android.widget.TextView;
 
 public class ViewAddCar extends Activity{
 
-	TextView add_edit_title;
-	Button cancel,add_edit;
-	AutoCompleteTextView mName,  mHorsepower;
-	Spinner mManufacturer, mCategory;
+	private TextView add_edit_title;
+	private Button cancel,add_edit;
+	private AutoCompleteTextView mName,  mHorsepower;
+	private Spinner mManufacturer, mCategory;
 
-	ModelCar car;
-	ModelCarList cars;
-	ControllerCar controllerCar;
-	ControllerManufacturer list_of_manufacturers;
-	ControllerCategory list_of_category;
-	Intent i;
+	private ModelCar car;
+	private ModelCarList cars;
+	private ControllerCar controllerCar;
+	private ControllerManufacturer list_of_manufacturers;
+	private ControllerCategory list_of_category;
+	private Intent i;
+	
+	
+	ArrayList<String> categoryList;
+	ArrayList<String> manufacturerList;
 	
 	public static final String Name = "name";
 	public static final String Manufacturer = "manufacturer";
@@ -38,6 +42,9 @@ public class ViewAddCar extends Activity{
 	public static final String Category = "category";
 	public static final String isEdit = "isEdit";
 	public static final String mPosition = "position";
+	public static final String mManufacturerNo = "manufacturerNo";
+	public static final String mCategoryNo = "categoryNo";
+	
 	String name;
 	String manufacturer;
 	String type;
@@ -47,8 +54,8 @@ public class ViewAddCar extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_car);
-		ArrayList<String> manufacturerList = new ArrayList<String>();
-		ArrayList<String> categoryList = new ArrayList<String>();
+		manufacturerList = new ArrayList<String>();
+		categoryList = new ArrayList<String>();
 		i = getIntent();
 		try{
 			controllerCar = new ControllerCar(getApplicationContext(), "Cars.json");
@@ -81,10 +88,7 @@ public class ViewAddCar extends Activity{
 		mManufacturer = (Spinner) findViewById(R.id.manufacturer_spin);
 		
 		
-		if(i.getExtras().getBoolean(ViewAddCar.isEdit))
-			editLabels();
-		else
-			addLabels();
+		
 		
 		mName.setText(i.getStringExtra(ViewAddCar.Name));
 		mHorsepower.setText(i.getStringExtra(ViewAddCar.Horsepower));
@@ -92,16 +96,17 @@ public class ViewAddCar extends Activity{
 		ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoryList);
 		categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mCategory.setAdapter(categoryAdapter);
-
+			
 		ArrayAdapter<String> manufacturerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,manufacturerList);
 		manufacturerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mManufacturer.setAdapter(manufacturerAdapter);
 
-		/*for(int j = 0; j < list.size(); j++){
-			if(list.get(j).equals(ViewAddCar.Manufacturer))
-				mManufacturer.setSelection(j);
-		}*/
-
+		if(i.getExtras().getBoolean(ViewAddCar.isEdit))
+			editLabels();
+		else{
+			addLabels();
+			setSpinners();
+		}
 		cancel.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -176,6 +181,14 @@ public class ViewAddCar extends Activity{
 			type = "Sedan";
 			Log.d("type","was null");
 		}
+	}
+	private void setSpinners(){
+		mCategory.setSelection(i.getExtras().getInt(ViewAddCar.mCategoryNo));
+		mCategory.setEnabled(false);
+		mCategory.setClickable(false);
+		mManufacturer.setSelection(i.getExtras().getInt(ViewAddCar.mManufacturerNo));
+		mManufacturer.setEnabled(false);
+		mManufacturer.setClickable(false);
 	}
 
 

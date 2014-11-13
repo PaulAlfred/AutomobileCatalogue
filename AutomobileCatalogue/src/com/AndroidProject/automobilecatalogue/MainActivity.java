@@ -91,6 +91,7 @@ public class MainActivity extends ActionBarActivity {
 				try {
 					Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
 					intent.putExtra(CategoryActivity.mManufacturer,mControllerManufacturer.loadManufacturers().get(position).getmName());
+					intent.putExtra(CategoryActivity.mManfacturerNo, position);
 					startActivity(intent);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

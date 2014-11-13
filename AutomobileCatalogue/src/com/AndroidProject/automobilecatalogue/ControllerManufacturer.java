@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -23,11 +24,18 @@ public class ControllerManufacturer {
 	private Context context;
 	private String mFilename;
 	private ArrayList<ModelManufacturer> manufacturers;
+	private ArrayList<ModelCar> cars;
+	private ArrayList<ModelCar> modifiedCars;
+	private ControllerCar carController;
 	public ControllerManufacturer(Context c, String f){
 		context = c;
 		mFilename = f;
+		carController = new ControllerCar(context, "Cars.json");
 		try {
 			manufacturers = loadManufacturers();
+			cars = new ArrayList<ModelCar>();
+			modifiedCars = new ArrayList<ModelCar>();
+			cars = carController.loadCars();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,8 +89,13 @@ public class ControllerManufacturer {
 	
 	public void deleteManufacturer(int position) throws IOException, JSONException{
 		
+		for(ModelCar c : cars)
+			if(!c.getmManufacturer().equals(manufacturers.get(position).getmName()))
+				modifiedCars.add(c);
+		
 		manufacturers.remove(position);
 		partialSave(manufacturers);
+		carController.partialSave(modifiedCars);
 	}
 	
 	public void editManufacturer(ModelManufacturer model, int position) throws IOException, JSONException{
@@ -93,9 +106,6 @@ public class ControllerManufacturer {
 		partialSave(manufacturers);
 	}
 	
-	//manufacturers,edit(){
-		
-//	}
 	
 	private void partialSave(ArrayList<ModelManufacturer> manufacturers) throws JSONException
 	{

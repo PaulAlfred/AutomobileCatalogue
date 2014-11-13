@@ -21,13 +21,17 @@ import android.widget.ListView;
 public class CarActivity extends ActionBarActivity {
 
 	private CarListAdapter car_list;
-	private ControllerCar controllerCar;
+	private ControllerCar controllerCar;	
 	
 	private int mPosition;
 	private ArrayList<ModelCar> mCars;
+	private ArrayList<String> carFilters;
+	private Intent i;
 	
 	public static final String mManufacturer = "manufacturer";
 	public static final String mCategory = "category";
+	public static final String mManufacturerNo = "manufacturerNo";
+	public static final String mCategoryNo = "categoryNo";
 	
 	//loading the cars from cars.json and putting its contents to the adapter
 	//then displays the adapter in a listview
@@ -36,6 +40,8 @@ public class CarActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_car);
 		mCars = new ArrayList<ModelCar>();
+		carFilters = new ArrayList<String>();
+		i = getIntent();
 		
 	}
 	//inflates the add menu and icon on the action bar
@@ -54,6 +60,8 @@ public class CarActivity extends ActionBarActivity {
 		case R.id.action_add:
 			Intent intent = new Intent(CarActivity.this, ViewAddCar.class);
 			intent.putExtra(ViewAddCar.isEdit, false);
+			intent.putExtra(ViewAddCar.mCategoryNo, i.getExtras().getInt(CarActivity.mCategoryNo));
+			intent.putExtra(ViewAddCar.mManufacturerNo, i.getExtras().getInt(CarActivity.mManufacturerNo));
 			startActivity(intent);
 			return true;
 		default:
@@ -107,6 +115,8 @@ public class CarActivity extends ActionBarActivity {
 		intent.putExtra(ViewAddCar.Horsepower,mCars.get(mPosition).getmHorsepower());
 		intent.putExtra(ViewAddCar.isEdit, true);
 		intent.putExtra(ViewAddCar.mPosition, mPosition);
+		intent.putExtra(ViewAddCar.mCategoryNo, i.getExtras().getInt(CarActivity.mCategoryNo));
+		intent.putExtra(ViewAddCar.mManufacturerNo, i.getExtras().getInt(CarActivity.mManufacturerNo));
 		return intent;
 		
 	}
@@ -115,7 +125,9 @@ public class CarActivity extends ActionBarActivity {
 		try {
 			controllerCar = new ControllerCar(getApplicationContext(), "Cars.json");
 			mCars = controllerCar.loadCars();
-			car_list = new CarListAdapter(this, controllerCar.loadCars());
+			carFilters.add(i.getExtras().getString(CarActivity.mManufacturer));
+			carFilters.add(i.getExtras().getString(CarActivity.mCategory));
+			car_list = new CarListAdapter(this, controllerCar.loadCars(),carFilters);
 		} catch (IOException e) {
 
 			e.printStackTrace();
