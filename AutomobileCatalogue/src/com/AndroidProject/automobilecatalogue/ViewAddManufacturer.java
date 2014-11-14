@@ -108,7 +108,7 @@ public class ViewAddManufacturer extends Activity {
 	private void add() {
 		setValues();
 		manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
-		manufacturers.addManufacturer(manufacturer);	
+		manufacturers.addManufacturer(manufacturer);
 		finish();				
 	}
 	private void edit() {

@@ -1,5 +1,6 @@
 package com.AndroidProject.automobilecatalogue;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -10,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 
-public class CarListAdapter extends BaseAdapter{
+public class CarListAdapter extends BaseAdapter implements Serializable{
 
 	private Context context;
 	private LayoutInflater inflater;

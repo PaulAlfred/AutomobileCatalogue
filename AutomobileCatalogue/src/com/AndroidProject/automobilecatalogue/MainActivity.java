@@ -26,9 +26,13 @@ public class MainActivity extends ActionBarActivity {
 	private static Context mContext;
 	private ManufacturerListAdapter manufacturerListAdapter;
 	private ControllerManufacturer mControllerManufacturer;	
+	private ModelManufacturerList modelManufacturerList;
 	
 	private int mPosition;
 	private ArrayList<ModelManufacturer> mManufacturers;
+	private Intent i;
+	
+	public static final String Class_Object = "classObject";
 	
 	//loading the cars from Manufacturers.json and putting its contents to the adapter
 	//then displays the adapter in a listview
@@ -37,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		MainActivity.mContext = getApplicationContext();
 		mManufacturers = new ArrayList<ModelManufacturer>();
+		modelManufacturerList = new ModelManufacturerList(getApplicationContext());
 		setContentView(R.layout.activity_main);
 	}
 	//inflates the add menu and icon on the action bar
@@ -70,7 +75,7 @@ public class MainActivity extends ActionBarActivity {
 		mControllerManufacturer = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
 		try {
 			mManufacturers = mControllerManufacturer.loadManufacturers();
-			manufacturerListAdapter = new ManufacturerListAdapter(this, mControllerManufacturer.loadManufacturers());   
+			manufacturerListAdapter = new ManufacturerListAdapter(this, mManufacturers);   
 		} catch (Exception e ){
 		}
 		ListView mainList = (ListView) findViewById(R.id.activityMainList);
@@ -81,18 +86,10 @@ public class MainActivity extends ActionBarActivity {
 			public void onItemClick(AdapterView<?> adapter, View v, int position,
 					long s) {
 				
-				try {
-					Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
-					intent.putExtra(CategoryActivity.mManufacturer,mControllerManufacturer.loadManufacturers().get(position).getName());
-					intent.putExtra(CategoryActivity.mManfacturerNo, position);
-					startActivity(intent);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
+				intent.putExtra(CategoryActivity.mManufacturer,mManufacturers.get(position).getName());
+				intent.putExtra(CategoryActivity.mManfacturerNo, position);
+				startActivity(intent);
 			
 				
 			}
@@ -111,24 +108,24 @@ public class MainActivity extends ActionBarActivity {
 	}
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		try {
-			switch(item.getItemId()){
-			case 0:
+		switch(item.getItemId()){
+		case 0:
+			try {
 				mControllerManufacturer.deleteManufacturer(mPosition);
-				generateAdapter();
-				break;
-			case 1:
-				startActivity(editManufacturer(mPosition));
-				generateAdapter();
-				break;
-			
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			generateAdapter();
+			break;
+		case 1:
+			startActivity(editManufacturer(mPosition));
+			generateAdapter();
+			break;
+		
 		}
 		return super.onContextItemSelected(item);
 	}
