@@ -1,6 +1,8 @@
 package com.AndroidProject.automobilecatalogue;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 import org.json.JSONException;
 
@@ -13,7 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class ViewAddManufacturer extends Activity {
+public class ViewAddManufacturer extends Activity implements Serializable{
 
 	//variables for widgets
 	private Button addEdit, cancel;
@@ -24,7 +26,7 @@ public class ViewAddManufacturer extends Activity {
 	private EditText origin;
 	//Model and Controller Objects
 	private ModelManufacturer manufacturer;
-	private ModelManufacturerList manufacturers;
+	private ArrayList<ModelManufacturer> manufacturers;
 	private ControllerManufacturer manufacturerController;
 	private Intent i;
 	//intent values
@@ -34,18 +36,22 @@ public class ViewAddManufacturer extends Activity {
 	public static final String mRevenue = "revenue";
 	public static final String isEdit = "isEdit";
 	public static final String mPosition = "position";
+	public static final String mObject = "object";
 	//for better readability of listOfObject.get(position).getType();
 	private String Name;
 	private String Founded;
 	private String Revenue;
 	private String Origin;
-	
+	private int Position;
+	private boolean mIsEdit;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_manufacturer);
 		
 		i = getIntent();
+		mIsEdit = i.getExtras().getBoolean(ViewAddManufacturer.isEdit);
+		
 		
 		name = (EditText) findViewById(R.id.editTextCompanyName);
 		founded = (EditText) findViewById(R.id.editTextYear);
@@ -61,14 +67,16 @@ public class ViewAddManufacturer extends Activity {
 		origin.setText(i.getStringExtra(ViewAddManufacturer.mOrigin));
 		
 		
-		if(i.getExtras().getBoolean(ViewAddManufacturer.isEdit))
+		if(i.getExtras().getBoolean(ViewAddManufacturer.isEdit)){
+			Position = i.getExtras().getInt(ViewAddManufacturer.mPosition);
 			editLabel();
+		}
 		else
 			addLabel();
 		
 		
 		manufacturerController = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
-		manufacturers = new ModelManufacturerList(MainActivity.getAppContext());
+		manufacturers = new ArrayList<ModelManufacturer>();
 		addEdit.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -79,10 +87,6 @@ public class ViewAddManufacturer extends Activity {
 					add();
 				
 			}
-
-				
-				
-			
 		});
 		cancel.setOnClickListener(new OnClickListener() {
 			
@@ -108,22 +112,25 @@ public class ViewAddManufacturer extends Activity {
 	private void add() {
 		setValues();
 		manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
-		manufacturers.addManufacturer(manufacturer);	
+		manufacturers =  (ArrayList<ModelManufacturer>) i.getSerializableExtra(ViewAddManufacturer.mObject);
+		manufacturers.add(manufacturer);
+		Intent resultIntent = new Intent();
+		resultIntent.putExtra(MainActivity.mObject, manufacturers);
+		setResult(Activity.RESULT_OK, resultIntent);
 		finish();				
 	}
 	private void edit() {
 		setValues();
 		manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
-		try {
-			manufacturerController.editManufacturer(manufacturer, i.getExtras().getInt(ViewAddManufacturer.mPosition));
-			finish();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		manufacturers =  (ArrayList<ModelManufacturer>) i.getSerializableExtra(ViewAddManufacturer.mObject);
+		manufacturers.get(Position).setFounded(manufacturer.getFounded());
+		manufacturers.get(Position).setName(manufacturer.getName());
+		manufacturers.get(Position).setOrigin(manufacturer.getOrigin());
+		manufacturers.get(Position).setRevenue(manufacturer.getRevenue());
+		Intent resultIntent = new Intent();
+		resultIntent.putExtra(MainActivity.mObject, manufacturers);
+		setResult(Activity.RESULT_OK, resultIntent);
+		finish();
 	}
 	//method to hide the setting of helper strings
 	private void setValues() {

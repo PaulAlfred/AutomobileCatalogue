@@ -28,10 +28,14 @@ public class CarActivity extends ActionBarActivity {
 	private ArrayList<String> carFilters;
 	private Intent i;
 	
+	public static final String mObject = "object";
+	
 	public static final String mManufacturer = "manufacturer";
 	public static final String mCategory = "category";
 	public static final String mManufacturerNo = "manufacturerNo";
 	public static final String mCategoryNo = "categoryNo";
+	
+	private boolean mIsEdit;
 	
 	//loading the cars from cars.json and putting its contents to the adapter
 	//then displays the adapter in a listview
@@ -39,6 +43,7 @@ public class CarActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_car);
+		mIsEdit = false;
 		mCars = new ArrayList<ModelCar>();
 		carFilters = new ArrayList<String>();
 		i = getIntent();
@@ -60,7 +65,7 @@ public class CarActivity extends ActionBarActivity {
 		switch (item.getItemId()) {
 		case R.id.action_add:
 			Intent intent = new Intent(CarActivity.this, ViewAddCar.class);
-			intent.putExtra(ViewAddCar.isEdit, false);
+			intent.putExtra(ViewAddCar.isEdit, mIsEdit);
 			intent.putExtra(ViewAddCar.mCategoryNo, i.getExtras().getInt(CarActivity.mCategoryNo));
 			intent.putExtra(ViewAddCar.mManufacturerNo, i.getExtras().getInt(CarActivity.mManufacturerNo));
 			startActivity(intent);

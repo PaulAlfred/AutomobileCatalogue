@@ -1,9 +1,11 @@
 package com.AndroidProject.automobilecatalogue;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ModelManufacturer{
+public class ModelManufacturer implements Serializable{
 	//To be put on a jsonObject
 	//values
 	private String mName;

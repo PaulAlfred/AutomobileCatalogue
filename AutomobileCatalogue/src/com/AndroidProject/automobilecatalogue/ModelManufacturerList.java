@@ -1,6 +1,7 @@
 package com.AndroidProject.automobilecatalogue;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -9,7 +10,13 @@ import android.content.Context;
  
 
 //Acts as a bridge of ControllerManufacturer and ModelManufacturer
-public class ModelManufacturerList{
+public class ModelManufacturerList implements Serializable{
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7609809664710096575L;
 
 	private final String mFilename = "Manufacturers.json";
 	
@@ -23,23 +30,25 @@ public class ModelManufacturerList{
 		mAppcontext = appContext;
 		mManufacturers = new ArrayList<ModelManufacturer>();
 		mManSerializer = new ControllerManufacturer(mAppcontext, mFilename);
+		loadManufacturers();
 	}
 	
 
 	public void addManufacturer(ModelManufacturer m) {
 		mManufacturers.add(m);
-		saveManufacturers();
+		//saveManufacturers();
 	}
 	
-	private void saveManufacturers(){
+	public void saveManufacturers(){
 		try{
 			mManSerializer.saveManufacturers(mManufacturers);
 		} catch (Exception e) {
 		}
 	}
-	public void loadManufacturers(){
+	private void loadManufacturers(){
 		try {
-			mManSerializer.loadManufacturers();
+			mManufacturers= mManSerializer.loadManufacturers();
+			//mManSerializer.loadManufacturers();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,6 +56,14 @@ public class ModelManufacturerList{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public ArrayList<ModelManufacturer> getManufacturers() {
+		return mManufacturers;
+	}
+
+
+	public void setManufacturers(ArrayList<ModelManufacturer> mManufacturers) {
+		this.mManufacturers = mManufacturers;
 	}
 	
 

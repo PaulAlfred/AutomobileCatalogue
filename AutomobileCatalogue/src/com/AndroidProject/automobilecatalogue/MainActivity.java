@@ -1,6 +1,7 @@
 package com.AndroidProject.automobilecatalogue;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -9,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -26,9 +28,14 @@ public class MainActivity extends ActionBarActivity {
 	private static Context mContext;
 	private ManufacturerListAdapter manufacturerListAdapter;
 	private ControllerManufacturer mControllerManufacturer;	
+	private ModelManufacturerList mModelManufacturerList;
+	
+	public static final String mObject = "object";
 	
 	private int mPosition;
 	private ArrayList<ModelManufacturer> mManufacturers;
+	
+	private boolean mIsEdit;
 	
 	//loading the cars from Manufacturers.json and putting its contents to the adapter
 	//then displays the adapter in a listview
@@ -36,7 +43,10 @@ public class MainActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		MainActivity.mContext = getApplicationContext();
+		mIsEdit = false;
 		mManufacturers = new ArrayList<ModelManufacturer>();
+		mModelManufacturerList = new ModelManufacturerList(getApplicationContext());
+		
 		setContentView(R.layout.activity_main);
 	}
 	//inflates the add menu and icon on the action bar
@@ -53,8 +63,9 @@ public class MainActivity extends ActionBarActivity {
 		switch (item.getItemId()) {
 		case R.id.action_add:
 			Intent intent = new Intent(MainActivity.this, ViewAddManufacturer.class);
-			intent.putExtra(ViewAddManufacturer.isEdit, false);
-			startActivity(intent);
+			intent.putExtra(ViewAddManufacturer.isEdit, mIsEdit);
+			intent.putExtra(ViewAddManufacturer.mObject,mManufacturers);
+			startActivityForResult(intent, 1);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -69,8 +80,12 @@ public class MainActivity extends ActionBarActivity {
 	private void  generateAdapter(){
 		mControllerManufacturer = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
 		try {
-			mManufacturers = mControllerManufacturer.loadManufacturers();
-			manufacturerListAdapter = new ManufacturerListAdapter(this, mControllerManufacturer.loadManufacturers());   
+			//mManufacturers = mControllerManufacturer.loadManufacturers();
+			//manufacturerListAdapter = new ManufacturerListAdapter(this, mControllerManufacturer.loadManufacturers());  
+			if(mManufacturers == null)
+				mManufacturers = mModelManufacturerList.getManufacturers();
+			manufacturerListAdapter = new ManufacturerListAdapter(this, mManufacturers);  
+			
 		} catch (Exception e ){
 		}
 		ListView mainList = (ListView) findViewById(R.id.activityMainList);
@@ -111,36 +126,30 @@ public class MainActivity extends ActionBarActivity {
 	}
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		try {
-			switch(item.getItemId()){
-			case 0:
-				mControllerManufacturer.deleteManufacturer(mPosition);
-				generateAdapter();
-				break;
-			case 1:
-				startActivity(editManufacturer(mPosition));
-				generateAdapter();
-				break;
-			
-			}
-		}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		switch(item.getItemId()){
+		case 0:
+			mManufacturers.remove(mPosition);
+			generateAdapter();
+			break;
+		case 1:
+			startActivityForResult(editManufacturer(mPosition), 1);
+			generateAdapter();
+			break;
+		
 		}
 		return super.onContextItemSelected(item);
 	}
 	//put Extras to the intent to be started for editView
 	private Intent editManufacturer(int mPosition) {
+		mIsEdit=true;
 		Intent intent = new Intent(this, ViewAddManufacturer.class);
 		intent.putExtra(ViewAddManufacturer.mName, mManufacturers.get(mPosition).getName());
 		intent.putExtra(ViewAddManufacturer.mFounded, mManufacturers.get(mPosition).getFounded());
 		intent.putExtra(ViewAddManufacturer.mOrigin, mManufacturers.get(mPosition).getOrigin());
 		intent.putExtra(ViewAddManufacturer.mRevenue, mManufacturers.get(mPosition).getRevenue());
-		intent.putExtra(ViewAddManufacturer.isEdit, true);
+		intent.putExtra(ViewAddManufacturer.isEdit, mIsEdit);
 		intent.putExtra(ViewAddManufacturer.mPosition, mPosition);
+		intent.putExtra(ViewAddManufacturer.mObject, mManufacturers);
 		return intent;
 		
 	}
@@ -149,6 +158,24 @@ public class MainActivity extends ActionBarActivity {
 		generateAdapter();
 		super.onResume();
 	}
-	
-	
+	@Override
+	protected void onDestroy() {
+		mControllerManufacturer.saveManufacturers(mManufacturers);
+		super.onDestroy();
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1) {
+	        if(resultCode == RESULT_OK){
+	        	if(mIsEdit!=true)
+	        		mManufacturers.addAll((ArrayList<ModelManufacturer>) data.getSerializableExtra(mObject));
+	        	else
+	        		mManufacturers = (ArrayList<ModelManufacturer>) data.getSerializableExtra(mObject);
+	            Log.d("result", "resultcaptured");
+	        }
+	        if (resultCode == RESULT_CANCELED) {
+	            Log.d("result", "noresultcaptured");
+	        }
+	    }
+	}
 }
