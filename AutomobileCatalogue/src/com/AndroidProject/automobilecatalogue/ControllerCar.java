@@ -16,7 +16,6 @@ import org.json.JSONTokener;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 
@@ -69,29 +68,22 @@ public class ControllerCar  extends Activity{
 		}
 		return cars;
 	}
-	
+	//deletes the car on the jsonFile
 	public void deleteCar(int position) throws IOException, JSONException{
 		
 		mCars.remove(position);
-		/*ArrayList<ModelCar> cars = loadCars();
-		
-		for(int i =0; i<cars.size(); i++){
-			 String name = cars.get(i).getmName();
-			if(name.equals(mName)){
-				cars.remove(i);
-			}
-		}*/
 		partialSave(mCars);
 	}
+	//edits the car information on the jsonfile
 	public void editCar(ModelCar car, int position) throws IOException, JSONException{
 
-		mCars.get(position).setmHorsepower(car.getmHorsepower());
-		mCars.get(position).setmManufacturer(car.getmManufacturer());
-		mCars.get(position).setmName(car.getmName());
-		mCars.get(position).setmType(car.getmType());
+		mCars.get(position).setHorsepower(car.getHorsepower());
+		mCars.get(position).setManufacturer(car.getManufacturer());
+		mCars.get(position).setName(car.getName());
+		mCars.get(position).setType(car.getType());
 		partialSave(mCars);
 	}
-	
+	//part of save functionality that overwrites the jsonfile
 	public void partialSave(ArrayList<ModelCar> cars) throws JSONException
 	{
 		JSONArray array = new JSONArray();

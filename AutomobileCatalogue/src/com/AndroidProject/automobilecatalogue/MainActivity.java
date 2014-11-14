@@ -24,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
 
 	
 	private static Context mContext;
-	private ManufacturerListAdapter mBrand_List_Adapter;
+	private ManufacturerListAdapter manufacturerListAdapter;
 	private ControllerManufacturer mControllerManufacturer;	
 	
 	private int mPosition;
@@ -65,23 +65,16 @@ public class MainActivity extends ActionBarActivity {
 	public static Context getAppContext() {
         return MainActivity.mContext;
     }
-	//refreshes the view on start of MainActivity
-	@Override
-	protected void onStart() {
-		super.onStart();
-		generateAdapter();
-		
-	}
 	//Used to simplify code
 	private void  generateAdapter(){
 		mControllerManufacturer = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
 		try {
 			mManufacturers = mControllerManufacturer.loadManufacturers();
-			mBrand_List_Adapter = new ManufacturerListAdapter(this, mControllerManufacturer.loadManufacturers());   
+			manufacturerListAdapter = new ManufacturerListAdapter(this, mControllerManufacturer.loadManufacturers());   
 		} catch (Exception e ){
 		}
-		ListView mainList = (ListView) findViewById(R.id.mainList);
-		mainList.setAdapter(mBrand_List_Adapter);
+		ListView mainList = (ListView) findViewById(R.id.activityMainList);
+		mainList.setAdapter(manufacturerListAdapter);
 		mainList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -90,7 +83,7 @@ public class MainActivity extends ActionBarActivity {
 				
 				try {
 					Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
-					intent.putExtra(CategoryActivity.mManufacturer,mControllerManufacturer.loadManufacturers().get(position).getmName());
+					intent.putExtra(CategoryActivity.mManufacturer,mControllerManufacturer.loadManufacturers().get(position).getName());
 					intent.putExtra(CategoryActivity.mManfacturerNo, position);
 					startActivity(intent);
 				} catch (IOException e) {
@@ -110,7 +103,7 @@ public class MainActivity extends ActionBarActivity {
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
 		mPosition = info.position;
-		menu.setHeaderTitle(mManufacturers.get(mPosition).getmName());
+		menu.setHeaderTitle(mManufacturers.get(mPosition).getName());
 		menu.add(Menu.NONE,0,0,"Delete");
 		menu.add(Menu.NONE,1,1,"Edit");
 
@@ -139,12 +132,13 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return super.onContextItemSelected(item);
 	}
+	//put Extras to the intent to be started for editView
 	private Intent editManufacturer(int mPosition) {
 		Intent intent = new Intent(this, ViewAddManufacturer.class);
-		intent.putExtra(ViewAddManufacturer.mName, mManufacturers.get(mPosition).getmName());
-		intent.putExtra(ViewAddManufacturer.mFounded, mManufacturers.get(mPosition).getmFounded());
-		intent.putExtra(ViewAddManufacturer.mOrigin, mManufacturers.get(mPosition).getmOrigin());
-		intent.putExtra(ViewAddManufacturer.mRevenue, mManufacturers.get(mPosition).getmRevenue());
+		intent.putExtra(ViewAddManufacturer.mName, mManufacturers.get(mPosition).getName());
+		intent.putExtra(ViewAddManufacturer.mFounded, mManufacturers.get(mPosition).getFounded());
+		intent.putExtra(ViewAddManufacturer.mOrigin, mManufacturers.get(mPosition).getOrigin());
+		intent.putExtra(ViewAddManufacturer.mRevenue, mManufacturers.get(mPosition).getRevenue());
 		intent.putExtra(ViewAddManufacturer.isEdit, true);
 		intent.putExtra(ViewAddManufacturer.mPosition, mPosition);
 		return intent;

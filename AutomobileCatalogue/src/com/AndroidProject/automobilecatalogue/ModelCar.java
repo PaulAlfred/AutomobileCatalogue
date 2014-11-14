@@ -20,44 +20,44 @@ public class ModelCar {
 	private static final String JSON_HORSPOWER = "horsepower";
 	
 	//setters of values
-	public void setmName(String mName) {
+	public void setName(String mName) {
 		this.mName = mName;
 	}
 
-	public void setmType(String mType) {
+	public void setType(String mType) {
 		this.mType = mType;
 	}
 
-	public void setmManufacturer(String mManufacturer) {
+	public void setManufacturer(String mManufacturer) {
 		this.mManufacturer = mManufacturer;
 	}
 
-	public void setmHorsepower(String mHorsepower) {
+	public void setHorsepower(String mHorsepower) {
 		this.mHorsepower = mHorsepower;
 	}
 
 	//getters of values
-	public String getmType() {
+	public String getType() {
 		return mType;
 	}
 
-	public String getmManufacturer() {
+	public String getManufacturer() {
 		return mManufacturer;
 	}
 
-	public String getmHorsepower() {
+	public String getHorsepower() {
 		return mHorsepower;
 	}
 
-	public String getmName() {
+	public String getName() {
 		return mName;
 	}
 	//constructor that sets the values of the car
-	public ModelCar(String Name, String Manufacturer, String Horsepower, String Type){
-		this.mName = Name;
-		this.mType = Type;
-		this.mManufacturer = Manufacturer;
-		this.mHorsepower = Horsepower;
+	public ModelCar(String name, String manufacturer, String horsepower, String type){
+		this.mName = name;
+		this.mType = type;
+		this.mManufacturer = manufacturer;
+		this.mHorsepower = horsepower;
 	}
 	//gets the value of the jsonobject
 	public ModelCar(JSONObject json) throws JSONException {

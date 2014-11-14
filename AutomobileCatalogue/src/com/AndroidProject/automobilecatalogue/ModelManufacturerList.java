@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.json.JSONException;
 
 import android.content.Context;
-import android.util.Log;
  
 
 //Acts as a bridge of ControllerManufacturer and ModelManufacturer
@@ -32,14 +31,10 @@ public class ModelManufacturerList{
 		saveManufacturers();
 	}
 	
-	private boolean saveManufacturers(){
+	private void saveManufacturers(){
 		try{
 			mManSerializer.saveManufacturers(mManufacturers);
-			Log.d("Manufacturers", "saved files");
-			return true;
 		} catch (Exception e) {
-			Log.d("Manufacturers", "files not saved");
-			return false;
 		}
 	}
 	public void loadManufacturers(){

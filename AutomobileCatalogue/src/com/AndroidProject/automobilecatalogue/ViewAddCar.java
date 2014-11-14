@@ -13,29 +13,29 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class ViewAddCar extends Activity{
-
-	private TextView add_edit_title;
-	private Button cancel,add_edit;
-	private AutoCompleteTextView mName,  mHorsepower;
+	
+	//variables for widgets
+	private TextView addEditTitle;
+	private Button cancel,addEdit;
+	private EditText mName,  mHorsepower;
 	private Spinner mManufacturer, mCategory;
-
+	//Model and Controller Objects
 	private ModelCar car;
 	private ModelCarList cars;
 	private ControllerCar controllerCar;
-	private ControllerManufacturer list_of_manufacturers;
-	private ControllerCategory list_of_category;
+	private ControllerManufacturer manufacturers;
+	private ControllerCategory categories;
 	private Intent i;
-	
-	
-	ArrayList<String> categoryList;
-	ArrayList<String> manufacturerList;
-	
+	//receive jsonobject names for the spinner
+	private ArrayList<String> categoryList;
+	private ArrayList<String> manufacturerList;
+	//intent values
 	public static final String Name = "name";
 	public static final String Manufacturer = "manufacturer";
 	public static final String Horsepower = "horsepower";
@@ -44,11 +44,11 @@ public class ViewAddCar extends Activity{
 	public static final String mPosition = "position";
 	public static final String mManufacturerNo = "manufacturerNo";
 	public static final String mCategoryNo = "categoryNo";
-	
-	String name;
-	String manufacturer;
-	String type;
-	String horsepower;
+	//for better readability of listOfObject.get(position).getType();
+	private String name;
+	private String manufacturer;
+	private String type;
+	private String horsepower;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +59,13 @@ public class ViewAddCar extends Activity{
 		i = getIntent();
 		try{
 			controllerCar = new ControllerCar(getApplicationContext(), "Cars.json");
-			list_of_manufacturers = new ControllerManufacturer(getApplicationContext(), "Manufacturers.json");
-			list_of_category = new ControllerCategory(getApplicationContext(), "Categories.json");
-			for(ModelManufacturer m : list_of_manufacturers.loadManufacturers()){
-				manufacturerList.add(m.getmName());
+			manufacturers = new ControllerManufacturer(getApplicationContext(), "Manufacturers.json");
+			categories = new ControllerCategory(getApplicationContext(), "Categories.json");
+			for(ModelManufacturer m : manufacturers.loadManufacturers()){
+				manufacturerList.add(m.getName());
 			}
-			for(ModelCategory c: list_of_category.loadCategories()){
-				categoryList.add(c.getmName());
+			for(ModelCategory c: categories.loadCategories()){
+				categoryList.add(c.getName());
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -79,13 +79,13 @@ public class ViewAddCar extends Activity{
 
 		cars = new ModelCarList(ViewAddCar.this);
 		
-		add_edit_title = (TextView) findViewById(R.id.add_edit_car_title);
+		addEditTitle = (TextView) findViewById(R.id.addOrEditCarTitle);
 		cancel = (Button) findViewById(R.id.Cancel);
-		add_edit = (Button) findViewById(R.id.add_edit_car_info);
-		mName = (AutoCompleteTextView) findViewById(R.id.edit_car_model);
-		mCategory = (Spinner) findViewById(R.id.category_spinner);
-		mHorsepower = (AutoCompleteTextView) findViewById(R.id.edit_horsepower);
-		mManufacturer = (Spinner) findViewById(R.id.manufacturer_spin);
+		addEdit = (Button) findViewById(R.id.add_edit_car_info);
+		mName = (EditText) findViewById(R.id.editTextCarName);
+		mCategory = (Spinner) findViewById(R.id.spinnerCategory);
+		mHorsepower = (EditText) findViewById(R.id.editTextHorsepower);
+		mManufacturer = (Spinner) findViewById(R.id.spinnerManufacturer);
 		
 		
 		
@@ -116,7 +116,7 @@ public class ViewAddCar extends Activity{
 
 			
 		});
-		add_edit.setOnClickListener(new OnClickListener() {
+		addEdit.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -128,15 +128,17 @@ public class ViewAddCar extends Activity{
 			}
 		});
 	}
+	//Labels for the widgets to determine what state of functionality it is in
 	private void addLabels() {
-		add_edit.setText("Add");
-		add_edit_title.setText("Add Car");
+		addEdit.setText("Add");
+		addEditTitle.setText("Add Car");
 		
 	}
 	private void editLabels() {
-		add_edit.setText("Edit");
-		add_edit_title.setText("Edit Car");		
+		addEdit.setText("Edit");
+		addEditTitle.setText("Edit Car");		
 	}
+	//actions for different functionality add or edit
 	private void add(){
 
 		setCarValues();
@@ -159,6 +161,7 @@ public class ViewAddCar extends Activity{
 		}
 		
 	}
+	//method to hide the setting of values of Strings
 	private void setCarValues() {
 		name = mName.getText().toString();
 		manufacturer = mManufacturer.getSelectedItem().toString();
@@ -182,6 +185,7 @@ public class ViewAddCar extends Activity{
 			Log.d("type","was null");
 		}
 	}
+	//method to hide the setting of spinner items
 	private void setSpinners(){
 		mCategory.setSelection(i.getExtras().getInt(ViewAddCar.mCategoryNo));
 		mCategory.setEnabled(false);

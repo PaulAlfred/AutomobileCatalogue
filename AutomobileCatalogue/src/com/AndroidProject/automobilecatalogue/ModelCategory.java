@@ -16,10 +16,10 @@ public class ModelCategory{
 		this.mDescription = Description;
 	}
 	//getters of values
-	public String getmName() {
+	public String getName() {
 		return mName;
 	}
-	public String getmDescription() {
+	public String getDescription() {
 		return mDescription;
 	}
 	//gets the value of the jsonobject

@@ -28,12 +28,11 @@ public class ModelCarList {
 		saveCar();
 	}
 	
-	private boolean saveCar(){
+	private void saveCar(){
 		try{
 			mCarSerializer.saveCars(mCar);
-			return true;
 		} catch (Exception e) {
-			return false;
+			
 		}
 	}
 	public void loadCar(){

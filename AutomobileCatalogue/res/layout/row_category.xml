@@ -5,18 +5,17 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/category_title"
+        android:id="@+id/textViewCategoryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" 
-        android:textColor="#000000"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#000000" />
 
     <TextView
-        android:id="@+id/category_description"
+        android:id="@+id/editTextCategoryDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" 
-		android:textColor="#000000"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+
 </LinearLayout>

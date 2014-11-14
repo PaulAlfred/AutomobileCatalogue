@@ -17,47 +17,47 @@ public class ModelManufacturer{
 	private static final String JSON_REVENUE = "revenue";
 	
 	//setter of values
-	public void setmName(String mName) {
+	public void setName(String mName) {
 		this.mName = mName;
 	}
 
-	public void setmFounded(String mFounded) {
+	public void setFounded(String mFounded) {
 		this.mFounded = mFounded;
 	}
 
-	public void setmOrigin(String mOrigin) {
+	public void setOrigin(String mOrigin) {
 		this.mOrigin = mOrigin;
 	}
 
-	public void setmRevenue(String mRevenue) {
+	public void setRevenue(String mRevenue) {
 		this.mRevenue = mRevenue;
 	}
 
 	//getters of values
-	public String getmName() {
+	public String getName() {
 		return mName;
 	}
 
-	public String getmFounded() {
+	public String getFounded() {
 		return mFounded;
 	}
 
-	public String getmOrigin() {
+	public String getOrigin() {
 		return mOrigin;
 	}
 
-	public String getmRevenue() {
+	public String getRevenue() {
 		return mRevenue;
 	}
 
 
 
-	//constructor that sets the values of the car
-	public ModelManufacturer(String Name, String Founded, String Origin, String Revenue){
-		this.mName = Name;
-		this.mFounded = Founded;
-		this.mOrigin = Origin;
-		this.mRevenue = Revenue;
+	//constructor that sets the values of the manufacturer
+	public ModelManufacturer(String name, String founded, String origin, String revenue){
+		this.mName = name;
+		this.mFounded = founded;
+		this.mOrigin = origin;
+		this.mRevenue = revenue;
 	}
 	//gets the value of the jsonobject
 	public ModelManufacturer(JSONObject json) throws JSONException {

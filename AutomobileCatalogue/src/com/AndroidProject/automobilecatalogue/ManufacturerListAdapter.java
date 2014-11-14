@@ -38,30 +38,39 @@ public class ManufacturerListAdapter extends BaseAdapter{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		ViewHolderItem mViewHolder;
+		
+		if(convertView == null){
+			
+			convertView = inflater.inflate(R.layout.row, parent, false);
+			mViewHolder = new ViewHolderItem();
+			mViewHolder.Name = (TextView) convertView.findViewById(R.id.titleText);
+			mViewHolder.Origin = (TextView) convertView.findViewById(R.id.description1);
+			mViewHolder.Founded = (TextView) convertView.findViewById(R.id.description2);
+			mViewHolder.Revenue = (TextView) convertView.findViewById(R.id.description3);
+			
+			convertView.setTag(mViewHolder);
+		} else {
 
-		
-		View row = convertView;
-		
-		if(row == null){
-			row = inflater.inflate(R.layout.row, parent, false);
+			mViewHolder = (ViewHolderItem) convertView.getTag();
+
 		}
 		
+		ModelManufacturer manufacturer = manufacturers.get(position);
 		
-		ViewHolder mViewHolder = new ViewHolder();
-		mViewHolder.Name = (TextView) row.findViewById(R.id.titleText);
-		mViewHolder.Origin = (TextView) row.findViewById(R.id.description1);
-		mViewHolder.Founded = (TextView) row.findViewById(R.id.description2);
-		mViewHolder.Revenue = (TextView) row.findViewById(R.id.description3);
+		if(manufacturer != null){
 		
-		mViewHolder.Name.setText(manufacturers.get(position).getmName());
-		mViewHolder.Founded.setText(manufacturers.get(position).getmFounded());
-		mViewHolder.Origin.setText(manufacturers.get(position).getmOrigin());
-		mViewHolder.Revenue.setText(manufacturers.get(position).getmRevenue());
+			mViewHolder.Name.setText(manufacturer.getName());
+			mViewHolder.Founded.setText(manufacturer.getFounded());
+			mViewHolder.Origin.setText(manufacturer.getOrigin());
+			mViewHolder.Revenue.setText(manufacturer.getRevenue());
+			
+		}
 		
-		return row;
+		return convertView;
 	}
 
-	private class ViewHolder{
+	private class ViewHolderItem{
 		TextView Name, Origin, Founded, Revenue;
 	}
 	

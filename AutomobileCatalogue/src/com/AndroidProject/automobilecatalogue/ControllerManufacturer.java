@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -86,27 +85,26 @@ public class ControllerManufacturer {
 		}
 		return manufacturers;
 	}
-	
+	//deletes the manufacturer on the jsonFile
 	public void deleteManufacturer(int position) throws IOException, JSONException{
 		
 		for(ModelCar c : cars)
-			if(!c.getmManufacturer().equals(manufacturers.get(position).getmName()))
+			if(!c.getManufacturer().equals(manufacturers.get(position).getName()))
 				modifiedCars.add(c);
 		
 		manufacturers.remove(position);
 		partialSave(manufacturers);
 		carController.partialSave(modifiedCars);
 	}
-	
+	//edits the manufactuer information on the jsonfile
 	public void editManufacturer(ModelManufacturer model, int position) throws IOException, JSONException{
-		manufacturers.get(position).setmFounded(model.getmFounded());
-		manufacturers.get(position).setmName(model.getmName());
-		manufacturers.get(position).setmOrigin(model.getmOrigin());
-		manufacturers.get(position).setmRevenue(model.getmRevenue());
+		manufacturers.get(position).setFounded(model.getFounded());
+		manufacturers.get(position).setName(model.getName());
+		manufacturers.get(position).setOrigin(model.getOrigin());
+		manufacturers.get(position).setRevenue(model.getRevenue());
 		partialSave(manufacturers);
 	}
-	
-	
+	//part of save functionality that overwrites the jsonfile	
 	private void partialSave(ArrayList<ModelManufacturer> manufacturers) throws JSONException
 	{
 		JSONArray array = new JSONArray();

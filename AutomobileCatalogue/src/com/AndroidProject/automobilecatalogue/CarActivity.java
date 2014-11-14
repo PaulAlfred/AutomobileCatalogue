@@ -19,8 +19,8 @@ import android.widget.ListView;
 
 
 public class CarActivity extends ActionBarActivity {
-
-	private CarListAdapter car_list;
+	
+	private CarListAdapter carListAdapter;
 	private ControllerCar controllerCar;	
 	
 	private int mPosition;
@@ -56,6 +56,7 @@ public class CarActivity extends ActionBarActivity {
 	//starts the activity of the add menu
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		
 		switch (item.getItemId()) {
 		case R.id.action_add:
 			Intent intent = new Intent(CarActivity.this, ViewAddCar.class);
@@ -69,6 +70,7 @@ public class CarActivity extends ActionBarActivity {
 
 		}
 	}
+	//Refreshes the Adapter information every Resume
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -77,15 +79,17 @@ public class CarActivity extends ActionBarActivity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
+		
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
 		mPosition = info.position;
-		menu.setHeaderTitle(mCars.get(mPosition).getmName());
+		menu.setHeaderTitle(mCars.get(mPosition).getName());
 		menu.add(Menu.NONE,0,0,"Delete");
 		menu.add(Menu.NONE,1,1,"Edit");
 
 	}
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
+		
 		try {
 			switch(item.getItemId()){
 			case 0:
@@ -99,20 +103,22 @@ public class CarActivity extends ActionBarActivity {
 			
 			}
 		}catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return super.onContextItemSelected(item);
 	}
+	//put Extras to the intent to be started for editView
 	private Intent editCar(int mPosition) {
+		
 		Intent intent = new Intent(this, ViewAddCar.class);
-		intent.putExtra(ViewAddCar.Name,mCars.get(mPosition).getmName());
-		intent.putExtra(ViewAddCar.Category,mCars.get(mPosition).getmType());
-		intent.putExtra(ViewAddCar.Manufacturer,mCars.get(mPosition).getmManufacturer());
-		intent.putExtra(ViewAddCar.Horsepower,mCars.get(mPosition).getmHorsepower());
+		intent.putExtra(ViewAddCar.Name,mCars.get(mPosition).getName());
+		intent.putExtra(ViewAddCar.Category,mCars.get(mPosition).getType());
+		intent.putExtra(ViewAddCar.Manufacturer,mCars.get(mPosition).getManufacturer());
+		intent.putExtra(ViewAddCar.Horsepower,mCars.get(mPosition).getHorsepower());
 		intent.putExtra(ViewAddCar.isEdit, true);
 		intent.putExtra(ViewAddCar.mPosition, mPosition);
 		intent.putExtra(ViewAddCar.mCategoryNo, i.getExtras().getInt(CarActivity.mCategoryNo));
@@ -120,14 +126,15 @@ public class CarActivity extends ActionBarActivity {
 		return intent;
 		
 	}
-	
+	//generates the Adapter information
 	private void generateAdapter(){
+		
 		try {
 			controllerCar = new ControllerCar(getApplicationContext(), "Cars.json");
 			mCars = controllerCar.loadCars();
 			carFilters.add(i.getExtras().getString(CarActivity.mManufacturer));
 			carFilters.add(i.getExtras().getString(CarActivity.mCategory));
-			car_list = new CarListAdapter(this, controllerCar.loadCars(),carFilters);
+			carListAdapter = new CarListAdapter(this, controllerCar.loadCars(),carFilters);
 		} catch (IOException e) {
 
 			e.printStackTrace();
@@ -135,8 +142,9 @@ public class CarActivity extends ActionBarActivity {
 
 			e.printStackTrace();
 		}
-		ListView carList = (ListView) findViewById(R.id.carList);
-		carList.setAdapter(car_list);
+		
+		ListView carList = (ListView) findViewById(R.id.activityCarList);
+		carList.setAdapter(carListAdapter);
 		registerForContextMenu(carList);
 	}
 	

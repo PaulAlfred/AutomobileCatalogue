@@ -37,27 +37,34 @@ public class CategoryListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-
+		ViewHolderItem mViewHolder;
 		
-		View row = convertView;
 		
-		if(row == null){
-			row = inflater.inflate(R.layout.row_category, parent, false);
+		if(convertView == null){
+			convertView = inflater.inflate(R.layout.row_category, parent, false);
+				
+			mViewHolder = new ViewHolderItem();
+			mViewHolder.Name = (TextView) convertView.findViewById(R.id.textViewCategoryName);
+			mViewHolder.Description = (TextView) convertView.findViewById(R.id.editTextCategoryDescription);
+			
+			convertView.setTag(mViewHolder);
+		} else {
+			
+			mViewHolder = (ViewHolderItem) convertView.getTag();
+		
 		}
 		
+		ModelCategory category = categories.get(position);
 		
-		ViewHolder mViewHolder = new ViewHolder();
-		mViewHolder.Name = (TextView) row.findViewById(R.id.category_title);
-		mViewHolder.Description = (TextView) row.findViewById(R.id.category_description);
+		if(category != null){
+			mViewHolder.Name.setText(category.getName());
+			mViewHolder.Description.setText(category.getDescription());
+		}
 		
-		mViewHolder.Name.setText(categories.get(position).getmName());
-		mViewHolder.Description.setText(categories.get(position).getmDescription());
-		
-		
-		return row;
+		return convertView;
 	}
 
-	private class ViewHolder{
+	private class ViewHolderItem{
 		TextView Name;
 		TextView Description;
 	}

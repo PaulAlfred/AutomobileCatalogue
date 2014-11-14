@@ -9,36 +9,37 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class ViewAddManufacturer extends Activity {
-	
-	Intent i;
-	
-	Button add_edit, cancel;
-	TextView add_edit_label;
-	AutoCompleteTextView name;
-	AutoCompleteTextView founded;
-	AutoCompleteTextView revenue;
-	AutoCompleteTextView origin;
-	
-	String Name;
-	String Founded;
-	String Revenue;
-	String Origin;
-	
+
+	//variables for widgets
+	private Button addEdit, cancel;
+	private TextView addEditLabel;
+	private EditText name;
+	private EditText founded;
+	private EditText revenue;
+	private EditText origin;
+	//Model and Controller Objects
+	private ModelManufacturer manufacturer;
+	private ModelManufacturerList manufacturers;
+	private ControllerManufacturer manufacturerController;
+	private Intent i;
+	//intent values
 	public static final String mName = "name";
 	public static final String mFounded = "founded";
 	public static final String mOrigin = "origin";
 	public static final String mRevenue = "revenue";
 	public static final String isEdit = "isEdit";
 	public static final String mPosition = "position";
+	//for better readability of listOfObject.get(position).getType();
+	private String Name;
+	private String Founded;
+	private String Revenue;
+	private String Origin;
 	
-	ModelManufacturer manufacturer;
-	ModelManufacturerList list_of_company;
-	ControllerManufacturer mControllerManufacturer;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,12 +47,12 @@ public class ViewAddManufacturer extends Activity {
 		
 		i = getIntent();
 		
-		name = (AutoCompleteTextView) findViewById(R.id.edit_company);
-		founded = (AutoCompleteTextView) findViewById(R.id.edit_year);
-		revenue = (AutoCompleteTextView) findViewById(R.id.edit_revenue);
-		origin = (AutoCompleteTextView) findViewById(R.id.edit_origin);
-		add_edit_label = (TextView) findViewById(R.id.add_edit_man_info);	
-		add_edit = (Button) findViewById(R.id.add_edit_man);
+		name = (EditText) findViewById(R.id.editTextCompanyName);
+		founded = (EditText) findViewById(R.id.editTextYear);
+		revenue = (EditText) findViewById(R.id.editTextRevenue);
+		origin = (EditText) findViewById(R.id.editTextOrigin);
+		addEditLabel = (TextView) findViewById(R.id.add_edit_man_info);	
+		addEdit = (Button) findViewById(R.id.add_edit_man);
 		cancel = (Button) findViewById(R.id.cancel);
 		
 		name.setText(i.getStringExtra(ViewAddManufacturer.mName));
@@ -66,9 +67,9 @@ public class ViewAddManufacturer extends Activity {
 			addLabel();
 		
 		
-		mControllerManufacturer = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
-		list_of_company = new ModelManufacturerList(MainActivity.getAppContext());
-		add_edit.setOnClickListener(new OnClickListener() {
+		manufacturerController = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
+		manufacturers = new ModelManufacturerList(MainActivity.getAppContext());
+		addEdit.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -79,30 +80,7 @@ public class ViewAddManufacturer extends Activity {
 				
 			}
 
-			private void add() {
-				setValues();
-				manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
-				list_of_company.addManufacturer(manufacturer);	
-				finish();				
-			}
-
-			private void edit() {
-				setValues();
-				manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
-				try {
-					mControllerManufacturer.editManufacturer(manufacturer, i.getExtras().getInt(ViewAddManufacturer.mPosition));
-					finish();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				
-			}
-
-		
 				
 			
 		});
@@ -115,16 +93,39 @@ public class ViewAddManufacturer extends Activity {
 		});
 		
 	}
+	//Labels for the widgets to determine what state of functionality it is in
 	private void addLabel() {
-		add_edit.setText("Add");
-		add_edit_label.setText("Add Manufacturer");
+		addEdit.setText("Add");
+		addEditLabel.setText("Add Manufacturer");
 		
 	}
 	private void editLabel() {
-		add_edit.setText("Edit");
-		add_edit_label.setText("Edit Manufacturer");
+		addEdit.setText("Edit");
+		addEditLabel.setText("Edit Manufacturer");
 		
 	}
+	//actions for different functionality add or edit	
+	private void add() {
+		setValues();
+		manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
+		manufacturers.addManufacturer(manufacturer);	
+		finish();				
+	}
+	private void edit() {
+		setValues();
+		manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
+		try {
+			manufacturerController.editManufacturer(manufacturer, i.getExtras().getInt(ViewAddManufacturer.mPosition));
+			finish();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	//method to hide the setting of helper strings
 	private void setValues() {
 		Name = name.getText().toString();
 		Founded = founded.getText().toString();
