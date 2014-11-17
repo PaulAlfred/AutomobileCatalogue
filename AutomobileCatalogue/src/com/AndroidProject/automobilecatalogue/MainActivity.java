@@ -20,8 +20,6 @@ import android.widget.ListView;
 
 public class MainActivity extends ActionBarActivity {
 
-	
-	private static Context mContext;
 	private ManufacturerListAdapter manufacturerListAdapter;
 	private ControllerManufacturer mControllerManufacturer;	
 	private ModelManufacturerList mModelManufacturerList;
@@ -39,7 +37,6 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		MainActivity.mContext = getApplicationContext();
 		mIsEdit = false;
 		mManufacturers = new ArrayList<ModelManufacturer>();
 		mModelManufacturerList = new ModelManufacturerList(getApplicationContext());
@@ -70,9 +67,6 @@ public class MainActivity extends ActionBarActivity {
 		}	
 	}
 	//gets the context of MainActivity to be accessed globally
-	public static Context getAppContext() {
-        return MainActivity.mContext;
-    }
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;

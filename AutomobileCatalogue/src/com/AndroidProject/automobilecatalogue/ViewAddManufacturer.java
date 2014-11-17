@@ -74,7 +74,7 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 			Labels(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
 		
 		
-		manufacturerController = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
+		manufacturerController = new ControllerManufacturer(getApplicationContext(), "Manufacturers.json");
 		manufacturers = new ArrayList<ModelManufacturer>();
 		addEdit.setOnClickListener(new OnClickListener() {
 			
@@ -108,7 +108,6 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 	}
 
 	//actions for different functionality add or edit	
-	private void add() {
 
 	private void addOrEdit(boolean isEdit) {
 		if(isEdit){
