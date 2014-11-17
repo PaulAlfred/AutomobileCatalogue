@@ -106,7 +106,6 @@ public class CarActivity extends ActionBarActivity {
 		switch(item.getItemId()){
 		case 0:
 			mCars.remove(carListAdapter.getItem(mPosition));
-			removeCars(mCars.indexOf(carListAdapter.getItem(mPosition)));
 			generateAdapter();
 			break;
 		case 1:
@@ -134,18 +133,7 @@ public class CarActivity extends ActionBarActivity {
 		return intent;
 		
 	}
-	private void removeCars(int position){
-		for(ModelCar c : mCars){
-			if(!c.getManufacturer().equals(mCars.get(position).getName()))
-				modifiedCars.add(c);
-		}
-		try {
-			controllerCar.partialSave(mCars);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 	//generates the Adapter information
 	private void generateAdapter(){
 			

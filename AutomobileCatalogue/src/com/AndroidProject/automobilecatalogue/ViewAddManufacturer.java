@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ViewAddManufacturer extends Activity implements Serializable{
 
@@ -52,7 +53,8 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 		
 		i = getIntent();
 		mIsEdit = i.getExtras().getBoolean(ViewAddManufacturer.isEdit);
-		
+		manufacturers = new ArrayList<ModelManufacturer>();
+		manufacturers =  (ArrayList<ModelManufacturer>) i.getSerializableExtra(ViewAddManufacturer.mObject);
 		
 		name = (EditText) findViewById(R.id.editTextCompanyName);
 		founded = (EditText) findViewById(R.id.editTextYear);
@@ -66,22 +68,23 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 		founded.setText(i.getStringExtra(ViewAddManufacturer.mFounded));
 		revenue.setText(i.getStringExtra(ViewAddManufacturer.mRevenue));
 		origin.setText(i.getStringExtra(ViewAddManufacturer.mOrigin));
-		
-		
 
-			position = i.getExtras().getInt(ViewAddManufacturer.mPosition);
+		position = i.getExtras().getInt(ViewAddManufacturer.mPosition);
 			
-			Labels(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
-		
+		Labels(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
 		
 		manufacturerController = new ControllerManufacturer(getApplicationContext(), "Manufacturers.json");
-		manufacturers = new ArrayList<ModelManufacturer>();
+		
 		addEdit.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-
-				addOrEdit(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
+				boolean isExists = isNameExists(name.getText().toString());
+				if(isExists){
+					Toast.makeText(getApplicationContext(), "The Name you have chosen has already been taken.", Toast.LENGTH_SHORT).show();
+					finish();
+				}else
+					addOrEdit(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
 
 			}
 		});
@@ -94,9 +97,10 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 		});
 		
 	}
+	
 	//Labels for the widgets to determine what state of functionality it is in
 	private void Labels(boolean isEdit) {
-		if(isEdit){
+		if(isEdit){	
 			addEdit.setText("Edit");
 			addEditLabel.setText("Edit Manufacturer");
 		}
@@ -108,21 +112,18 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 	}
 
 	//actions for different functionality add or edit	
-
 	private void addOrEdit(boolean isEdit) {
+		
+		setValues();
+		manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
+		
 		if(isEdit){
-			setValues();
-			manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
-			manufacturers =  (ArrayList<ModelManufacturer>) i.getSerializableExtra(ViewAddManufacturer.mObject);
 			manufacturers.get(position).setFounded(manufacturer.getFounded());
 			manufacturers.get(position).setName(manufacturer.getName());
 			manufacturers.get(position).setOrigin(manufacturer.getOrigin());
 			manufacturers.get(position).setRevenue(manufacturer.getRevenue());
 		}
 		else{
-			setValues();
-			manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
-			manufacturers =  (ArrayList<ModelManufacturer>) i.getSerializableExtra(ViewAddManufacturer.mObject);
 			manufacturers.add(manufacturer);			
 		}
 		Intent resultIntent = new Intent();
@@ -130,6 +131,7 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 		setResult(Activity.RESULT_OK, resultIntent);
 		finish();
 	}
+	
 	//method to hide the setting of helper strings
 	private void setValues() {
 		Name = name.getText().toString();
@@ -145,5 +147,13 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 			Origin = "Europe";
 		if(TextUtils.isEmpty(Revenue))
 			Revenue = "$500M";
+	}
+	private boolean isNameExists(String name){
+		boolean isExists = false;
+		for(ModelManufacturer m : manufacturers ){
+			if(name.equals(m.getName()))
+				isExists = true;
+		}
+		return isExists;
 	}
 }

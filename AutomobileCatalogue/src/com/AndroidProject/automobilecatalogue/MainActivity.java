@@ -1,8 +1,10 @@
 package com.AndroidProject.automobilecatalogue;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-import android.content.Context;
+import org.json.JSONException;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -20,15 +22,18 @@ import android.widget.ListView;
 
 public class MainActivity extends ActionBarActivity {
 
+
 	private ManufacturerListAdapter manufacturerListAdapter;
 	private ControllerManufacturer mControllerManufacturer;	
 	private ModelManufacturerList mModelManufacturerList;
-	
+	private ControllerCar controllerCar;
+	private ModelCarList modelCarList;
 	public static final String mObject = "object";
 	
 	private int mPosition;
 	private ArrayList<ModelManufacturer> mManufacturers;
-	
+	private ArrayList<ModelCar> cars;
+	private ArrayList<ModelCar> filteredCars;
 	private boolean mIsEdit;
 	private boolean once = true;
 	
@@ -41,6 +46,11 @@ public class MainActivity extends ActionBarActivity {
 		mManufacturers = new ArrayList<ModelManufacturer>();
 		mModelManufacturerList = new ModelManufacturerList(getApplicationContext());
 		mManufacturers = mModelManufacturerList.getManufacturers();
+		cars = new ArrayList<ModelCar>();
+		modelCarList = new ModelCarList(getApplicationContext());
+		cars = modelCarList.getCar();
+		filteredCars = new ArrayList<ModelCar>();
+		controllerCar = new ControllerCar(getApplicationContext(), "Cars.json");
 		setContentView(R.layout.activity_main);
 	}
 	//inflates the add menu and icon on the action bar
@@ -66,7 +76,6 @@ public class MainActivity extends ActionBarActivity {
 
 		}	
 	}
-	//gets the context of MainActivity to be accessed globally
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
@@ -81,6 +90,7 @@ public class MainActivity extends ActionBarActivity {
 	public boolean onContextItemSelected(MenuItem item) {
 		switch(item.getItemId()){
 		case 0:
+			removeCars(mPosition);
 			mManufacturers.remove(mPosition);
 			generateAdapter();
 			break;
@@ -149,5 +159,21 @@ public class MainActivity extends ActionBarActivity {
 			}
 		});
 		registerForContextMenu(mainList);
+	}
+	//filtersCars
+	public void removeCars(int position){
+		
+		if(cars.size() != 0){
+			for(ModelCar c : cars){
+				if(!c.getManufacturer().equals(mManufacturers.get(position).getName()))
+					filteredCars.add(c);
+			}			
+			try {
+				controllerCar.partialSave(filteredCars);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

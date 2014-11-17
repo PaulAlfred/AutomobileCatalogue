@@ -81,18 +81,7 @@ public class ControllerManufacturer {
 		}
 		return manufacturers;
 	}
-	//deletes the manufacturer on the jsonFile
-	public void deleteManufacturer(int position) throws IOException, JSONException{
-		
-		for(ModelCar c : cars){
-			if(!c.getManufacturer().equals(manufacturers.get(position).getName()))
-				modifiedCars.add(c);
-		}
-		
-		manufacturers.remove(position);
-		partialSave(manufacturers);
-		carController.partialSave(modifiedCars);
-	}
+	
 	//edits the manufactuer information on the jsonfile
 	public void editManufacturer(ModelManufacturer model, int position) throws IOException, JSONException{
 		manufacturers.get(position).setFounded(model.getFounded());

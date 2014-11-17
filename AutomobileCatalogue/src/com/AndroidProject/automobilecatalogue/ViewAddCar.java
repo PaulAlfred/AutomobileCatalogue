@@ -137,24 +137,24 @@ public class ViewAddCar extends Activity{
 			setSpinners(isEdit);
 		}		
 	}
+	
 	//actions for different functionality add or edit
 	private void addOrEdit(boolean isEdit){
+		
+		setCarValues();
+		car = new ModelCar(name, manufacturer, horsepower, type);
+		mCars =  (ArrayList<ModelCar>) i.getSerializableExtra(ViewAddCar.mObject);
+		
 		if(isEdit){
 			position = i.getExtras().getInt(ViewAddCar.mPosition);
 			Log.d("position",String.valueOf(position));
 			ModelCar mCar = (ModelCar) i.getExtras().getSerializable(ViewAddCar.mCar);
-			setCarValues();
-			car = new ModelCar(name, manufacturer, horsepower, type);
-			mCars =  (ArrayList<ModelCar>) i.getSerializableExtra(ViewAddCar.mObject);
 			mCars.get(position).setHorsepower(car.getHorsepower());
 			mCars.get(position).setManufacturer(car.getManufacturer());
 			mCars.get(position).setName(car.getName());
 			mCars.get(position).setType(car.getType());
 		}
 		else{
-			setCarValues();
-			car = new ModelCar(name, manufacturer, horsepower ,type);
-			mCars =  (ArrayList<ModelCar>) i.getSerializableExtra(ViewAddCar.mObject);
 			mCars.add(car);
 		}
 		Intent resultIntent = new Intent();
@@ -162,8 +162,7 @@ public class ViewAddCar extends Activity{
 		setResult(Activity.RESULT_OK, resultIntent);
 		finish();
 	}
-	
-	
+		
 	//method to hide the setting of values of Strings
 	private void setCarValues() {
 		name = mName.getText().toString();
@@ -173,21 +172,18 @@ public class ViewAddCar extends Activity{
 		
 		if(TextUtils.isEmpty(name)){
 			name = "Generic White Vehicle";
-			Log.d("name","was null");
 		}
 		if(TextUtils.isEmpty(manufacturer)){
 			manufacturer = "honda";
-			Log.d("manufacturer","was null");
 		}
 		if(TextUtils.isEmpty(horsepower)){
 			horsepower = "150hp";
-			Log.d("horsepower","was null");
 		}
 		if(TextUtils.isEmpty(type)){
-			type = "Sedan";
-			Log.d("type","was null");
+			type = "Sedan";	
 		}
 	}
+	
 	//method to hide the setting of spinner items
 	private void setSpinners(boolean isEdit){
 
@@ -198,6 +194,5 @@ public class ViewAddCar extends Activity{
 		mManufacturer.setEnabled(isEdit);
 		mManufacturer.setClickable(isEdit);
 	}
-
 
 }
