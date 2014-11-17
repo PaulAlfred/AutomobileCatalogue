@@ -21,27 +21,31 @@ public class ModelCarList {
 		mAppcontext = appContext;
 		mCar = new ArrayList<ModelCar>();
 		mCarSerializer = new ControllerCar(mAppcontext, mFilename);
+		loadCar();
 	}
 
 	public void addCar(ModelCar c) {
 		mCar.add(c);
-		saveCar();
 	}
 	
-	private void saveCar(){
+	public void saveCar(ArrayList<ModelCar> mCar){
 		try{
 			mCarSerializer.saveCars(mCar);
 		} catch (Exception e) {
 			
 		}
 	}
-	public void loadCar(){
+	private void loadCar(){
 		try {
-			mCarSerializer.loadCars();
+			mCar = mCarSerializer.loadCars();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
+
+	public ArrayList<ModelCar> getCar() {
+		return mCar;
+	}	
 }

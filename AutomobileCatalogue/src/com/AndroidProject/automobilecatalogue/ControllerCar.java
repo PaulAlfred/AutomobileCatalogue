@@ -28,6 +28,7 @@ public class ControllerCar  extends Activity{
 		context = c;
 		mFilename = f;
 		try {
+			mCars = new ArrayList<ModelCar>();
 			mCars = loadCars();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -39,7 +40,7 @@ public class ControllerCar  extends Activity{
 	//or creates a new cars.json, then stores
 	//to the default location with Filename = mFilename
 	public void saveCars(ArrayList<ModelCar> cars) throws JSONException, IOException {
-		cars.addAll(loadCars());
+		//cars.addAll(loadCars());
 		partialSave(cars);
 	}
 	//loads the cars form mFilename
@@ -87,9 +88,10 @@ public class ControllerCar  extends Activity{
 	public void partialSave(ArrayList<ModelCar> cars) throws JSONException
 	{
 		JSONArray array = new JSONArray();
-		for (ModelCar c : cars)
+		for (ModelCar c : cars){
 			array.put(c.toJSON());
-
+		}
+		
 		Writer writer = null;
 		try{
 			OutputStream out = context.openFileOutput(mFilename, Context.MODE_PRIVATE);

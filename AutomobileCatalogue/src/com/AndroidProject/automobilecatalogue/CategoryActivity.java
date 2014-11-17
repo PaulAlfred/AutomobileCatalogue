@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -37,8 +38,10 @@ public class CategoryActivity extends ActionBarActivity
 		categories.add(new ModelCategory("Sports","Cars that are build for speed"));
 		categoryListAdapter = new CategoryListAdapter(getApplicationContext(),categories);
 		
-		for(ModelCategory c: categories)
+		for(ModelCategory c: categories){
 			modelCategoryList.addCategory(c);
+		}
+			
 		
 		modelCategoryList.saveCategory();
 		
@@ -53,6 +56,10 @@ public class CategoryActivity extends ActionBarActivity
 				intent.putExtra(CarActivity.mCategory, categories.get(position).getName());
 				intent.putExtra(CarActivity.mManufacturerNo, i.getExtras().getInt(CategoryActivity.mManfacturerNo));
 				intent.putExtra(CarActivity.mCategoryNo, position);
+				Log.d("categoryIntent",	i.getStringExtra(CategoryActivity.mManufacturer));
+				Log.d("categoryIntent",	categories.get(position).getName());
+
+				
 				try{
 				startActivity(intent);
 				} catch (Exception e){

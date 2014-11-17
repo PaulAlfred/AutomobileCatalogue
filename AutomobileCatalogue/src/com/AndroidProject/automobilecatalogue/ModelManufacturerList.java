@@ -13,9 +13,6 @@ import android.content.Context;
 public class ModelManufacturerList implements Serializable{
 
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7609809664710096575L;
 
 	private final String mFilename = "Manufacturers.json";
@@ -36,10 +33,9 @@ public class ModelManufacturerList implements Serializable{
 
 	public void addManufacturer(ModelManufacturer m) {
 		mManufacturers.add(m);
-		//saveManufacturers();
 	}
 	
-	public void saveManufacturers(){
+	public void saveManufacturers(ArrayList<ModelManufacturer> mManufacturers){
 		try{
 			mManSerializer.saveManufacturers(mManufacturers);
 		} catch (Exception e) {
@@ -47,8 +43,7 @@ public class ModelManufacturerList implements Serializable{
 	}
 	private void loadManufacturers(){
 		try {
-			mManufacturers= mManSerializer.loadManufacturers();
-			//mManSerializer.loadManufacturers();
+			mManufacturers = mManSerializer.loadManufacturers();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

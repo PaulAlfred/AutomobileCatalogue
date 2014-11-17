@@ -9,6 +9,7 @@ import org.json.JSONException;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -42,7 +43,7 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 	private String Founded;
 	private String Revenue;
 	private String Origin;
-	private int Position;
+	private int position;
 	private boolean mIsEdit;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +68,10 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 		origin.setText(i.getStringExtra(ViewAddManufacturer.mOrigin));
 		
 		
-		if(i.getExtras().getBoolean(ViewAddManufacturer.isEdit)){
-			Position = i.getExtras().getInt(ViewAddManufacturer.mPosition);
-			editLabel();
-		}
-		else
-			addLabel();
+
+			position = i.getExtras().getInt(ViewAddManufacturer.mPosition);
+			
+			Labels(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
 		
 		
 		manufacturerController = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
@@ -81,11 +80,9 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 			
 			@Override
 			public void onClick(View v) {
-				if(i.getExtras().getBoolean(ViewAddManufacturer.isEdit))
-					edit();
-				else
-					add();
-				
+
+				addOrEdit(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
+
 			}
 		});
 		cancel.setOnClickListener(new OnClickListener() {
@@ -98,35 +95,37 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 		
 	}
 	//Labels for the widgets to determine what state of functionality it is in
-	private void addLabel() {
-		addEdit.setText("Add");
-		addEditLabel.setText("Add Manufacturer");
-		
+	private void Labels(boolean isEdit) {
+		if(isEdit){
+			addEdit.setText("Edit");
+			addEditLabel.setText("Edit Manufacturer");
+		}
+		else {
+			addEdit.setText("Add");
+			addEditLabel.setText("Add Manufacturer");
+		}
+			
 	}
-	private void editLabel() {
-		addEdit.setText("Edit");
-		addEditLabel.setText("Edit Manufacturer");
-		
-	}
+
 	//actions for different functionality add or edit	
 	private void add() {
-		setValues();
-		manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
-		manufacturers =  (ArrayList<ModelManufacturer>) i.getSerializableExtra(ViewAddManufacturer.mObject);
-		manufacturers.add(manufacturer);
-		Intent resultIntent = new Intent();
-		resultIntent.putExtra(MainActivity.mObject, manufacturers);
-		setResult(Activity.RESULT_OK, resultIntent);
-		finish();				
-	}
-	private void edit() {
-		setValues();
-		manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
-		manufacturers =  (ArrayList<ModelManufacturer>) i.getSerializableExtra(ViewAddManufacturer.mObject);
-		manufacturers.get(Position).setFounded(manufacturer.getFounded());
-		manufacturers.get(Position).setName(manufacturer.getName());
-		manufacturers.get(Position).setOrigin(manufacturer.getOrigin());
-		manufacturers.get(Position).setRevenue(manufacturer.getRevenue());
+
+	private void addOrEdit(boolean isEdit) {
+		if(isEdit){
+			setValues();
+			manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
+			manufacturers =  (ArrayList<ModelManufacturer>) i.getSerializableExtra(ViewAddManufacturer.mObject);
+			manufacturers.get(position).setFounded(manufacturer.getFounded());
+			manufacturers.get(position).setName(manufacturer.getName());
+			manufacturers.get(position).setOrigin(manufacturer.getOrigin());
+			manufacturers.get(position).setRevenue(manufacturer.getRevenue());
+		}
+		else{
+			setValues();
+			manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
+			manufacturers =  (ArrayList<ModelManufacturer>) i.getSerializableExtra(ViewAddManufacturer.mObject);
+			manufacturers.add(manufacturer);			
+		}
 		Intent resultIntent = new Intent();
 		resultIntent.putExtra(MainActivity.mObject, manufacturers);
 		setResult(Activity.RESULT_OK, resultIntent);
@@ -139,13 +138,13 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 		Origin = origin.getText().toString();
 		Revenue = revenue.getText().toString();
 		
-		if(Name.equals(""))
+		if(TextUtils.isEmpty(Name))
 			Name = "Generic Automobile Company";
-		if(Founded.equals(""))
+		if(TextUtils.isEmpty(Founded))
 			Founded = "2000";
-		if(Origin.equals(""))
+		if(TextUtils.isEmpty(Origin))
 			Origin = "Europe";
-		if(Revenue.equals(""))
+		if(TextUtils.isEmpty(Revenue))
 			Revenue = "$500M";
 	}
 }

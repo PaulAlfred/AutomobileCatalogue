@@ -1,10 +1,6 @@
 package com.AndroidProject.automobilecatalogue;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
-
-import org.json.JSONException;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +32,7 @@ public class MainActivity extends ActionBarActivity {
 	private ArrayList<ModelManufacturer> mManufacturers;
 	
 	private boolean mIsEdit;
+	private boolean once = true;
 	
 	//loading the cars from Manufacturers.json and putting its contents to the adapter
 	//then displays the adapter in a listview
@@ -46,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
 		mIsEdit = false;
 		mManufacturers = new ArrayList<ModelManufacturer>();
 		mModelManufacturerList = new ModelManufacturerList(getApplicationContext());
-		
+		mManufacturers = mModelManufacturerList.getManufacturers();
 		setContentView(R.layout.activity_main);
 	}
 	//inflates the add menu and icon on the action bar
@@ -76,44 +73,6 @@ public class MainActivity extends ActionBarActivity {
 	public static Context getAppContext() {
         return MainActivity.mContext;
     }
-	//Used to simplify code
-	private void  generateAdapter(){
-		mControllerManufacturer = new ControllerManufacturer(MainActivity.getAppContext(), "Manufacturers.json");
-		try {
-			//mManufacturers = mControllerManufacturer.loadManufacturers();
-			//manufacturerListAdapter = new ManufacturerListAdapter(this, mControllerManufacturer.loadManufacturers());  
-			if(mManufacturers == null)
-				mManufacturers = mModelManufacturerList.getManufacturers();
-			manufacturerListAdapter = new ManufacturerListAdapter(this, mManufacturers);  
-			
-		} catch (Exception e ){
-		}
-		ListView mainList = (ListView) findViewById(R.id.activityMainList);
-		mainList.setAdapter(manufacturerListAdapter);
-		mainList.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> adapter, View v, int position,
-					long s) {
-				
-				try {
-					Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
-					intent.putExtra(CategoryActivity.mManufacturer,mControllerManufacturer.loadManufacturers().get(position).getName());
-					intent.putExtra(CategoryActivity.mManfacturerNo, position);
-					startActivity(intent);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
-				
-			}
-		});
-		registerForContextMenu(mainList);
-	}
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
@@ -141,7 +100,7 @@ public class MainActivity extends ActionBarActivity {
 	}
 	//put Extras to the intent to be started for editView
 	private Intent editManufacturer(int mPosition) {
-		mIsEdit=true;
+		mIsEdit = true;
 		Intent intent = new Intent(this, ViewAddManufacturer.class);
 		intent.putExtra(ViewAddManufacturer.mName, mManufacturers.get(mPosition).getName());
 		intent.putExtra(ViewAddManufacturer.mFounded, mManufacturers.get(mPosition).getFounded());
@@ -155,27 +114,46 @@ public class MainActivity extends ActionBarActivity {
 	}
 	@Override
 	protected void onResume() {
+		mIsEdit = false;
 		generateAdapter();
 		super.onResume();
 	}
 	@Override
 	protected void onDestroy() {
-		mControllerManufacturer.saveManufacturers(mManufacturers);
+		mModelManufacturerList.saveManufacturers(mManufacturers);
 		super.onDestroy();
 	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
 	        if(resultCode == RESULT_OK){
-	        	if(mIsEdit!=true)
-	        		mManufacturers.addAll((ArrayList<ModelManufacturer>) data.getSerializableExtra(mObject));
-	        	else
-	        		mManufacturers = (ArrayList<ModelManufacturer>) data.getSerializableExtra(mObject);
-	            Log.d("result", "resultcaptured");
+	        	mManufacturers = (ArrayList<ModelManufacturer>) data.getSerializableExtra(MainActivity.mObject);
 	        }
 	        if (resultCode == RESULT_CANCELED) {
 	            Log.d("result", "noresultcaptured");
 	        }
 	    }
+	}
+	//Used to simplify code
+	private void  generateAdapter(){
+			
+		manufacturerListAdapter = new ManufacturerListAdapter(this, mManufacturers);  
+
+		ListView mainList = (ListView) findViewById(R.id.activityMainList);
+		mainList.setAdapter(manufacturerListAdapter);
+		mainList.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> adapter, View v, int position,
+						long s) {
+				Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
+				ModelManufacturer manufacturer = (ModelManufacturer) manufacturerListAdapter.getItem(position);
+				intent.putExtra(CategoryActivity.mManufacturer,manufacturer.getName());
+				intent.putExtra(CategoryActivity.mManfacturerNo, position);
+				startActivity(intent);
+									
+			}
+		});
+		registerForContextMenu(mainList);
 	}
 }

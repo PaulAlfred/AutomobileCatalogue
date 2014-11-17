@@ -48,11 +48,7 @@ public class ControllerManufacturer {
 	//to the default location with Filename = mFilename
 	public void saveManufacturers(ArrayList<ModelManufacturer> manufacturers){
 		try {
-			manufacturers.addAll(loadManufacturers());
 			partialSave(manufacturers);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -88,9 +84,10 @@ public class ControllerManufacturer {
 	//deletes the manufacturer on the jsonFile
 	public void deleteManufacturer(int position) throws IOException, JSONException{
 		
-		for(ModelCar c : cars)
+		for(ModelCar c : cars){
 			if(!c.getManufacturer().equals(manufacturers.get(position).getName()))
 				modifiedCars.add(c);
+		}
 		
 		manufacturers.remove(position);
 		partialSave(manufacturers);
@@ -108,8 +105,9 @@ public class ControllerManufacturer {
 	private void partialSave(ArrayList<ModelManufacturer> manufacturers) throws JSONException
 	{
 		JSONArray array = new JSONArray();
-		for (ModelManufacturer m : manufacturers)
+		for (ModelManufacturer m : manufacturers){
 			array.put(m.toJSON());
+		}
 
 		Writer writer = null;
 		try{

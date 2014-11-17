@@ -9,6 +9,7 @@ import org.json.JSONException;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,7 +28,8 @@ public class ViewAddCar extends Activity{
 	private Spinner mManufacturer, mCategory;
 	//Model and Controller Objects
 	private ModelCar car;
-	private ModelCarList cars;
+	private ModelCarList carList;
+	private ArrayList<ModelCar> mCars;
 	private ControllerCar controllerCar;
 	private ControllerManufacturer manufacturers;
 	private ControllerCategory categories;
@@ -44,11 +46,14 @@ public class ViewAddCar extends Activity{
 	public static final String mPosition = "position";
 	public static final String mManufacturerNo = "manufacturerNo";
 	public static final String mCategoryNo = "categoryNo";
+	public static final String mObject = "object";
+	public static final String mCar = "car";
 	//for better readability of listOfObject.get(position).getType();
 	private String name;
 	private String manufacturer;
 	private String type;
 	private String horsepower;
+	private int position;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,7 @@ public class ViewAddCar extends Activity{
 		setContentView(R.layout.add_car);
 		manufacturerList = new ArrayList<String>();
 		categoryList = new ArrayList<String>();
+		mCars = new ArrayList<ModelCar>();
 		i = getIntent();
 		try{
 			controllerCar = new ControllerCar(getApplicationContext(), "Cars.json");
@@ -77,7 +83,7 @@ public class ViewAddCar extends Activity{
 
 
 
-		cars = new ModelCarList(ViewAddCar.this);
+		carList = new ModelCarList(ViewAddCar.this);
 		
 		addEditTitle = (TextView) findViewById(R.id.addOrEditCarTitle);
 		cancel = (Button) findViewById(R.id.Cancel);
@@ -86,9 +92,6 @@ public class ViewAddCar extends Activity{
 		mCategory = (Spinner) findViewById(R.id.spinnerCategory);
 		mHorsepower = (EditText) findViewById(R.id.editTextHorsepower);
 		mManufacturer = (Spinner) findViewById(R.id.spinnerManufacturer);
-		
-		
-		
 		
 		mName.setText(i.getStringExtra(ViewAddCar.Name));
 		mHorsepower.setText(i.getStringExtra(ViewAddCar.Horsepower));
@@ -101,12 +104,9 @@ public class ViewAddCar extends Activity{
 		manufacturerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mManufacturer.setAdapter(manufacturerAdapter);
 
-		if(i.getExtras().getBoolean(ViewAddCar.isEdit))
-			editLabels();
-		else{
-			addLabels();
-			setSpinners();
-		}
+		Labels(i.getExtras().getBoolean(ViewAddCar.isEdit));
+			
+		
 		cancel.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -120,47 +120,50 @@ public class ViewAddCar extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				if(i.getExtras().getBoolean(ViewAddCar.isEdit))
-					edit();
-				else
-					add();
-					
+				addOrEdit(i.getExtras().getBoolean(ViewAddCar.isEdit));
 			}
 		});
 	}
 	//Labels for the widgets to determine what state of functionality it is in
-	private void addLabels() {
-		addEdit.setText("Add");
-		addEditTitle.setText("Add Car");
-		
-	}
-	private void editLabels() {
-		addEdit.setText("Edit");
-		addEditTitle.setText("Edit Car");		
+	private void Labels(boolean isEdit) {
+		if(isEdit){
+			addEdit.setText("Edit");
+			addEditTitle.setText("Edit Car");
+			setSpinners(isEdit);
+		}
+		else{		
+			addEdit.setText("Add");
+			addEditTitle.setText("Add Car");
+			setSpinners(isEdit);
+		}		
 	}
 	//actions for different functionality add or edit
-	private void add(){
-
-		setCarValues();
-		car = new ModelCar(name, manufacturer, horsepower ,type);
-		cars.addCar(car);	
-		finish();
-	}
-	private void edit(){
-		try {
+	private void addOrEdit(boolean isEdit){
+		if(isEdit){
+			position = i.getExtras().getInt(ViewAddCar.mPosition);
+			Log.d("position",String.valueOf(position));
+			ModelCar mCar = (ModelCar) i.getExtras().getSerializable(ViewAddCar.mCar);
 			setCarValues();
 			car = new ModelCar(name, manufacturer, horsepower, type);
-			controllerCar.editCar(car, i.getExtras().getInt(ViewAddCar.mPosition));
-			finish();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			mCars =  (ArrayList<ModelCar>) i.getSerializableExtra(ViewAddCar.mObject);
+			mCars.get(position).setHorsepower(car.getHorsepower());
+			mCars.get(position).setManufacturer(car.getManufacturer());
+			mCars.get(position).setName(car.getName());
+			mCars.get(position).setType(car.getType());
 		}
-		
+		else{
+			setCarValues();
+			car = new ModelCar(name, manufacturer, horsepower ,type);
+			mCars =  (ArrayList<ModelCar>) i.getSerializableExtra(ViewAddCar.mObject);
+			mCars.add(car);
+		}
+		Intent resultIntent = new Intent();
+		resultIntent.putExtra(CarActivity.mObject, mCars);
+		setResult(Activity.RESULT_OK, resultIntent);
+		finish();
 	}
+	
+	
 	//method to hide the setting of values of Strings
 	private void setCarValues() {
 		name = mName.getText().toString();
@@ -168,31 +171,32 @@ public class ViewAddCar extends Activity{
 		horsepower = mHorsepower.getText().toString();
 		type = mCategory.getSelectedItem().toString();
 		
-		if(name.equals("")){
+		if(TextUtils.isEmpty(name)){
 			name = "Generic White Vehicle";
 			Log.d("name","was null");
 		}
-		if(manufacturer.equals("")){
+		if(TextUtils.isEmpty(manufacturer)){
 			manufacturer = "honda";
 			Log.d("manufacturer","was null");
 		}
-		if(horsepower.equals("")){
+		if(TextUtils.isEmpty(horsepower)){
 			horsepower = "150hp";
 			Log.d("horsepower","was null");
 		}
-		if(type.equals("")){
+		if(TextUtils.isEmpty(type)){
 			type = "Sedan";
 			Log.d("type","was null");
 		}
 	}
 	//method to hide the setting of spinner items
-	private void setSpinners(){
+	private void setSpinners(boolean isEdit){
+
 		mCategory.setSelection(i.getExtras().getInt(ViewAddCar.mCategoryNo));
-		mCategory.setEnabled(false);
-		mCategory.setClickable(false);
+		mCategory.setEnabled(isEdit);
+		mCategory.setClickable(isEdit);
 		mManufacturer.setSelection(i.getExtras().getInt(ViewAddCar.mManufacturerNo));
-		mManufacturer.setEnabled(false);
-		mManufacturer.setClickable(false);
+		mManufacturer.setEnabled(isEdit);
+		mManufacturer.setClickable(isEdit);
 	}
 
 

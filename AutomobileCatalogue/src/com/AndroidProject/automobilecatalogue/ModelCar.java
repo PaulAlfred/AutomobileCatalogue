@@ -1,12 +1,18 @@
 package com.AndroidProject.automobilecatalogue;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 
-public class ModelCar {
+public class ModelCar implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4852926514407088720L;
 	//To be put on a jsonObject
 	//values
 	private String mName;

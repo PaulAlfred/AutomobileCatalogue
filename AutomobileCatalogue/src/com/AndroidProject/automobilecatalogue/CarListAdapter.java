@@ -24,10 +24,10 @@ public class CarListAdapter extends BaseAdapter{
 		this.cars = cars;
 		this.dataFilter = dataFilter;
 		
-		for(ModelCar c : cars)
-			if((c.getManufacturer().equals(dataFilter.get(0)))&&(c.getType().equals(dataFilter.get(1))))
+		for(ModelCar c : cars){
+			if(((c.getManufacturer().equals(dataFilter.get(0)))&&(c.getType().equals(dataFilter.get(1)))))
 				filteredCars.add(c);
-		
+		}
 		
 		inflater = LayoutInflater.from(this.context);
 	}
@@ -64,7 +64,7 @@ public class CarListAdapter extends BaseAdapter{
 			mViewHolder = (ViewHolderItem) convertView.getTag();
 		}
 		
-		ModelCar car = cars.get(position);
+		ModelCar car = filteredCars.get(position);
 		
 		if(car != null){
 			
