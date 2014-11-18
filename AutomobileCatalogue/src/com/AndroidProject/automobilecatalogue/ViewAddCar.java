@@ -10,7 +10,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -20,7 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class ViewAddCar extends Activity{
-	
+
 	//variables for widgets
 	private TextView addEditTitle;
 	private Button cancel,addEdit;
@@ -28,9 +27,7 @@ public class ViewAddCar extends Activity{
 	private Spinner mManufacturer, mCategory;
 	//Model and Controller Objects
 	private ModelCar car;
-	private ModelCarList carList;
 	private ArrayList<ModelCar> mCars;
-	private ControllerCar controllerCar;
 	private ControllerManufacturer manufacturers;
 	private ControllerCategory categories;
 	private Intent i;
@@ -64,7 +61,7 @@ public class ViewAddCar extends Activity{
 		mCars = new ArrayList<ModelCar>();
 		i = getIntent();
 		try{
-			controllerCar = new ControllerCar(getApplicationContext(), "Cars.json");
+			new ControllerCar(getApplicationContext(), "Cars.json");
 			manufacturers = new ControllerManufacturer(getApplicationContext(), "Manufacturers.json");
 			categories = new ControllerCategory(getApplicationContext(), "Categories.json");
 			for(ModelManufacturer m : manufacturers.loadManufacturers()){
@@ -83,8 +80,8 @@ public class ViewAddCar extends Activity{
 
 
 
-		carList = new ModelCarList(ViewAddCar.this);
-		
+		new ModelCarList(ViewAddCar.this);
+
 		addEditTitle = (TextView) findViewById(R.id.addOrEditCarTitle);
 		cancel = (Button) findViewById(R.id.Cancel);
 		addEdit = (Button) findViewById(R.id.add_edit_car_info);
@@ -92,21 +89,21 @@ public class ViewAddCar extends Activity{
 		mCategory = (Spinner) findViewById(R.id.spinnerCategory);
 		mHorsepower = (EditText) findViewById(R.id.editTextHorsepower);
 		mManufacturer = (Spinner) findViewById(R.id.spinnerManufacturer);
-		
+
 		mName.setText(i.getStringExtra(ViewAddCar.Name));
 		mHorsepower.setText(i.getStringExtra(ViewAddCar.Horsepower));
-		
+
 		ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoryList);
 		categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mCategory.setAdapter(categoryAdapter);
-			
+
 		ArrayAdapter<String> manufacturerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,manufacturerList);
 		manufacturerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mManufacturer.setAdapter(manufacturerAdapter);
 
 		Labels(i.getExtras().getBoolean(ViewAddCar.isEdit));
-			
-		
+
+
 		cancel.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -114,10 +111,10 @@ public class ViewAddCar extends Activity{
 				finish();
 			}
 
-			
+
 		});
 		addEdit.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				addOrEdit(i.getExtras().getBoolean(ViewAddCar.isEdit));
@@ -137,17 +134,17 @@ public class ViewAddCar extends Activity{
 			setSpinners(isEdit);
 		}		
 	}
-	
+
 	//actions for different functionality add or edit
+	@SuppressWarnings({ "unchecked", "unused" })
 	private void addOrEdit(boolean isEdit){
-		
+
 		setCarValues();
 		car = new ModelCar(name, manufacturer, horsepower, type);
 		mCars =  (ArrayList<ModelCar>) i.getSerializableExtra(ViewAddCar.mObject);
-		
+
 		if(isEdit){
 			position = i.getExtras().getInt(ViewAddCar.mPosition);
-			Log.d("position",String.valueOf(position));
 			ModelCar mCar = (ModelCar) i.getExtras().getSerializable(ViewAddCar.mCar);
 			mCars.get(position).setHorsepower(car.getHorsepower());
 			mCars.get(position).setManufacturer(car.getManufacturer());
@@ -158,18 +155,18 @@ public class ViewAddCar extends Activity{
 			mCars.add(car);
 		}
 		Intent resultIntent = new Intent();
-		resultIntent.putExtra(CarActivity.mObject, mCars);
+		resultIntent.putExtra(CarActivity.OBJECT, mCars);
 		setResult(Activity.RESULT_OK, resultIntent);
 		finish();
 	}
-		
+
 	//method to hide the setting of values of Strings
 	private void setCarValues() {
 		name = mName.getText().toString();
 		manufacturer = mManufacturer.getSelectedItem().toString();
 		horsepower = mHorsepower.getText().toString();
 		type = mCategory.getSelectedItem().toString();
-		
+
 		if(TextUtils.isEmpty(name)){
 			name = "Generic White Vehicle";
 		}
@@ -183,7 +180,7 @@ public class ViewAddCar extends Activity{
 			type = "Sedan";	
 		}
 	}
-	
+
 	//method to hide the setting of spinner items
 	private void setSpinners(boolean isEdit){
 

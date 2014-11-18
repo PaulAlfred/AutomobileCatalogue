@@ -6,38 +6,43 @@ import java.util.ArrayList;
 import org.json.JSONException;
 
 import android.content.Context;
+
 //Acts as a bridge of ControllerCar and ModelCar
 public class ModelCarList {
 
 	private final String mFilename = "Cars.json";
-	
+
 	private ArrayList<ModelCar> mCar;
-	private ControllerCar mCarSerializer;
-	
+	private ControllerCar carSerializer;
 	public static ModelCarList sCar;
-	private Context mAppcontext;
-	
+	private Context mAppContext;
+
 	public ModelCarList(Context appContext) {
-		mAppcontext = appContext;
+		mAppContext = appContext;
 		mCar = new ArrayList<ModelCar>();
-		mCarSerializer = new ControllerCar(mAppcontext, mFilename);
+		carSerializer = new ControllerCar(mAppContext, mFilename);
 		loadCar();
 	}
 
 	public void addCar(ModelCar c) {
 		mCar.add(c);
 	}
-	
-	public void saveCar(ArrayList<ModelCar> mCar){
-		try{
-			mCarSerializer.saveCars(mCar);
-		} catch (Exception e) {
-			
+
+	public void saveCar(ArrayList<ModelCar> mCar) {
+		try {
+			carSerializer.saveCars(mCar);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
-	private void loadCar(){
+
+	private void loadCar() {
 		try {
-			mCar = mCarSerializer.loadCars();
+			mCar = carSerializer.loadCars();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
@@ -47,5 +52,5 @@ public class ModelCarList {
 
 	public ArrayList<ModelCar> getCar() {
 		return mCar;
-	}	
+	}
 }

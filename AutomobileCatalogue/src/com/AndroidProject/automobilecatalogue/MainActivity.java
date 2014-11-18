@@ -1,6 +1,5 @@
 package com.AndroidProject.automobilecatalogue;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -9,7 +8,6 @@ import org.json.JSONException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -25,19 +23,15 @@ public class MainActivity extends ActionBarActivity {
 
 
 	private ManufacturerListAdapter manufacturerListAdapter;
-	private ControllerManufacturer mControllerManufacturer;	
 	private ModelManufacturerList mModelManufacturerList;
 	private ControllerCar controllerCar;
 	private ModelCarList modelCarList;
 	public static final String mObject = "object";
-	
+
 	private int mPosition;
 	private ArrayList<ModelManufacturer> mManufacturers;
 	private ArrayList<ModelCar> cars;
-	private ArrayList<ModelCar> filteredCars;
 	private boolean mIsEdit;
-	private boolean once = true;
-	
 	//loading the cars from Manufacturers.json and putting its contents to the adapter
 	//then displays the adapter in a listview
 	@Override
@@ -49,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
 		mManufacturers = mModelManufacturerList.getManufacturers();
 		cars = new ArrayList<ModelCar>();
 		modelCarList = new ModelCarList(getApplicationContext());
-		filteredCars = new ArrayList<ModelCar>();
+		new ArrayList<ModelCar>();
 		controllerCar = new ControllerCar(getApplicationContext(), "Cars.json");
 		setContentView(R.layout.activity_main);
 	}
@@ -98,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
 			startActivityForResult(editManufacturer(mPosition), 1);
 			generateAdapter();
 			break;
-		
+
 		}
 		return super.onContextItemSelected(item);
 	}
@@ -114,7 +108,7 @@ public class MainActivity extends ActionBarActivity {
 		intent.putExtra(ViewAddManufacturer.mPosition, mPosition);
 		intent.putExtra(ViewAddManufacturer.mObject, mManufacturers);
 		return intent;
-		
+
 	}
 	@Override
 	protected void onResume() {
@@ -128,56 +122,56 @@ public class MainActivity extends ActionBarActivity {
 		cars = modelCarList.getCar();
 		super.onPause();
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
-	        if(resultCode == RESULT_OK){
-	        	mManufacturers = (ArrayList<ModelManufacturer>) data.getSerializableExtra(MainActivity.mObject);
-	        }
-	        if (resultCode == RESULT_CANCELED) {
-	            Log.d("result", "noresultcaptured");
-	        }
-	    }
+			if(resultCode == RESULT_OK){
+				mManufacturers = (ArrayList<ModelManufacturer>) data.getSerializableExtra(MainActivity.mObject);
+			}
+			if (resultCode == RESULT_CANCELED) {
+			}
+		}
 	}
 	//Used to simplify code
 	private void  generateAdapter(){
-			
+
 		manufacturerListAdapter = new ManufacturerListAdapter(this, mManufacturers);  
 
 		ListView mainList = (ListView) findViewById(R.id.activityMainList);
 		mainList.setAdapter(manufacturerListAdapter);
 		mainList.setOnItemClickListener(new OnItemClickListener() {
 
-				@Override
-				public void onItemClick(AdapterView<?> adapter, View v, int position,
-						long s) {
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View v, int position,
+					long s) {
 				Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
 				ModelManufacturer manufacturer = (ModelManufacturer) manufacturerListAdapter.getItem(position);
-				intent.putExtra(CategoryActivity.mManufacturer,manufacturer.getName());
-				intent.putExtra(CategoryActivity.mManfacturerNo, position);
+				intent.putExtra(CategoryActivity.MANUFACTURER,manufacturer.getName());
+				intent.putExtra(CategoryActivity.MANUFACTURER_NO, position);
 				startActivity(intent);
-									
+
 			}
 		});
 		registerForContextMenu(mainList);
 	}
 	//filtersCars
 	public void removeCars(int position){
-		
+
 		Iterator<ModelCar> iter = cars.iterator();
 		while(iter.hasNext()){
 			ModelCar modelCar = iter.next();
 			if(modelCar.getManufacturer().equals(mManufacturers.get(position).getName()))
-					iter.remove();
+				iter.remove();
 		}
-			
+
 		try {
 			controllerCar.partialSave(cars);
-			} catch (JSONException e) {
+		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
+
 	}
 }

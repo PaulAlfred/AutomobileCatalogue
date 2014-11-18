@@ -1,10 +1,7 @@
 package com.AndroidProject.automobilecatalogue;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,6 +16,10 @@ import android.widget.Toast;
 
 public class ViewAddManufacturer extends Activity implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3291828332789817065L;
 	//variables for widgets
 	private Button addEdit, cancel;
 	private TextView addEditLabel;
@@ -29,7 +30,6 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 	//Model and Controller Objects
 	private ModelManufacturer manufacturer;
 	private ArrayList<ModelManufacturer> manufacturers;
-	private ControllerManufacturer manufacturerController;
 	private Intent i;
 	//intent values
 	public static final String mName = "name";
@@ -45,17 +45,17 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 	private String Revenue;
 	private String Origin;
 	private int position;
-	private boolean mIsEdit;
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_manufacturer);
-		
+
 		i = getIntent();
-		mIsEdit = i.getExtras().getBoolean(ViewAddManufacturer.isEdit);
+		i.getExtras().getBoolean(ViewAddManufacturer.isEdit);
 		manufacturers = new ArrayList<ModelManufacturer>();
 		manufacturers =  (ArrayList<ModelManufacturer>) i.getSerializableExtra(ViewAddManufacturer.mObject);
-		
+
 		name = (EditText) findViewById(R.id.editTextCompanyName);
 		founded = (EditText) findViewById(R.id.editTextYear);
 		revenue = (EditText) findViewById(R.id.editTextRevenue);
@@ -63,20 +63,20 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 		addEditLabel = (TextView) findViewById(R.id.add_edit_man_info);	
 		addEdit = (Button) findViewById(R.id.add_edit_man);
 		cancel = (Button) findViewById(R.id.cancel);
-		
+
 		name.setText(i.getStringExtra(ViewAddManufacturer.mName));
 		founded.setText(i.getStringExtra(ViewAddManufacturer.mFounded));
 		revenue.setText(i.getStringExtra(ViewAddManufacturer.mRevenue));
 		origin.setText(i.getStringExtra(ViewAddManufacturer.mOrigin));
 
 		position = i.getExtras().getInt(ViewAddManufacturer.mPosition);
-			
+
 		Labels(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
-		
-		manufacturerController = new ControllerManufacturer(getApplicationContext(), "Manufacturers.json");
-		
+
+		new ControllerManufacturer(getApplicationContext(), "Manufacturers.json");
+
 		addEdit.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				boolean isExists = isNameExists(name.getText().toString());
@@ -89,15 +89,15 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 			}
 		});
 		cancel.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				finish();
 			}
 		});
-		
+
 	}
-	
+
 	//Labels for the widgets to determine what state of functionality it is in
 	private void Labels(boolean isEdit) {
 		if(isEdit){	
@@ -108,15 +108,15 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 			addEdit.setText("Add");
 			addEditLabel.setText("Add Manufacturer");
 		}
-			
+
 	}
 
 	//actions for different functionality add or edit	
 	private void addOrEdit(boolean isEdit) {
-		
+
 		setValues();
 		manufacturer = new ModelManufacturer(Name, Founded, Origin, Revenue);
-		
+
 		if(isEdit){
 			manufacturers.get(position).setFounded(manufacturer.getFounded());
 			manufacturers.get(position).setName(manufacturer.getName());
@@ -131,14 +131,14 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 		setResult(Activity.RESULT_OK, resultIntent);
 		finish();
 	}
-	
+
 	//method to hide the setting of helper strings
 	private void setValues() {
 		Name = name.getText().toString();
 		Founded = founded.getText().toString();
 		Origin = origin.getText().toString();
 		Revenue = revenue.getText().toString();
-		
+
 		if(TextUtils.isEmpty(Name))
 			Name = "Generic Automobile Company";
 		if(TextUtils.isEmpty(Founded))

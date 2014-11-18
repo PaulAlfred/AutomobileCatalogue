@@ -6,8 +6,8 @@ import org.json.JSONObject;
 public class ModelCategory{
 	//To be put on a jsonObject
 	//json variables
-	private static final String JSON_NAME = "name";
-	private static final String JSON_DESCRIPTION = "description";
+	private static final String NAME = "name";
+	private static final String DESCRIPTION = "description";
 	//values
 	private String mName, mDescription;
 	//constructor that sets the values of the category
@@ -24,9 +24,9 @@ public class ModelCategory{
 	}
 	//gets the value of the jsonobject
 	public ModelCategory(JSONObject json) throws JSONException {
-		mName = json.getString(JSON_NAME);
-		mDescription = json.getString(JSON_DESCRIPTION);
-		
+		mName = json.getString(NAME);
+		mDescription = json.getString(DESCRIPTION);
+
 	}
 	//puts the "variables":"values" in a jsonobject
 	public JSONObject toJSON() throws JSONException{

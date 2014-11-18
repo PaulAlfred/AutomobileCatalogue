@@ -15,20 +15,39 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="Manufacturers" >
+            android:label="Manufacturers"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".CarActivity"
-            android:label="Cars">
+            android:label="Cars" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ViewAddCategory" android:label="AddLabel"></activity>
-        <activity android:name=".ViewAddCar" android:label="AddCar"></activity>
-    	<activity android:name=".ViewAddManufacturer" android:label="AddManufacturer"></activity>
-    	<activity android:name=".CategoryActivity" android:label="Categories"></activity>
+        <activity
+            android:name=".ViewAddCategory"
+            android:label="AddLabel"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ViewAddCar"
+            android:label="AddCar" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ViewAddManufacturer"
+            android:label="AddManufacturer" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".CategoryActivity"
+            android:label="Categories" 
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

@@ -6,6 +6,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ModelManufacturer implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//To be put on a jsonObject
 	//values
 	private String mName;
@@ -13,11 +17,11 @@ public class ModelManufacturer implements Serializable{
 	private String mOrigin;
 	private String mRevenue;
 	//json variables
-	private static final String JSON_NAME = "name";
-	private static final String JSON_FOUNDED = "founded";
-	private static final String JSON_ORIGIN = "origin";
-	private static final String JSON_REVENUE = "revenue";
-	
+	private static final String NAME = "name";
+	private static final String FOUNDED = "founded";
+	private static final String ORIGIN = "origin";
+	private static final String REVENUE = "revenue";
+
 	//setter of values
 	public void setName(String mName) {
 		this.mName = mName;
@@ -63,11 +67,11 @@ public class ModelManufacturer implements Serializable{
 	}
 	//gets the value of the jsonobject
 	public ModelManufacturer(JSONObject json) throws JSONException {
-		mName = json.getString(JSON_NAME);
-		mFounded = json.getString(JSON_FOUNDED);
-		mOrigin = json.getString(JSON_ORIGIN);
-		mRevenue = json.getString(JSON_REVENUE);
-		
+		mName = json.getString(NAME);
+		mFounded = json.getString(FOUNDED);
+		mOrigin = json.getString(ORIGIN);
+		mRevenue = json.getString(REVENUE);
+
 	}
 	//puts the "variables":"values" in a jsonobject
 	public JSONObject toJSON() throws JSONException{
@@ -79,7 +83,7 @@ public class ModelManufacturer implements Serializable{
 		return item;
 	}
 
-	
+
 
 
 

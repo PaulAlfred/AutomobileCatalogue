@@ -14,7 +14,7 @@ public class CategoryListAdapter extends BaseAdapter {
 	private Context context;
 	private LayoutInflater inflater;
 	private ArrayList<ModelCategory> categories = new ArrayList<ModelCategory>();
-	
+
 	public CategoryListAdapter(Context context, ArrayList<ModelCategory> categories){
 		this.context = context;
 		this.categories = categories;
@@ -38,29 +38,29 @@ public class CategoryListAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolderItem mViewHolder;
-		
-		
+
+
 		if(convertView == null){
 			convertView = inflater.inflate(R.layout.row_category, parent, false);
-				
+
 			mViewHolder = new ViewHolderItem();
 			mViewHolder.Name = (TextView) convertView.findViewById(R.id.textViewCategoryName);
 			mViewHolder.Description = (TextView) convertView.findViewById(R.id.editTextCategoryDescription);
-			
+
 			convertView.setTag(mViewHolder);
 		} else {
-			
+
 			mViewHolder = (ViewHolderItem) convertView.getTag();
-		
+
 		}
-		
+
 		ModelCategory category = categories.get(position);
-		
+
 		if(category != null){
 			mViewHolder.Name.setText(category.getName());
 			mViewHolder.Description.setText(category.getDescription());
 		}
-		
+
 		return convertView;
 	}
 
@@ -70,5 +70,5 @@ public class CategoryListAdapter extends BaseAdapter {
 	}
 
 
-	
+
 }

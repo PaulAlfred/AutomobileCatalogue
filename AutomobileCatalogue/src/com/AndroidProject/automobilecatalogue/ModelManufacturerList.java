@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.json.JSONException;
 
 import android.content.Context;
- 
+
 
 //Acts as a bridge of ControllerManufacturer and ModelManufacturer
 public class ModelManufacturerList implements Serializable{
@@ -16,34 +16,33 @@ public class ModelManufacturerList implements Serializable{
 	private static final long serialVersionUID = 7609809664710096575L;
 
 	private final String mFilename = "Manufacturers.json";
-	
+
 	private ArrayList<ModelManufacturer> mManufacturers;
-	private ControllerManufacturer mManSerializer;
-	
+	private ControllerManufacturer manSerializer;
+
 	public static ModelManufacturerList sCompany;
 	private Context mAppcontext;
-	
+
 	public ModelManufacturerList(Context appContext) {
 		mAppcontext = appContext;
 		mManufacturers = new ArrayList<ModelManufacturer>();
-		mManSerializer = new ControllerManufacturer(mAppcontext, mFilename);
+		manSerializer = new ControllerManufacturer(mAppcontext, mFilename);
 		loadManufacturers();
 	}
-	
+
 
 	public void addManufacturer(ModelManufacturer m) {
 		mManufacturers.add(m);
 	}
-	
+
 	public void saveManufacturers(ArrayList<ModelManufacturer> mManufacturers){
-		try{
-			mManSerializer.saveManufacturers(mManufacturers);
-		} catch (Exception e) {
-		}
+
+		manSerializer.saveManufacturers(mManufacturers);
+
 	}
 	private void loadManufacturers(){
 		try {
-			mManufacturers = mManSerializer.loadManufacturers();
+			mManufacturers = manSerializer.loadManufacturers();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,6 +59,6 @@ public class ModelManufacturerList implements Serializable{
 	public void setManufacturers(ArrayList<ModelManufacturer> mManufacturers) {
 		this.mManufacturers = mManufacturers;
 	}
-	
+
 
 }

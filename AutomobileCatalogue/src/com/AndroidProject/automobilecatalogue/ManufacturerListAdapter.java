@@ -10,25 +10,25 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class ManufacturerListAdapter extends BaseAdapter{
-	
-	
+
+
 	private Context context;
 	private LayoutInflater inflater;
-	private ArrayList<ModelManufacturer> manufacturers = new ArrayList<ModelManufacturer>();
-	
+	private ArrayList<ModelManufacturer> mManufacturers = new ArrayList<ModelManufacturer>();
+
 	public ManufacturerListAdapter(Context context, ArrayList<ModelManufacturer> manufacturers){
 		this.context = context;
-		this.manufacturers = manufacturers;
+		this.mManufacturers = manufacturers;
 		inflater = LayoutInflater.from(this.context);
 	}
 	@Override
 	public int getCount() {
-		return this.manufacturers.size();
+		return this.mManufacturers.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return this.manufacturers.get(position);
+		return this.mManufacturers.get(position);
 	}
 
 	@Override
@@ -39,43 +39,43 @@ public class ManufacturerListAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolderItem mViewHolder;
-		
+
 		if(convertView == null){
-			
+
 			convertView = inflater.inflate(R.layout.row, parent, false);
 			mViewHolder = new ViewHolderItem();
 			mViewHolder.Name = (TextView) convertView.findViewById(R.id.titleText);
 			mViewHolder.Origin = (TextView) convertView.findViewById(R.id.description1);
 			mViewHolder.Founded = (TextView) convertView.findViewById(R.id.description2);
 			mViewHolder.Revenue = (TextView) convertView.findViewById(R.id.description3);
-			
+
 			convertView.setTag(mViewHolder);
 		} else {
 
 			mViewHolder = (ViewHolderItem) convertView.getTag();
 
 		}
-		
-		ModelManufacturer manufacturer = manufacturers.get(position);
-		
+
+		ModelManufacturer manufacturer = mManufacturers.get(position);
+
 		if(manufacturer != null){
-		
+
 			mViewHolder.Name.setText(manufacturer.getName());
 			mViewHolder.Founded.setText(manufacturer.getFounded());
 			mViewHolder.Origin.setText(manufacturer.getOrigin());
 			mViewHolder.Revenue.setText(manufacturer.getRevenue());
-			
+
 		}
-		
+
 		return convertView;
 	}
 
 	private class ViewHolderItem{
 		TextView Name, Origin, Founded, Revenue;
 	}
-	
-	
-	
 
-	
+
+
+
+
 }
