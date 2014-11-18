@@ -44,10 +44,10 @@ public class ManufacturerListAdapter extends BaseAdapter{
 
 			convertView = inflater.inflate(R.layout.row, parent, false);
 			mViewHolder = new ViewHolderItem();
-			mViewHolder.Name = (TextView) convertView.findViewById(R.id.titleText);
-			mViewHolder.Origin = (TextView) convertView.findViewById(R.id.description1);
-			mViewHolder.Founded = (TextView) convertView.findViewById(R.id.description2);
-			mViewHolder.Revenue = (TextView) convertView.findViewById(R.id.description3);
+			mViewHolder.mName = (TextView) convertView.findViewById(R.id.titleText);
+			mViewHolder.mOrigin = (TextView) convertView.findViewById(R.id.description1);
+			mViewHolder.mFounded = (TextView) convertView.findViewById(R.id.description2);
+			mViewHolder.mRevenue = (TextView) convertView.findViewById(R.id.description3);
 
 			convertView.setTag(mViewHolder);
 		} else {
@@ -60,10 +60,10 @@ public class ManufacturerListAdapter extends BaseAdapter{
 
 		if(manufacturer != null){
 
-			mViewHolder.Name.setText(manufacturer.getName());
-			mViewHolder.Founded.setText(manufacturer.getFounded());
-			mViewHolder.Origin.setText(manufacturer.getOrigin());
-			mViewHolder.Revenue.setText(manufacturer.getRevenue());
+			mViewHolder.mName.setText(manufacturer.getName());
+			mViewHolder.mFounded.setText(manufacturer.getFounded());
+			mViewHolder.mOrigin.setText(manufacturer.getOrigin());
+			mViewHolder.mRevenue.setText(manufacturer.getRevenue());
 
 		}
 
@@ -71,7 +71,7 @@ public class ManufacturerListAdapter extends BaseAdapter{
 	}
 
 	private class ViewHolderItem{
-		TextView Name, Origin, Founded, Revenue;
+		TextView mName, mOrigin, mFounded, mRevenue;
 	}
 
 

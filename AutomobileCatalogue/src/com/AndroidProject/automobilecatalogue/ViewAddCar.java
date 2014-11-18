@@ -123,15 +123,16 @@ public class ViewAddCar extends Activity{
 	}
 	//Labels for the widgets to determine what state of functionality it is in
 	private void Labels(boolean isEdit) {
+
+		setSpinners(isEdit);
+
 		if(isEdit){
 			addEdit.setText("Edit");
 			addEditTitle.setText("Edit Car");
-			setSpinners(isEdit);
 		}
 		else{		
 			addEdit.setText("Add");
 			addEditTitle.setText("Add Car");
-			setSpinners(isEdit);
 		}		
 	}
 

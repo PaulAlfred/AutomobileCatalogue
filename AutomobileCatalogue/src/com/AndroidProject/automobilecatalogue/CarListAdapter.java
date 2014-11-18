@@ -49,10 +49,10 @@ public class CarListAdapter extends BaseAdapter{
 			convertView = inflater.inflate(R.layout.row, parent, false);
 
 			mViewHolder = new ViewHolderItem();
-			mViewHolder.Name = (TextView) convertView.findViewById(R.id.titleText);
-			mViewHolder.Type = (TextView) convertView.findViewById(R.id.description1);
-			mViewHolder.Manufacturer = (TextView) convertView.findViewById(R.id.description2);
-			mViewHolder.Horsepower = (TextView) convertView.findViewById(R.id.description3);
+			mViewHolder.mName = (TextView) convertView.findViewById(R.id.titleText);
+			mViewHolder.mType = (TextView) convertView.findViewById(R.id.description1);
+			mViewHolder.mManufacturer = (TextView) convertView.findViewById(R.id.description2);
+			mViewHolder.mHorsepower = (TextView) convertView.findViewById(R.id.description3);
 
 			convertView.setTag(mViewHolder);
 		} else{
@@ -63,16 +63,16 @@ public class CarListAdapter extends BaseAdapter{
 
 		if(car != null){
 
-			mViewHolder.Name.setText(car.getName());
-			mViewHolder.Type.setText(car.getType());
-			mViewHolder.Manufacturer.setText(car.getManufacturer());
-			mViewHolder.Horsepower.setText(car.getHorsepower());	
+			mViewHolder.mName.setText(car.getName());
+			mViewHolder.mType.setText(car.getType());
+			mViewHolder.mManufacturer.setText(car.getManufacturer());
+			mViewHolder.mHorsepower.setText(car.getHorsepower());	
 		}
 		return convertView;
 	}
 
 	private class ViewHolderItem{
-		TextView Name, Type, Manufacturer, Horsepower;
+		TextView mName, mType, mManufacturer, mHorsepower;
 	}
 
 
