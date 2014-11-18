@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class CarActivity extends ActionBarActivity {
@@ -99,7 +100,7 @@ public class CarActivity extends ActionBarActivity {
     public boolean onContextItemSelected(MenuItem item) {
 
 
-        switch(item.getItemId()){
+        switch(item.getItemId()) {
         case 0:
             mCars.remove(carListAdapter.getItem(mPosition));
             generateAdapter();
@@ -131,7 +132,7 @@ public class CarActivity extends ActionBarActivity {
     }
 
     //generates the Adapter information
-    private void generateAdapter(){
+    private void generateAdapter() {
 
         mCarFilters.add(i.getExtras().getString(CarActivity.MANUFACTURER));
         mCarFilters.add(i.getExtras().getString(CarActivity.CATEGORY));
@@ -146,10 +147,12 @@ public class CarActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
-            if(resultCode == RESULT_OK){
+            if (resultCode == RESULT_OK) {
                 mCars = (ArrayList<ModelCar>) data.getSerializableExtra(CarActivity.OBJECT);
-            }
-            if (resultCode == RESULT_CANCELED) {
+            } else if (resultCode == RESULT_CANCELED && mIsEdit) {
+                Toast.makeText(getApplicationContext(), "Edit Car Canceled", Toast.LENGTH_SHORT).show();
+            } else if (resultCode == RESULT_CANCELED && !mIsEdit) {
+                Toast.makeText(getApplicationContext(), "Add Car Canceled", Toast.LENGTH_SHORT).show();
             }
         }
     }

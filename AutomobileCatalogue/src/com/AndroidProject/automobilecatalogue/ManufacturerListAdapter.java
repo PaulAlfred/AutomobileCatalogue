@@ -15,7 +15,7 @@ public class ManufacturerListAdapter extends BaseAdapter{
     private LayoutInflater inflater;
     private ArrayList<ModelManufacturer> mManufacturers = new ArrayList<ModelManufacturer>();
 
-    public ManufacturerListAdapter(Context context, ArrayList<ModelManufacturer> manufacturers){
+    public ManufacturerListAdapter(Context context, ArrayList<ModelManufacturer> manufacturers) {
         this.context = context;
         this.mManufacturers = manufacturers;
         inflater = LayoutInflater.from(this.context);
@@ -40,7 +40,7 @@ public class ManufacturerListAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolderItem mViewHolder;
 
-        if(convertView == null){
+        if (convertView == null) {
 
             convertView = inflater.inflate(R.layout.row, parent, false);
             mViewHolder = new ViewHolderItem();
@@ -58,7 +58,7 @@ public class ManufacturerListAdapter extends BaseAdapter{
 
         ModelManufacturer manufacturer = mManufacturers.get(position);
 
-        if(manufacturer != null){
+        if (manufacturer != null) {
 
             mViewHolder.textName.setText(manufacturer.getName());
             mViewHolder.textFounded.setText(manufacturer.getFounded());

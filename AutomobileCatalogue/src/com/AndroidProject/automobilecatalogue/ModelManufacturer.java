@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ModelManufacturer implements Serializable{
+public class ModelManufacturer implements Serializable {
     /**
      * 
      */
@@ -56,10 +56,8 @@ public class ModelManufacturer implements Serializable{
         return mRevenue;
     }
 
-
-
     //constructor that sets the values of the manufacturer
-    public ModelManufacturer(String name, String founded, String origin, String revenue){
+    public ModelManufacturer(String name, String founded, String origin, String revenue) {
         this.mName = name;
         this.mFounded = founded;
         this.mOrigin = origin;

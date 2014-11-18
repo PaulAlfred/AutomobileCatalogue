@@ -14,7 +14,7 @@ public class CategoryListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private ArrayList<ModelCategory> categories = new ArrayList<ModelCategory>();
 
-    public CategoryListAdapter(Context context, ArrayList<ModelCategory> categories){
+    public CategoryListAdapter(Context context, ArrayList<ModelCategory> categories) {
         this.context = context;
         this.categories = categories;
         inflater = LayoutInflater.from(this.context);
@@ -40,7 +40,7 @@ public class CategoryListAdapter extends BaseAdapter {
         ViewHolderItem mViewHolder;
 
 
-        if(convertView == null){
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.row_category, parent, false);
 
             mViewHolder = new ViewHolderItem();
@@ -56,7 +56,7 @@ public class CategoryListAdapter extends BaseAdapter {
 
         ModelCategory category = categories.get(position);
 
-        if(category != null){
+        if (category != null) {
             mViewHolder.textName.setText(category.getName());
             mViewHolder.textDescription.setText(category.getDescription());
         }

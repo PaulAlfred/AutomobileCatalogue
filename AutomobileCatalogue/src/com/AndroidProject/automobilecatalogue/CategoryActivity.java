@@ -53,7 +53,7 @@ public class CategoryActivity extends ActionBarActivity
         return mCategories;
     }
 
-    private void createDefaultCategories(){
+    private void createDefaultCategories() {
         mCategories = new ArrayList<ModelCategory>();
         mCategories.add(new ModelCategory("Sedan", "Average Four Door Car"));
         mCategories.add(new ModelCategory("Van", "Big Vehicle used for mass transportation"));

@@ -65,10 +65,10 @@ public class ViewAddCar extends Activity{
         try{
             new ControllerCar(getApplicationContext(), "Cars.json");
             manufacturers = new ControllerManufacturer(getApplicationContext(), "Manufacturers.json");
-            for(ModelManufacturer m : manufacturers.loadManufacturers()){
+            for(ModelManufacturer m : manufacturers.loadManufacturers()) {
                 manufacturerList.add(m.getName());
             }
-            for(ModelCategory c: mCategories){
+            for(ModelCategory c: mCategories) {
                 categoryList.add(c.getName());
             }
         } catch (IOException e) {
@@ -125,11 +125,10 @@ public class ViewAddCar extends Activity{
 
         setSpinners(isEdit);
 
-        if(isEdit){
+        if (isEdit) {
             addEdit.setText("Edit");
             addEditTitle.setText("Edit Car");
-        }
-        else{		
+        } else {		
             addEdit.setText("Add");
             addEditTitle.setText("Add Car");
         }		
@@ -143,14 +142,13 @@ public class ViewAddCar extends Activity{
         car = new ModelCar(name, manufacturer, horsepower, type);
         mCars =  (ArrayList<ModelCar>) i.getSerializableExtra(ViewAddCar.mObject);
 
-        if(isEdit){
+        if (isEdit) {
             position = i.getExtras().getInt(ViewAddCar.mPosition);
             mCars.get(position).setHorsepower(car.getHorsepower());
             mCars.get(position).setManufacturer(car.getManufacturer());
             mCars.get(position).setName(car.getName());
             mCars.get(position).setType(car.getType());
-        }
-        else{
+        } else {
             mCars.add(car);
         }
         Intent resultIntent = new Intent();
@@ -166,22 +164,22 @@ public class ViewAddCar extends Activity{
         horsepower = mHorsepower.getText().toString();
         type = mCategory.getSelectedItem().toString();
 
-        if(TextUtils.isEmpty(name)){
+        if (TextUtils.isEmpty(name)) {
             name = "Generic White Vehicle";
         }
-        if(TextUtils.isEmpty(manufacturer)){
+        if (TextUtils.isEmpty(manufacturer)) {
             manufacturer = "honda";
         }
-        if(TextUtils.isEmpty(horsepower)){
+        if (TextUtils.isEmpty(horsepower)) {
             horsepower = "150hp";
         }
-        if(TextUtils.isEmpty(type)){
+        if (TextUtils.isEmpty(type)) {
             type = "Sedan";	
         }
     }
 
     //method to hide the setting of spinner items
-    private void setSpinners(boolean isEdit){
+    private void setSpinners(boolean isEdit) {
 
         mCategory.setSelection(i.getExtras().getInt(ViewAddCar.mCategoryNo));
         mCategory.setEnabled(isEdit);

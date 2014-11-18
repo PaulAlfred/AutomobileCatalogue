@@ -50,18 +50,19 @@ public class ControllerCar  extends Activity{
             reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder jsonString = new StringBuilder();
             String line = null;
-            while((line = reader.readLine()) != null){
+            while((line = reader.readLine()) != null) {
                 jsonString.append(line);
             }
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
-            for(int i=0; i<array.length(); i++){
+            int jsonArrayCount = array.length();
+            for(int i=0; i<jsonArrayCount; i++) {
                 cars.add(new ModelCar(array.getJSONObject(i)));
             }
 
-            if(reader != null)
+            if (reader != null)
                 reader.close();
 
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
 
         }
         return cars;
@@ -87,7 +88,7 @@ public class ControllerCar  extends Activity{
     //part of save functionality that overwrites the jsonfile
     public void partialSave(ArrayList<ModelCar> cars) throws JSONException{
         JSONArray array = new JSONArray();
-        for (ModelCar c : cars){
+        for (ModelCar c : cars) {
             array.put(c.toJSON());
         }
 
@@ -96,11 +97,11 @@ public class ControllerCar  extends Activity{
             OutputStream out = context.openFileOutput(mFilename, Context.MODE_PRIVATE);
             writer = new OutputStreamWriter(out);
             writer.write(array.toString());
-        } catch(IOException e){
+        } catch(IOException e) {
             e.printStackTrace();
         }
         finally {
-            if(writer != null)
+            if (writer != null)
                 try {
                     writer.close();
                 } catch (IOException e) {

@@ -15,11 +15,11 @@ public class CarListAdapter extends BaseAdapter{
     private LayoutInflater inflater;
     private ArrayList<ModelCar> mFilteredCars = new ArrayList<ModelCar>();
 
-    public CarListAdapter(Context context, ArrayList<ModelCar> cars, ArrayList<String> dataFilter){
+    public CarListAdapter(Context context, ArrayList<ModelCar> cars, ArrayList<String> dataFilter) {
 
         this.context = context;
-        for(ModelCar c : cars){
-            if(((c.getManufacturer().equals(dataFilter.get(0)))&&(c.getType().equals(dataFilter.get(1)))))
+        for(ModelCar c : cars) {
+            if (((c.getManufacturer().equals(dataFilter.get(0)))&&(c.getType().equals(dataFilter.get(1)))))
                 mFilteredCars.add(c);
         }
 
@@ -46,7 +46,7 @@ public class CarListAdapter extends BaseAdapter{
 
         ViewHolderItem mViewHolder;
 
-        if(convertView == null){
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.row, parent, false);
 
             mViewHolder = new ViewHolderItem();
@@ -56,13 +56,13 @@ public class CarListAdapter extends BaseAdapter{
             mViewHolder.textHorsepower = (TextView) convertView.findViewById(R.id.description3);
 
             convertView.setTag(mViewHolder);
-        } else{
+        } else {
             mViewHolder = (ViewHolderItem) convertView.getTag();
         }
 
         ModelCar car = mFilteredCars.get(position);
 
-        if(car != null){
+        if (car != null) {
 
             mViewHolder.textName.setText(car.getName());
             mViewHolder.textType.setText(car.getType());

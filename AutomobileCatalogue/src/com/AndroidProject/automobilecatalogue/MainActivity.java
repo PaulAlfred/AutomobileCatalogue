@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -83,7 +84,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch(item.getItemId()) {
         case 0:
             removeCars(mPosition);
             mManufacturers.remove(mPosition);
@@ -128,15 +129,17 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
-            if(resultCode == RESULT_OK){
+            if (resultCode == RESULT_OK) {
                 mManufacturers = (ArrayList<ModelManufacturer>) data.getSerializableExtra(MainActivity.mObject);
-            }
-            if (resultCode == RESULT_CANCELED) {
+            } else if (resultCode == RESULT_CANCELED && mIsEdit) {
+                Toast.makeText(getApplicationContext(), "Edit Manufacturer Canceled", Toast.LENGTH_SHORT).show();
+            } else if (resultCode == RESULT_CANCELED && !mIsEdit) {
+                Toast.makeText(getApplicationContext(), "Add Manufacturer Canceled", Toast.LENGTH_SHORT).show();
             }
         }
     }
     //Used to simplify code
-    private void  generateAdapter(){
+    private void  generateAdapter() {
 
         manufacturerListAdapter = new ManufacturerListAdapter(this, mManufacturers);  
 
@@ -158,12 +161,12 @@ public class MainActivity extends ActionBarActivity {
         registerForContextMenu(mainList);
     }
     //filtersCars
-    public void removeCars(int position){
+    public void removeCars(int position) {
 
         Iterator<ModelCar> iter = cars.iterator();
-        while(iter.hasNext()){
+        while(iter.hasNext()) {
             ModelCar modelCar = iter.next();
-            if(modelCar.getManufacturer().equals(mManufacturers.get(position).getName()))
+            if (modelCar.getManufacturer().equals(mManufacturers.get(position).getName()))
                 iter.remove();
         }
 

@@ -10,7 +10,7 @@ import android.content.Context;
 
 
 //Acts as a bridge of ControllerManufacturer and ModelManufacturer
-public class ModelManufacturerList implements Serializable{
+public class ModelManufacturerList implements Serializable {
 
 
     private static final long serialVersionUID = 7609809664710096575L;
@@ -30,17 +30,14 @@ public class ModelManufacturerList implements Serializable{
         loadManufacturers();
     }
 
-
     public void addManufacturer(ModelManufacturer m) {
         mManufacturers.add(m);
     }
 
-    public void saveManufacturers(ArrayList<ModelManufacturer> mManufacturers){
-
+    public void saveManufacturers(ArrayList<ModelManufacturer> mManufacturers) {
         manSerializer.saveManufacturers(mManufacturers);
-
     }
-    private void loadManufacturers(){
+    private void loadManufacturers() {
         try {
             mManufacturers = manSerializer.loadManufacturers();
         } catch (IOException e) {

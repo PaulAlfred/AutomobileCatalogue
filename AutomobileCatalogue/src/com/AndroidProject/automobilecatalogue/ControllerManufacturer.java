@@ -69,7 +69,8 @@ public class ControllerManufacturer {
             }
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString())
             .nextValue();
-            for (int i = 0; i < array.length(); i++) {
+            int jsonArrayCount = array.length();
+            for (int i = 0; i < jsonArrayCount; i++) {
                 manufacturers
                 .add(new ModelManufacturer(array.getJSONObject(i)));
             }

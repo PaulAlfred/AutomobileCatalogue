@@ -56,7 +56,7 @@ public class ModelCar implements Serializable {
         return mName;
     }
     //constructor that sets the values of the car
-    public ModelCar(String name, String manufacturer, String horsepower, String type){
+    public ModelCar(String name, String manufacturer, String horsepower, String type) {
         this.mName = name;
         this.mType = type;
         this.mManufacturer = manufacturer;
