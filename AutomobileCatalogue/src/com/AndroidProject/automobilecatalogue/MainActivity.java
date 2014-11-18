@@ -25,8 +25,8 @@ public class MainActivity extends ActionBarActivity {
     private ModelCarList modelCarList;
     public static final String mObject = "object";
     private int mPosition;
-    private final int edit = 1;
-    private final int  delete = 0;
+    private final int editManufacturer = 1;
+    private final int  deleteManufacturer = 0;
     private ArrayList<ModelManufacturer> mManufacturers;
     private ArrayList<ModelCar> cars;
     private boolean mIsEdit;
@@ -85,12 +85,12 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-        case delete:
+        case deleteManufacturer:
             removeCars(mPosition);
             mManufacturers.remove(mPosition);
             generateAdapter();
             break;
-        case edit:
+        case editManufacturer:
             startActivityForResult(editManufacturer(mPosition), 1);
             generateAdapter();
             break;

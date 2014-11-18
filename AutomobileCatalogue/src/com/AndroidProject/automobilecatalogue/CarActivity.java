@@ -24,8 +24,8 @@ public class CarActivity extends ActionBarActivity {
     private ArrayList<String> mCarFilters;
     private boolean mIsEdit;
     private Intent i;
-    private final int edit = 1;
-    private final int  delete = 0;
+    private final int editCar = 1;
+    private final int  deleteCar = 0;
     public static final String OBJECT = "object";
     public static final String MANUFACTURER = "manufacturer";
     public static final String CATEGORY = "category";
@@ -102,11 +102,11 @@ public class CarActivity extends ActionBarActivity {
 
 
         switch(item.getItemId()) {
-        case delete:
+        case deleteCar:
             mCars.remove(carListAdapter.getItem(mPosition));
             generateAdapter();
             break;
-        case edit:
+        case editCar:
             startActivityForResult(editCar((mCars.indexOf(carListAdapter.getItem(mPosition)))),1);
             generateAdapter();
             break;
