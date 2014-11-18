@@ -20,11 +20,11 @@ public class ModelCar implements Serializable {
 	private String mManufacturer;
 	private String mHorsepower;
 	//json variables
-	private static final String JSON_NAME = "name";
-	private static final String JSON_TYPE = "category";
-	private static final String JSON_MANUFACTURER = "manufacturer";
-	private static final String JSON_HORSPOWER = "horsepower";
-	
+	private static final String NAME = "name";
+	private static final String TYPE = "category";
+	private static final String MANUFACTURER = "manufacturer";
+	private static final String HORSEPOWER = "horsepower";
+
 	//setters of values
 	public void setName(String mName) {
 		this.mName = mName;
@@ -67,22 +67,22 @@ public class ModelCar implements Serializable {
 	}
 	//gets the value of the jsonobject
 	public ModelCar(JSONObject json) throws JSONException {
-		mName = json.getString(JSON_NAME);
-		mType = json.getString(JSON_TYPE);
-		mManufacturer = json.getString(JSON_MANUFACTURER);
-		mHorsepower = json.getString(JSON_HORSPOWER);
-		
+		mName = json.getString(NAME);
+		mType = json.getString(TYPE);
+		mManufacturer = json.getString(MANUFACTURER);
+		mHorsepower = json.getString(HORSEPOWER);
+
 	}
 	//puts the "variables":"values" in a jsonobject
 	public JSONObject toJSON() throws JSONException{
 		JSONObject item = new JSONObject();
-		item.put(JSON_NAME, this.mName);
-		item.put(JSON_TYPE, this.mType);
-		item.put(JSON_MANUFACTURER, this.mManufacturer);
-		item.put(JSON_HORSPOWER, this.mHorsepower);
+		item.put(NAME, this.mName);
+		item.put(TYPE, this.mType);
+		item.put(MANUFACTURER, this.mManufacturer);
+		item.put(HORSEPOWER, this.mHorsepower);
 		return item;
 	}
-	
+
 
 }	
 

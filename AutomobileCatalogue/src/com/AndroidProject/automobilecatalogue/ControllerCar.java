@@ -16,7 +16,6 @@ import org.json.JSONTokener;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 
 public class ControllerCar  extends Activity{
@@ -59,8 +58,7 @@ public class ControllerCar  extends Activity{
 			for(int i=0; i<array.length(); i++){
 				cars.add(new ModelCar(array.getJSONObject(i)));
 			}
-			Log.d("LoadArray",array.toString());
-			
+
 			if(reader != null)
 				reader.close();
 
@@ -71,7 +69,7 @@ public class ControllerCar  extends Activity{
 	}
 	//deletes the car on the jsonFile
 	public void deleteCar(int position) throws IOException, JSONException{
-		
+
 		mCars.remove(position);
 		partialSave(mCars);
 	}
@@ -91,7 +89,7 @@ public class ControllerCar  extends Activity{
 		for (ModelCar c : cars){
 			array.put(c.toJSON());
 		}
-		
+
 		Writer writer = null;
 		try{
 			OutputStream out = context.openFileOutput(mFilename, Context.MODE_PRIVATE);

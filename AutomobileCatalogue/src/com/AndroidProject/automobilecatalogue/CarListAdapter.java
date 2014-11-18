@@ -14,31 +14,26 @@ public class CarListAdapter extends BaseAdapter{
 
 	private Context context;
 	private LayoutInflater inflater;
-	private ArrayList<ModelCar> cars = new ArrayList<ModelCar>();
-	private ArrayList<String> dataFilter = new ArrayList<String>(2);
-	private ArrayList<ModelCar> filteredCars = new ArrayList<ModelCar>();
-	
+	private ArrayList<ModelCar> mFilteredCars = new ArrayList<ModelCar>();
+
 	public CarListAdapter(Context context, ArrayList<ModelCar> cars, ArrayList<String> dataFilter){
-		
+
 		this.context = context;
-		this.cars = cars;
-		this.dataFilter = dataFilter;
-		
 		for(ModelCar c : cars){
 			if(((c.getManufacturer().equals(dataFilter.get(0)))&&(c.getType().equals(dataFilter.get(1)))))
-				filteredCars.add(c);
+				mFilteredCars.add(c);
 		}
-		
+
 		inflater = LayoutInflater.from(this.context);
 	}
 	@Override
 	public int getCount() {
-		return this.filteredCars.size();
+		return this.mFilteredCars.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return this.filteredCars.get(position);
+		return this.mFilteredCars.get(position);
 	}
 
 	@Override
@@ -49,25 +44,25 @@ public class CarListAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolderItem mViewHolder;
-		
+
 		if(convertView == null){
 			convertView = inflater.inflate(R.layout.row, parent, false);
-			
+
 			mViewHolder = new ViewHolderItem();
 			mViewHolder.Name = (TextView) convertView.findViewById(R.id.titleText);
 			mViewHolder.Type = (TextView) convertView.findViewById(R.id.description1);
 			mViewHolder.Manufacturer = (TextView) convertView.findViewById(R.id.description2);
 			mViewHolder.Horsepower = (TextView) convertView.findViewById(R.id.description3);
-			
+
 			convertView.setTag(mViewHolder);
 		} else{
 			mViewHolder = (ViewHolderItem) convertView.getTag();
 		}
-		
-		ModelCar car = filteredCars.get(position);
-		
+
+		ModelCar car = mFilteredCars.get(position);
+
 		if(car != null){
-			
+
 			mViewHolder.Name.setText(car.getName());
 			mViewHolder.Type.setText(car.getType());
 			mViewHolder.Manufacturer.setText(car.getManufacturer());
