@@ -1,6 +1,7 @@
 package com.AndroidProject.automobilecatalogue;
 
 import java.util.ArrayList;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -38,8 +40,7 @@ public class CarActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car);
-
-        new ArrayList<ModelCar>();
+        
         i = getIntent();
         mIsEdit = false;
         mCars = new ArrayList<ModelCar>();
@@ -51,7 +52,8 @@ public class CarActivity extends ActionBarActivity {
     //inflates the add menu and icon on the action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
+        
+        
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.add_menu, menu);
         return true;

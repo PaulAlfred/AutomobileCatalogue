@@ -73,10 +73,11 @@ public class ViewAddManufacturer extends Activity implements Serializable {
         Labels(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
         addEdit.setOnClickListener(new OnClickListener() {
 
+        boolean isEdit = i.getExtras().getBoolean(ViewAddManufacturer.isEdit);
             @Override
             public void onClick(View v) {
                 boolean isExists = isNameExists(name.getText().toString());
-                if (isExists) {
+                if (isExists&&!isEdit) {
                     Toast.makeText(getApplicationContext(), "The Name you have chosen has already been taken.", Toast.LENGTH_SHORT).show();
                     finish();
                 } else
