@@ -149,11 +149,10 @@ public class ViewAddManufacturer extends Activity implements Serializable{
 			Revenue = "$500M";
 	}
 	private boolean isNameExists(String name){
-		boolean isExists = false;
 		for(ModelManufacturer m : manufacturers ){
 			if(name.equals(m.getName()))
-				isExists = true;
+				return true;
 		}
-		return isExists;
+		return false;
 	}
 }
