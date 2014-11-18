@@ -44,7 +44,6 @@ public class ViewAddCar extends Activity{
     public static final String mManufacturerNo = "manufacturerNo";
     public static final String mCategoryNo = "categoryNo";
     public static final String mObject = "object";
-    public static final String mCar = "car";
     //for better readability of listOfObject.get(position).getType();
     private String name;
     private String manufacturer;
@@ -137,7 +136,7 @@ public class ViewAddCar extends Activity{
     }
 
     //actions for different functionality add or edit
-    @SuppressWarnings({ "unchecked", "unused" })
+    @SuppressWarnings({ "unchecked"})
     private void addOrEdit(boolean isEdit){
 
         setCarValues();
@@ -146,7 +145,6 @@ public class ViewAddCar extends Activity{
 
         if(isEdit){
             position = i.getExtras().getInt(ViewAddCar.mPosition);
-            ModelCar mCar = (ModelCar) i.getExtras().getSerializable(ViewAddCar.mCar);
             mCars.get(position).setHorsepower(car.getHorsepower());
             mCars.get(position).setManufacturer(car.getManufacturer());
             mCars.get(position).setName(car.getName());
