@@ -2,6 +2,7 @@ package com.AndroidProject.automobilecatalogue;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.json.JSONException;
 
@@ -48,7 +49,6 @@ public class MainActivity extends ActionBarActivity {
 		mManufacturers = mModelManufacturerList.getManufacturers();
 		cars = new ArrayList<ModelCar>();
 		modelCarList = new ModelCarList(getApplicationContext());
-		cars = modelCarList.getCar();
 		filteredCars = new ArrayList<ModelCar>();
 		controllerCar = new ControllerCar(getApplicationContext(), "Cars.json");
 		setContentView(R.layout.activity_main);
@@ -125,6 +125,7 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	protected void onPause() {
 		mModelManufacturerList.saveManufacturers(mManufacturers);
+		cars = modelCarList.getCar();
 		super.onPause();
 	}
 	@Override
@@ -163,17 +164,20 @@ public class MainActivity extends ActionBarActivity {
 	//filtersCars
 	public void removeCars(int position){
 		
-		if(cars.size() != 0){
-			for(ModelCar c : cars){
-				if(!c.getManufacturer().equals(mManufacturers.get(position).getName()))
-					filteredCars.add(c);
-			}			
-			try {
-				controllerCar.partialSave(filteredCars);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		Iterator<ModelCar> iter = cars.iterator();
+		while(iter.hasNext()){
+			ModelCar modelCar = iter.next();
+			if(modelCar.getManufacturer().equals(mManufacturers.get(position).getName()))
+					iter.remove();
 		}
+			
+		try {
+			controllerCar.partialSave(cars);
+			} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 }
