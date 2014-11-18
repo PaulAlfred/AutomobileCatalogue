@@ -123,9 +123,9 @@ public class MainActivity extends ActionBarActivity {
 		super.onResume();
 	}
 	@Override
-	protected void onDestroy() {
+	protected void onPause() {
 		mModelManufacturerList.saveManufacturers(mManufacturers);
-		super.onDestroy();
+		super.onPause();
 	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
