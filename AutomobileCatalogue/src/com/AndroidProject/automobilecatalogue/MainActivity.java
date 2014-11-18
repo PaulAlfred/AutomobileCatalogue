@@ -17,9 +17,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-
 public class MainActivity extends ActionBarActivity {
-
 
     private ManufacturerListAdapter manufacturerListAdapter;
     private ModelManufacturerList mModelManufacturerList;
@@ -27,9 +25,12 @@ public class MainActivity extends ActionBarActivity {
     private ModelCarList modelCarList;
     public static final String mObject = "object";
     private int mPosition;
+    private final int edit = 1;
+    private final int  delete = 0;
     private ArrayList<ModelManufacturer> mManufacturers;
     private ArrayList<ModelCar> cars;
     private boolean mIsEdit;
+
     //loading the cars from Manufacturers.json and putting its contents to the adapter
     //then displays the adapter in a listview
     @Override
@@ -41,7 +42,6 @@ public class MainActivity extends ActionBarActivity {
         mManufacturers = mModelManufacturerList.getManufacturers();
         cars = new ArrayList<ModelCar>();
         modelCarList = new ModelCarList(getApplicationContext());
-        new ArrayList<ModelCar>();
         controllerCar = new ControllerCar(getApplicationContext(), "Cars.json");
         setContentView(R.layout.activity_main);
     }
@@ -85,12 +85,12 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-        case 0:
+        case delete:
             removeCars(mPosition);
             mManufacturers.remove(mPosition);
             generateAdapter();
             break;
-        case 1:
+        case edit:
             startActivityForResult(editManufacturer(mPosition), 1);
             generateAdapter();
             break;
@@ -111,20 +111,22 @@ public class MainActivity extends ActionBarActivity {
         intent.putExtra(ViewAddManufacturer.mPosition, mPosition);
         intent.putExtra(ViewAddManufacturer.mObject, mManufacturers);
         return intent;
-
     }
+
     @Override
     protected void onResume() {
         mIsEdit = false;
         generateAdapter();
         super.onResume();
     }
+
     @Override
     protected void onPause() {
         mModelManufacturerList.saveManufacturers(mManufacturers);
         cars = modelCarList.getCar();
         super.onPause();
     }
+
     @SuppressWarnings("unchecked")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -138,6 +140,7 @@ public class MainActivity extends ActionBarActivity {
             }
         }
     }
+
     //Used to simplify code
     private void  generateAdapter() {
 
@@ -160,6 +163,7 @@ public class MainActivity extends ActionBarActivity {
         });
         registerForContextMenu(mainList);
     }
+
     //filtersCars
     public void removeCars(int position) {
 
@@ -176,7 +180,5 @@ public class MainActivity extends ActionBarActivity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-
     }
 }

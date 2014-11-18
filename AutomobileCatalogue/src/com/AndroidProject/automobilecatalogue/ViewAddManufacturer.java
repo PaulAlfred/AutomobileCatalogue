@@ -68,13 +68,9 @@ public class ViewAddManufacturer extends Activity implements Serializable {
         founded.setText(i.getStringExtra(ViewAddManufacturer.mFounded));
         revenue.setText(i.getStringExtra(ViewAddManufacturer.mRevenue));
         origin.setText(i.getStringExtra(ViewAddManufacturer.mOrigin));
-
+        
         position = i.getExtras().getInt(ViewAddManufacturer.mPosition);
-
         Labels(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
-
-        new ControllerManufacturer(getApplicationContext(), "Manufacturers.json");
-
         addEdit.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -95,16 +91,15 @@ public class ViewAddManufacturer extends Activity implements Serializable {
                 finish();
             }
         });
-
     }
 
     //Labels for the widgets to determine what state of functionality it is in
     private void Labels(boolean isEdit) {
+        
         if (isEdit) {	
             addEdit.setText("Edit");
             addEditLabel.setText("Edit Manufacturer");
-        }
-        else {
+        } else {
             addEdit.setText("Add");
             addEditLabel.setText("Add Manufacturer");
         }
@@ -122,8 +117,7 @@ public class ViewAddManufacturer extends Activity implements Serializable {
             manufacturers.get(position).setName(manufacturer.getName());
             manufacturers.get(position).setOrigin(manufacturer.getOrigin());
             manufacturers.get(position).setRevenue(manufacturer.getRevenue());
-        }
-        else {
+        } else {
             manufacturers.add(manufacturer);			
         }
         Intent resultIntent = new Intent();
@@ -148,6 +142,7 @@ public class ViewAddManufacturer extends Activity implements Serializable {
         if (TextUtils.isEmpty(Revenue))
             Revenue = "$500M";
     }
+
     private boolean isNameExists(String name) {
         for(ModelManufacturer m : manufacturers ) {
             if (name.equals(m.getName()))

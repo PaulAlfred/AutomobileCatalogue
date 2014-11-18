@@ -24,6 +24,8 @@ public class CarActivity extends ActionBarActivity {
     private ArrayList<String> mCarFilters;
     private boolean mIsEdit;
     private Intent i;
+    private final int edit = 1;
+    private final int  delete = 0;
     public static final String OBJECT = "object";
     public static final String MANUFACTURER = "manufacturer";
     public static final String CATEGORY = "category";
@@ -44,7 +46,6 @@ public class CarActivity extends ActionBarActivity {
         mCarFilters = new ArrayList<String>();
         modelCarlist = new ModelCarList(getApplicationContext());
         mCars = modelCarlist.getCar();
-
     }
 
     //inflates the add menu and icon on the action bar
@@ -101,17 +102,18 @@ public class CarActivity extends ActionBarActivity {
 
 
         switch(item.getItemId()) {
-        case 0:
+        case delete:
             mCars.remove(carListAdapter.getItem(mPosition));
             generateAdapter();
             break;
-        case 1:
+        case edit:
             startActivityForResult(editCar((mCars.indexOf(carListAdapter.getItem(mPosition)))),1);
             generateAdapter();
             break;
         }
-
+        
         return super.onContextItemSelected(item);
+        
     }
 
     //put Extras to the intent to be started for editView
@@ -128,7 +130,6 @@ public class CarActivity extends ActionBarActivity {
         intent.putExtra(ViewAddCar.mManufacturerNo, i.getExtras().getInt(CarActivity.MANUFACTURER_NO));
         intent.putExtra(ViewAddCar.mObject, mCars);
         return intent;
-
     }
 
     //generates the Adapter information

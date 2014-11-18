@@ -63,6 +63,7 @@ public class ModelManufacturer implements Serializable {
         this.mOrigin = origin;
         this.mRevenue = revenue;
     }
+
     //gets the value of the jsonobject
     public ModelManufacturer(JSONObject json) throws JSONException {
         mName = json.getString(NAME);
@@ -80,10 +81,4 @@ public class ModelManufacturer implements Serializable {
         item.put("revenue", this.mRevenue);
         return item;
     }
-
-
-
-
-
-
 }

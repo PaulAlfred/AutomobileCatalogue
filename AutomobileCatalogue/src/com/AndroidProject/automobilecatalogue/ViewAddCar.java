@@ -55,6 +55,7 @@ public class ViewAddCar extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_car);
+
         manufacturerList = new ArrayList<String>();
         categoryList = new ArrayList<String>();
         mCars = new ArrayList<ModelCar>();
@@ -62,13 +63,14 @@ public class ViewAddCar extends Activity{
         i = getIntent();
         ArrayList<ModelCategory> mCategories = new ArrayList<ModelCategory>();
         mCategories = categoryActivity.getCategories();
+
         try{
-            new ControllerCar(getApplicationContext(), "Cars.json");
+            
             manufacturers = new ControllerManufacturer(getApplicationContext(), "Manufacturers.json");
             for(ModelManufacturer m : manufacturers.loadManufacturers()) {
                 manufacturerList.add(m.getName());
             }
-            for(ModelCategory c: mCategories) {
+            for (ModelCategory c: mCategories) {
                 categoryList.add(c.getName());
             }
         } catch (IOException e) {
@@ -78,8 +80,6 @@ public class ViewAddCar extends Activity{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        new ModelCarList(ViewAddCar.this);
 
         addEditTitle = (TextView) findViewById(R.id.addOrEditCarTitle);
         cancel = (Button) findViewById(R.id.Cancel);
@@ -120,6 +120,7 @@ public class ViewAddCar extends Activity{
             }
         });
     }
+
     //Labels for the widgets to determine what state of functionality it is in
     private void Labels(boolean isEdit) {
 

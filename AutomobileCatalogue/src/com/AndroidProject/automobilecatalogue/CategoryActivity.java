@@ -45,7 +45,6 @@ public class CategoryActivity extends ActionBarActivity
 
             }
         });
-
     }
 
     public ArrayList<ModelCategory> getCategories() {

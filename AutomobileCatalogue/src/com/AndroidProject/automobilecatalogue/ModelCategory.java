@@ -10,11 +10,13 @@ public class ModelCategory{
     private static final String DESCRIPTION = "description";
     //values
     private String mName, mDescription;
+
     //constructor that sets the values of the category
     public ModelCategory(String Name, String Description) {
         this.mName = Name;
         this.mDescription = Description;
     }
+
     //getters of values
     public String getName() {
         return mName;
@@ -22,12 +24,14 @@ public class ModelCategory{
     public String getDescription() {
         return mDescription;
     }
+
     //gets the value of the jsonobject
     public ModelCategory(JSONObject json) throws JSONException {
         mName = json.getString(NAME);
         mDescription = json.getString(DESCRIPTION);
 
     }
+
     //puts the "variables":"values" in a jsonobject
     public JSONObject toJSON() throws JSONException{
         JSONObject item = new JSONObject();
@@ -35,5 +39,4 @@ public class ModelCategory{
         item.put("description", this.mDescription);
         return item;
     }
-
 }

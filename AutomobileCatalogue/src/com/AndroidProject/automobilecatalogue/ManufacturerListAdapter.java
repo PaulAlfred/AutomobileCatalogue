@@ -48,12 +48,10 @@ public class ManufacturerListAdapter extends BaseAdapter{
             mViewHolder.textOrigin = (TextView) convertView.findViewById(R.id.description1);
             mViewHolder.textFounded = (TextView) convertView.findViewById(R.id.description2);
             mViewHolder.textRevenue = (TextView) convertView.findViewById(R.id.description3);
-
             convertView.setTag(mViewHolder);
+
         } else {
-
             mViewHolder = (ViewHolderItem) convertView.getTag();
-
         }
 
         ModelManufacturer manufacturer = mManufacturers.get(position);
@@ -71,7 +69,8 @@ public class ManufacturerListAdapter extends BaseAdapter{
     }
 
     private class ViewHolderItem{
+        
         TextView textName, textOrigin, textFounded, textRevenue;
+        
     }
-
 }

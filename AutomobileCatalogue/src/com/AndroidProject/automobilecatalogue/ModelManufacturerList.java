@@ -37,6 +37,7 @@ public class ModelManufacturerList implements Serializable {
     public void saveManufacturers(ArrayList<ModelManufacturer> mManufacturers) {
         manSerializer.saveManufacturers(mManufacturers);
     }
+
     private void loadManufacturers() {
         try {
             mManufacturers = manSerializer.loadManufacturers();
@@ -53,10 +54,7 @@ public class ModelManufacturerList implements Serializable {
         return mManufacturers;
     }
 
-
     public void setManufacturers(ArrayList<ModelManufacturer> mManufacturers) {
         this.mManufacturers = mManufacturers;
     }
-
-
 }

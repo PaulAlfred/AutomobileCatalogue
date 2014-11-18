@@ -11,7 +11,6 @@ import android.content.Context;
 public class ModelCarList {
 
     private final String mFilename = "Cars.json";
-
     private ArrayList<ModelCar> mCar;
     private ControllerCar carSerializer;
     public static ModelCarList sCar;

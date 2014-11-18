@@ -29,8 +29,6 @@ public class ControllerManufacturer {
 
         try {
             manufacturers = loadManufacturers();
-            new ArrayList<ModelCar>();
-            new ArrayList<ModelCar>();
             carController.loadCars();
         } catch (IOException e) {
 
