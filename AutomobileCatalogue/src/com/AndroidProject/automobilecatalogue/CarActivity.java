@@ -39,7 +39,7 @@ public class CarActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car);
-        
+
         i = getIntent();
         mIsEdit = false;
         mCars = new ArrayList<ModelCar>();
@@ -49,13 +49,13 @@ public class CarActivity extends ActionBarActivity {
         String mManufacturer = i.getExtras().getString(CarActivity.MANUFACTURER);
         String mCategory = i.getExtras().getString(CarActivity.CATEGORY);
         setTitle(mManufacturer + " > " + mCategory);
-        
+
     }
 
     //inflates the add menu and icon on the action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.add_menu, menu);
         return true;
@@ -65,9 +65,9 @@ public class CarActivity extends ActionBarActivity {
     //starts the activity of the add menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId(); 
 
-        switch (item.getItemId()) {
-        case R.id.action_add:
+        if (itemId == R.id.action_add) {
             Intent intent = new Intent(CarActivity.this, ViewAddCar.class);
             intent.putExtra(ViewAddCar.isEdit, mIsEdit);
             intent.putExtra(ViewAddCar.mCategoryNo, i.getExtras().getInt(CarActivity.CATEGORY_NO));
@@ -75,9 +75,8 @@ public class CarActivity extends ActionBarActivity {
             intent.putExtra(ViewAddCar.mObject, mCars);
             startActivityForResult(intent, 1);
             return true;
-        default:
+        } else {
             return super.onOptionsItemSelected(item);
-
         }
     }
 
@@ -88,38 +87,43 @@ public class CarActivity extends ActionBarActivity {
         mIsEdit = false;
         generateAdapter();
     }
-
+    
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-
+    
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
         mPosition = info.position;
         menu.setHeaderTitle(mCars.get(mPosition).getName());
         menu.add(Menu.NONE,0,0,"Delete");
         menu.add(Menu.NONE,1,1,"Edit");
-
+    
     }
-
+    
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId) {
 
-
-        switch(item.getItemId()) {
-        case deleteCar:
+        case deleteCar: {
             mCars.remove(carListAdapter.getItem(mPosition));
             generateAdapter();
-            break;
-        case editCar:
+        }
+        break;
+    
+        case editCar: {
             startActivityForResult(editCar((mCars.indexOf(carListAdapter.getItem(mPosition)))),1);
             generateAdapter();
-            break;
         }
-        
-        return super.onContextItemSelected(item);
-        
-    }
+        break;
 
+        default:
+            Toast.makeText(getApplicationContext(), "Invalid input", Toast.LENGTH_SHORT);
+        }
+    
+        return super.onContextItemSelected(item);
+    }
+    
     //put Extras to the intent to be started for editView
     private Intent editCar(int position) {
         mIsEdit = true;
@@ -135,19 +139,19 @@ public class CarActivity extends ActionBarActivity {
         intent.putExtra(ViewAddCar.mObject, mCars);
         return intent;
     }
-
+    
     //generates the Adapter information
     private void generateAdapter() {
-
+    
         mCarFilters.add(i.getExtras().getString(CarActivity.MANUFACTURER));
         mCarFilters.add(i.getExtras().getString(CarActivity.CATEGORY));
         carListAdapter = new CarListAdapter(this, mCars ,mCarFilters);
-
+    
         ListView carList = (ListView) findViewById(R.id.activityCarList);
         carList.setAdapter(carListAdapter);
         registerForContextMenu(carList);
     }
-
+    
     @SuppressWarnings("unchecked")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -161,7 +165,7 @@ public class CarActivity extends ActionBarActivity {
             }
         }
     }
-
+    
     @Override
     protected void onDestroy() {
         modelCarlist.saveCar(mCars);

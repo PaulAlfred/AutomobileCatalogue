@@ -29,12 +29,8 @@ public class ModelCarList {
 
     public void saveCar(ArrayList<ModelCar> mCar) {
         try {
-            carSerializer.saveCars(mCar);
+            carSerializer.save(mCar);
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

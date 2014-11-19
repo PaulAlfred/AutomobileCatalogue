@@ -47,7 +47,6 @@ public class ControllerManufacturer {
         try {
             partialSave(manufacturers);
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -57,6 +56,7 @@ public class ControllerManufacturer {
     JSONException {
         ArrayList<ModelManufacturer> manufacturers = new ArrayList<ModelManufacturer>();
         BufferedReader reader = null;
+
         try {
             InputStream in = context.openFileInput(mFilename);
             reader = new BufferedReader(new InputStreamReader(in));
@@ -77,7 +77,7 @@ public class ControllerManufacturer {
                 reader.close();
 
         } catch (FileNotFoundException e) {
-
+            e.printStackTrace();
         }
         return manufacturers;
     }
@@ -101,6 +101,7 @@ public class ControllerManufacturer {
         }
 
         Writer writer = null;
+
         try {
             OutputStream out = context.openFileOutput(mFilename,
                     Context.MODE_PRIVATE);

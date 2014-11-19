@@ -33,14 +33,6 @@ public class ControllerCar  extends Activity{
         }
     }
 
-    //saves the cars to the cars.json file, that was previously added to ModelCar
-    //or creates a new cars.json, then stores
-    //to the default location with Filename = mFilename
-    public void saveCars(ArrayList<ModelCar> cars) throws JSONException, IOException {
-        //cars.addAll(loadCars());
-        partialSave(cars);
-    }
-
     //loads the cars form mFilename
     public ArrayList<ModelCar> loadCars() throws IOException, JSONException{
         ArrayList<ModelCar> cars = new ArrayList<ModelCar>();
@@ -63,7 +55,7 @@ public class ControllerCar  extends Activity{
                 reader.close();
 
         } catch (FileNotFoundException e) {
-
+            e.printStackTrace();
         }
         return cars;
     }
@@ -72,7 +64,7 @@ public class ControllerCar  extends Activity{
     public void deleteCar(int position) throws IOException, JSONException{
 
         mCars.remove(position);
-        partialSave(mCars);
+        save(mCars);
     }
 
     //edits the car information on the jsonfile
@@ -82,11 +74,13 @@ public class ControllerCar  extends Activity{
         mCars.get(position).setManufacturer(car.getManufacturer());
         mCars.get(position).setName(car.getName());
         mCars.get(position).setType(car.getType());
-        partialSave(mCars);
+        save(mCars);
     }
 
-    //part of save functionality that overwrites the jsonfile
-    public void partialSave(ArrayList<ModelCar> cars) throws JSONException{
+    //saves the cars to the cars.json file, that was previously added to ModelCar
+    //or creates a new cars.json, then stores
+    //to the default location with Filename = mFilename
+    public void save(ArrayList<ModelCar> cars) throws JSONException{
         JSONArray array = new JSONArray();
         for (ModelCar c : cars) {
             array.put(c.toJSON());

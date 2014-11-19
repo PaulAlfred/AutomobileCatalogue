@@ -58,16 +58,22 @@ public class MainActivity extends ActionBarActivity {
     //starts the activity of the add menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.action_add:
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.action_add) {
+
             Intent intent = new Intent(MainActivity.this, ViewAddManufacturer.class);
             intent.putExtra(ViewAddManufacturer.isEdit, mIsEdit);
             intent.putExtra(ViewAddManufacturer.mObject,mManufacturers);
             startActivityForResult(intent, 1);
             return true;
-        default:
+            
+        }
+
+        else {
             return super.onOptionsItemSelected(item);
-        }	
+        }
+
     }
 
     @Override
@@ -83,17 +89,26 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-        case deleteManufacturer:
-            removeCars(mPosition);
-            mManufacturers.remove(mPosition);
-            generateAdapter();
-            break;
-        case editManufacturer:
-            startActivityForResult(editManufacturer(mPosition), 1);
-            generateAdapter();
+        int itemId = item.getItemId();
+
+        switch (itemId) {
+
+            case deleteManufacturer: {
+                removeCars(mPosition);
+                mManufacturers.remove(mPosition);
+                generateAdapter();
+            }
             break;
 
+            case editManufacturer: {
+                startActivityForResult(editManufacturer(mPosition), 1);
+                generateAdapter();
+            }
+            break;
+
+            default: {
+                Toast.makeText(getApplicationContext(), "Invalid input", Toast.LENGTH_SHORT).show();
+            }
         }
         return super.onContextItemSelected(item);
     }
@@ -174,9 +189,8 @@ public class MainActivity extends ActionBarActivity {
         }
 
         try {
-            controllerCar.partialSave(cars);
+            controllerCar.save(cars);
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

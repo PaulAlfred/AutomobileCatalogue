@@ -74,10 +74,8 @@ public class ViewAddCar extends Activity{
                 categoryList.add(c.getName());
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

@@ -42,10 +42,8 @@ public class ModelManufacturerList implements Serializable {
         try {
             mManufacturers = manSerializer.loadManufacturers();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
