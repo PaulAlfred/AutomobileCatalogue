@@ -146,6 +146,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onResume() {
+        cars = modelCarList.getCar();
         generateAdapter();
         mIsEdit = false;
         super.onResume();

@@ -46,6 +46,7 @@ public class ModelCarList {
     }
 
     public ArrayList<ModelCar> getCar() {
+        loadCar();
         return mCar;
     }
 }
