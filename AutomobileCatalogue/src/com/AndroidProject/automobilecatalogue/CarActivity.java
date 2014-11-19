@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -47,12 +46,15 @@ public class CarActivity extends ActionBarActivity {
         mCarFilters = new ArrayList<String>();
         modelCarlist = new ModelCarList(getApplicationContext());
         mCars = modelCarlist.getCar();
+        String mManufacturer = i.getExtras().getString(CarActivity.MANUFACTURER);
+        String mCategory = i.getExtras().getString(CarActivity.CATEGORY);
+        setTitle(mManufacturer + " > " + mCategory);
+        
     }
 
     //inflates the add menu and icon on the action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
         
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.add_menu, menu);

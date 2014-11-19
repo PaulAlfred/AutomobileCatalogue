@@ -73,14 +73,18 @@ public class ViewAddManufacturer extends Activity implements Serializable {
         Labels(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
         addEdit.setOnClickListener(new OnClickListener() {
 
-        boolean isEdit = i.getExtras().getBoolean(ViewAddManufacturer.isEdit);
+        boolean isAdd = !(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
             @Override
             public void onClick(View v) {
+                
+                String selectedName = i.getExtras().getString(ViewAddManufacturer.mName);
+                boolean isSameName = name.getText().toString().equals(selectedName);
                 boolean isExists = isNameExists(name.getText().toString());
-                if (isExists&&!isEdit) {
+
+                if (isExists && (isAdd||!isSameName)) {
                     Toast.makeText(getApplicationContext(), "The Name you have chosen has already been taken.", Toast.LENGTH_SHORT).show();
                     finish();
-                } else
+                } else 
                     addOrEdit(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
 
             }
@@ -134,8 +138,10 @@ public class ViewAddManufacturer extends Activity implements Serializable {
         Origin = origin.getText().toString();
         Revenue = revenue.getText().toString();
 
-        if (TextUtils.isEmpty(Name))
-            Name = "Generic Automobile Company";
+        if (TextUtils.isEmpty(Name)) {
+            Toast.makeText(getApplicationContext(), "You can not input null for name", Toast.LENGTH_SHORT).show();
+            finish();
+        }
         if (TextUtils.isEmpty(Founded))
             Founded = "2000";
         if (TextUtils.isEmpty(Origin))
@@ -146,7 +152,7 @@ public class ViewAddManufacturer extends Activity implements Serializable {
 
     private boolean isNameExists(String name) {
         for(ModelManufacturer m : manufacturers ) {
-            if (name.equals(m.getName()))
+            if (name.toLowerCase().equals(m.getName().toLowerCase()))
                 return true;
         }
         return false;
