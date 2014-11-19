@@ -1,0 +1,28 @@
+{
+	"categories":[
+	{
+		"name":"Sedan",
+		"description":"A vehicle with four passenger doors and a liftgate at the rear."
+	},
+	{
+		"name":"Sports",
+		"description":"A sports car (sportscar) is a small, usually two seater, two door automobile designed for spirited performance and nimble handling."
+	},
+	{
+		"name":"SUV",
+		"description":"A sport utility vehicle or suburban utility vehicle (SUV) is a vehicle similar to a station wagon or estate car, usually equipped with four-wheel drive for on- or off-road ability."
+	},
+	{
+		"name":"Truck",
+		"description":"A truck is a motor vehicle designed to transport cargo"
+	},
+	{
+		"name":"Wagon",
+		"description":"An automobile having an extended interior with a third seat or luggage platform and a tailgate."
+	},
+	{
+		"name":"Van",
+		"description":"A modern van is a kind of vehicle used for transporting goods or people."
+	}
+	]
+}

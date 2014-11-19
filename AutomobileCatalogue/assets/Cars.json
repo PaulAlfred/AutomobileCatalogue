@@ -1,0 +1,34 @@
+{
+	"cars": [
+		{
+			"name":"GranTurismo Sport",
+			"manufacturer":"Maserati",
+			"category":"Sports Car",
+			"horsepower":"444 hp"
+		},
+		{
+			"name":"GTR 2012",
+			"manufacturer":"Nissan",
+			"category":"Sports Car",
+			"horsepower":"530 hp"
+		},
+		{
+			"name":"Colorado 2010",
+			"manufacturer":"Chevrolet",
+			"category":"Pick-Up",
+			"horsepower":"185 hp"
+		},
+		{
+			"name":"Sonata 2009",
+			"manufacturer":"Hyundai",
+			"category":"Sedan",
+			"horsepower":"175 hp"
+		},
+		{
+			"name":"Megane Grandtourer",
+			"manufacturer":"Renault",
+			"category":"Wagon",
+			"horsepower":"217 hp"
+		}
+	]
+}

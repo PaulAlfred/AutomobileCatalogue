@@ -4,5 +4,19 @@
     <string name="app_name">AutomobileCatalogue</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+	<string name="add_man_name">Name: </string>
+	<string name="add_man_founded">Founded: </string>
+	<string name="add_man_origin">Origin: </string>
+	<string name="add_man_revenue">Revenue: </string>
+	<string name="add_car_name">Name: </string>
+	<string name="add_car_category">Category: </string>
+	<string name="add_car_manufacturer">Manufacturer: </string>
+	<string name="add_car_horsepower">Horsepower: </string>
+	<string name="hint_company">Company Name</string>
+	<string name="hint_year">Year Found</string>
+	<string name="hint_origin">Company\'s Origin</string>
+	<string name="hint_revenue">Company\'s Current Revenue</string>
+	<string name="hint_car">Car Model</string>
+	<string name="hint_horsepower">Car\'s Horsepower</string>	
+	<string name="button_cancel">Cancel</string>
 </resources>

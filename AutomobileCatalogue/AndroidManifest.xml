@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="13"
         android:targetSdkVersion="21" />
 
     <application
@@ -15,12 +15,38 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="Manufacturers"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".CarActivity"
+            android:label=""
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ViewAddCategory"
+            android:label="AddLabel"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ViewAddCar"
+            android:label="AddCar" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ViewAddManufacturer"
+            android:label="AddManufacturer" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".CategoryActivity"
+            android:label="Categories" 
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
