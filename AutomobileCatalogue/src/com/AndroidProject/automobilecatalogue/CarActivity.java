@@ -94,7 +94,8 @@ public class CarActivity extends ActionBarActivity {
     
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
         mPosition = info.position;
-        menu.setHeaderTitle(mCars.get(mPosition).getName());
+        int indexOfSelectedItem = mCars.indexOf(carListAdapter.getItem(mPosition));
+        menu.setHeaderTitle(mCars.get(indexOfSelectedItem).getName());
         menu.add(Menu.NONE,0,0,"Delete");
         menu.add(Menu.NONE,1,1,"Edit");
     
@@ -118,7 +119,7 @@ public class CarActivity extends ActionBarActivity {
         break;
 
         default:
-            Toast.makeText(getApplicationContext(), "Invalid input", Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), "Invalid input", Toast.LENGTH_SHORT).show();
         }
     
         return super.onContextItemSelected(item);

@@ -9,9 +9,11 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
+
 import android.app.Activity;
 import android.content.Context;
 

@@ -127,6 +127,7 @@ public class ViewAddManufacturer extends Activity implements Serializable {
         }
         Intent resultIntent = new Intent();
         resultIntent.putExtra(MainActivity.mObject, manufacturers);
+        resultIntent.putExtra(MainActivity.PREV_NAME, i.getStringExtra(ViewAddManufacturer.mName));
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }

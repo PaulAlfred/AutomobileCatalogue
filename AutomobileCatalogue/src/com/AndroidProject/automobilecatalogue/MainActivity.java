@@ -2,6 +2,7 @@ package com.AndroidProject.automobilecatalogue;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import org.json.JSONException;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +14,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -24,6 +25,8 @@ public class MainActivity extends ActionBarActivity {
     private ControllerCar controllerCar;
     private ModelCarList modelCarList;
     public static final String mObject = "object";
+    public static final String PREV_NAME = "man_name"; 
+    private String prevName;
     private int mPosition;
     private final int editManufacturer = 1;
     private final int  deleteManufacturer = 0;
@@ -102,7 +105,6 @@ public class MainActivity extends ActionBarActivity {
 
             case editManufacturer: {
                 startActivityForResult(editManufacturer(mPosition), 1);
-                generateAdapter();
             }
             break;
 
@@ -111,6 +113,21 @@ public class MainActivity extends ActionBarActivity {
             }
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void changeCarsManufacturer() {
+
+
+        for(ModelCar mc : cars) {
+            if (mc.getManufacturer().equals(prevName))
+                mc.setManufacturer(mManufacturers.get(mPosition).getName());
+        }
+        
+        try {
+            controllerCar.save(cars);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     //put Extras to the intent to be started for editView
@@ -129,8 +146,8 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onResume() {
-        mIsEdit = false;
         generateAdapter();
+        mIsEdit = false;
         super.onResume();
     }
 
@@ -146,6 +163,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
+                prevName = data.getStringExtra(MainActivity.PREV_NAME);
                 mManufacturers = (ArrayList<ModelManufacturer>) data.getSerializableExtra(MainActivity.mObject);
             } else if (resultCode == RESULT_CANCELED && mIsEdit) {
                 Toast.makeText(getApplicationContext(), "Edit Manufacturer Canceled", Toast.LENGTH_SHORT).show();
@@ -157,6 +175,9 @@ public class MainActivity extends ActionBarActivity {
 
     //Used to simplify code
     private void  generateAdapter() {
+        
+        if (mIsEdit == true)
+            changeCarsManufacturer();
 
         manufacturerListAdapter = new ManufacturerListAdapter(this, mManufacturers);  
 
