@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
         controllerCar = new ControllerCar(getApplicationContext(), "Cars.json");
         setContentView(R.layout.activity_main);
     }
-
+    
     //inflates the add menu and icon on the action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -117,10 +117,11 @@ public class MainActivity extends ActionBarActivity {
 
     private void changeCarsManufacturer() {
 
-
-        for(ModelCar mc : cars) {
-            if (mc.getManufacturer().equals(prevName))
-                mc.setManufacturer(mManufacturers.get(mPosition).getName());
+        if (prevName != null) {
+            for(ModelCar mc : cars) {
+                if (mc.getManufacturer().toLowerCase().equals(prevName.toLowerCase()))
+                    mc.setManufacturer(mManufacturers.get(mPosition).getName());
+            }
         }
         
         try {

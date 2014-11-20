@@ -71,6 +71,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/hint_car"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="14sp" />
 
             <Spinner
@@ -90,7 +92,10 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/hint_horsepower"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="14sp" />
+
         </LinearLayout>
     </LinearLayout>
 

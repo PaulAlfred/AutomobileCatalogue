@@ -82,6 +82,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/hint_company"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="14sp" >
 
                 <requestFocus />
@@ -94,6 +96,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/hint_year"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="14sp" />
 
             <EditText
@@ -103,6 +107,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/hint_origin"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="14sp" />
 
             <EditText
@@ -111,7 +117,10 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/hint_revenue"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="14sp" />
+
         </LinearLayout>
     </LinearLayout>
 

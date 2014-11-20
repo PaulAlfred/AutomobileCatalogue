@@ -74,11 +74,17 @@ public class ViewAddManufacturer extends Activity implements Serializable {
         addEdit.setOnClickListener(new OnClickListener() {
 
         boolean isAdd = !(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
+        boolean isSameName;
             @Override
             public void onClick(View v) {
+                if (!isAdd){
+                    String selectedName = i.getExtras().getString(ViewAddManufacturer.mName);
+                    String lowerSelected = selectedName.toLowerCase();
+                    isSameName = name.getText().toString().toLowerCase().equals(lowerSelected);
+                } else {
+                    isSameName = true;
+                }
                 
-                String selectedName = i.getExtras().getString(ViewAddManufacturer.mName);
-                boolean isSameName = name.getText().toString().equals(selectedName);
                 boolean isExists = isNameExists(name.getText().toString());
 
                 if (isExists && (isAdd||!isSameName)) {
