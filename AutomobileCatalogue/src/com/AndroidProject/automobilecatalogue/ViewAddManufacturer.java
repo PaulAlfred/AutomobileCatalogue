@@ -4,13 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +32,7 @@ public class ViewAddManufacturer extends Activity implements Serializable {
     private EditText founded;
     private EditText revenue;
     private EditText origin;
+    private RelativeLayout layout;
     //Model and Controller Objects
     private ModelManufacturer manufacturer;
     private ArrayList<ModelManufacturer> manufacturers;
@@ -63,18 +69,20 @@ public class ViewAddManufacturer extends Activity implements Serializable {
         addEditLabel = (TextView) findViewById(R.id.add_edit_man_info);	
         addEdit = (Button) findViewById(R.id.add_edit_man);
         cancel = (Button) findViewById(R.id.cancel);
-
+        layout = (RelativeLayout) findViewById(R.id.mainLayout);
+        
         name.setText(i.getStringExtra(ViewAddManufacturer.mName));
         founded.setText(i.getStringExtra(ViewAddManufacturer.mFounded));
         revenue.setText(i.getStringExtra(ViewAddManufacturer.mRevenue));
         origin.setText(i.getStringExtra(ViewAddManufacturer.mOrigin));
-        
+       
+
         position = i.getExtras().getInt(ViewAddManufacturer.mPosition);
         Labels(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
         addEdit.setOnClickListener(new OnClickListener() {
 
-        boolean isAdd = !(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
-        boolean isSameName;
+            boolean isAdd = !(i.getExtras().getBoolean(ViewAddManufacturer.isEdit));
+            boolean isSameName;
             @Override
             public void onClick(View v) {
                 if (!isAdd){
@@ -84,7 +92,6 @@ public class ViewAddManufacturer extends Activity implements Serializable {
                 } else {
                     isSameName = true;
                 }
-                
                 boolean isExists = isNameExists(name.getText().toString());
 
                 if (isExists && (isAdd||!isSameName)) {
@@ -102,11 +109,19 @@ public class ViewAddManufacturer extends Activity implements Serializable {
                 finish();
             }
         });
-    }
+        layout.setOnTouchListener(new OnTouchListener() {
+            
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(v);
+                return false;
+            }
+        });
+    } 
 
     //Labels for the widgets to determine what state of functionality it is in
     private void Labels(boolean isEdit) {
-        
+
         if (isEdit) {	
             addEdit.setText("Edit");
             addEditLabel.setText("Edit Manufacturer");
@@ -163,5 +178,9 @@ public class ViewAddManufacturer extends Activity implements Serializable {
                 return true;
         }
         return false;
+    }
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

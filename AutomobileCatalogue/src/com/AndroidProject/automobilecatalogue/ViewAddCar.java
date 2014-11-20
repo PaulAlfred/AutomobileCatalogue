@@ -7,14 +7,19 @@ import java.util.ArrayList;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,8 +28,9 @@ public class ViewAddCar extends Activity{
     //variables for widgets
     private TextView addEditTitle;
     private Button cancel,addEdit;
-    private EditText mName,  mHorsepower;
+    private EditText mName, mHorsepower;
     private Spinner mManufacturer, mCategory;
+    private RelativeLayout layout;
     //Model and Controller Objects
     private ModelCar car;
     private ArrayList<ModelCar> mCars;
@@ -86,6 +92,7 @@ public class ViewAddCar extends Activity{
         mCategory = (Spinner) findViewById(R.id.spinnerCategory);
         mHorsepower = (EditText) findViewById(R.id.editTextHorsepower);
         mManufacturer = (Spinner) findViewById(R.id.spinnerManufacturer);
+        layout = (RelativeLayout) findViewById(R.id.mainLayout2);
 
         mName.setText(i.getStringExtra(ViewAddCar.Name));
         mHorsepower.setText(i.getStringExtra(ViewAddCar.Horsepower));
@@ -115,6 +122,14 @@ public class ViewAddCar extends Activity{
             @Override
             public void onClick(View v) {
                 addOrEdit(i.getExtras().getBoolean(ViewAddCar.isEdit));
+            }
+        });
+        layout.setOnTouchListener(new OnTouchListener() {
+            
+            @Override
+            public boolean onTouch(View view, MotionEvent me) {
+                hideKeyboard(view);
+                return false;
             }
         });
     }
@@ -186,6 +201,11 @@ public class ViewAddCar extends Activity{
         mManufacturer.setSelection(i.getExtras().getInt(ViewAddCar.mManufacturerNo));
         mManufacturer.setEnabled(isEdit);
         mManufacturer.setClickable(isEdit);
+    }
+    
+    private void hideKeyboard(View view){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
 }
